@@ -42,3 +42,17 @@ test('axial rotation preserves the six-step hex ring', () => {
   assert.deepEqual(rotateAxial(p.q, p.r, 1), { q: 1, r: 0 });
   assert.equal(new Set(ring.map((point) => `${point.q},${point.r}`)).size, 6);
 });
+
+test('glued blocks fall together by the same vertical distance', () => {
+  const level = makeLevel([
+    { q: 0, r: 0, h: 0 }, { q: 1, r: 0, h: 0 },
+    { q: 0, r: 0, h: 1, support: false }, { q: 1, r: 0, h: 1, support: false },
+    { q: 0, r: 0, h: 2, support: false }, { q: 1, r: 0, h: 2, support: false },
+  ]);
+  const glued = [
+    { id: 'left', type: 'block', q: 0, r: 0, h: 2, assemblyId: 'pair' },
+    { id: 'right', type: 'block', q: 1, r: 0, h: 2, assemblyId: 'pair' },
+  ] satisfies LevelObject[];
+  const result = resolveGravity(level, glued, new Set());
+  assert.deepEqual(result.objects.map((o) => o.h), [0, 0]);
+});

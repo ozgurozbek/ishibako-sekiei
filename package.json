@@ -1,9 +1,20 @@
 {
   "name": "ishibako-web",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
-  "scripts": {"dev": "vite", "build": "tsc -b && vite build", "preview": "vite preview", "test": "node --experimental-strip-types --test src/simulation.test.ts"},
-  "dependencies": {"three": "^0.180.0"},
-  "devDependencies": {"@types/three": "^0.180.0", "typescript": "~5.8.3", "vite": "^6.3.5"}
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "node --experimental-strip-types --test src/*.test.ts"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.180.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
 }

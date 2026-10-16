@@ -1,0 +1,1 @@
+Place the final bundled soundtrack here as `ishibako-theme.mp3` once the music file has been supplied. The current build includes an in-game **Load music** picker, so a local audio file can already be auditioned without being bundled. Upload the soundtrack in chat to include it in the project archive and set it as the default track.

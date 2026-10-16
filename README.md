@@ -1,81 +1,66 @@
 # Ishibako: Hexbound
 
-A browser-based, color-material prototype for a minimalist 3D hex puzzle game. The project is deliberately self-contained: no image textures or external game assets are required. Three.js renders the puzzle and seeded decorative environment; level data is JSON.
-
-## Requirements
-
-- Node.js 20 or newer for the game; Node.js 22.6+ for the built-in TypeScript test runner
-- npm
-- A modern browser with WebGL
+A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps.
 
 ## Run locally
+
+Requirements: Node.js 20+, npm, and a browser with WebGL. Node.js 22.6+ is recommended for the built-in TypeScript test runner.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. To create a production build:
+Open the local URL printed by Vite. Production build and preview:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Play the example
+## Controls
 
-1. Use W/A/S/D or the arrow keys to walk on the hex grid. Each successful walk costs one move.
-2. Click the orange prism when adjacent to attach it. Attached blocks move with the player.
-3. Carry the prism from `(1,0)` to the mint pressure plate at `(1,1)`. One walk in the `(0,1)` direction places it on the plate.
-4. Detach the block with a click or Space, then walk to the violet exit at `(-2,1)`. The example move limit is five.
-5. Q and E rotate attached blocks in 60-degree increments around the player. Rotations are free. Invalid moves do not spend a move.
-6. Drag to orbit the camera and use the mouse wheel to zoom. Restart restores the level.
+- W/A/S/D or arrow keys: walk on the hex grid. A successful walk costs one move.
+- Click an adjacent block: attach or detach it. Blocks with the same `assemblyId` are treated as a glued assembly.
+- Q/E: rotate attached blocks by 60 degrees around the player. Rotations are free.
+- F: use a linked lift while standing on it. A successful lift transfer costs one move.
+- Space: detach all attached blocks.
+- Ctrl/Cmd+Z and Ctrl/Cmd+Y: undo and redo.
+- Drag to orbit the camera; scroll to zoom.
+- Load music: select an audio file from your device to loop it during play. Playback is local to the current browser session and the file is not copied into the project automatically. To bundle the soundtrack as the default, add the supplied track at `public/music/ishibako-theme.mp3` and wire it as the default source.
+- SFX toggle: enable or disable generated sound effects.
 
-## Level JSON
+## Included levels
 
-`levels/example.json` is the example level. The running game starts from the equivalent in-source `starterLevel` so Vite does not require special JSON loading. Open **Level editor** to inspect or modify JSON, apply a level, import a JSON file, or export the current level.
+- `levels/example.json`: the compact starter puzzle. Carry the orange prism onto the mint plate, then reach the violet exit within the walking move limit.
+- `levels/mechanics-lab.json`: a multi-elevation sandbox containing a glued pair, a mirrored laser, a receiver, and two linked lifts. Open Level editor, import the JSON file, then apply it to load the lab.
 
-Top-level fields:
+The app starts from the equivalent of `levels/example.json` embedded in `src/level.ts` so it can launch without a special asset loader.
 
-- `version`: schema version.
-- `metadata`: stable id, display name, author and description.
-- `rules`: walking move limit and gravity setting.
-- `board`: hex cells, elevation and optional cell kind.
-- `objects`: player, blocks, pressure plates, goals and supported prototype mechanisms.
-- `environment`: biome type, deterministic seed, decorative radius and density.
-- `objectives`: required pressure plate IDs and goal ID.
+## JSON format
 
-Hex coordinates use axial `(q,r)` coordinates. World coordinates are derived from those values. Elevation is `h`. Cells and decorative environment are independent: scenery is render-only and does not participate in puzzle collision.
+Top-level fields are `version`, `metadata`, `rules`, `board`, `objects`, `environment`, `presentation`, and `objectives`. Hex positions use axial coordinates `(q, r)` and elevation `h`. A cell is a board surface. Decorative scenery is generated separately from the puzzle board and does not participate in collision.
 
-The editor supports both JSON authoring and basic board-canvas editing. Choose a canvas tool, then click a tile: place/move objects, erase a tile, or add a tile one hex east of the clicked tile. The elevation field selects the target height for editor operations. JSON validation checks required entities, duplicate IDs and cells, objective references, solid-object overlaps, linked plate references, and object positions.
+Supported object types include `player`, `block`, `plate`, `goal`, `wall`, `gate`, `bridge`, `lift`, `laser`, `mirror`, and `receiver`.
 
-## Implemented prototype features
+- Glued blocks share an `assemblyId`. Attaching any member attaches the whole group; group translation and rotation preserve the relative hex layout.
+- A laser uses `direction` from 0 to 5, indexing the six axial directions in `src/types.ts`. Mirrors use `direction` as their reflection axis. Walls, blocks, and closed gates absorb the beam. The trace is deterministic and receiver hits are returned by the simulation helper.
+- A lift's `linkedTo` field references the ID of its paired lift. Stand on a lift and press F to transfer to its destination. Lift transfers consume one walking move.
+- Gates and bridges can use `linkedTo` to reference a pressure plate. Gates open and bridges activate while a block occupies that plate. A bridge with `kind: "normallyOpen"` starts walkable.
+- `direction` must be an integer from 0 through 5. Elevation is an integer-like layer value used in cell/object positions.
 
-- Three-dimensional hexagonal board and isometric orbit camera.
-- Player walking, move budget, restart and win condition.
-- Multi-block attachment set, carried translation and 60-degree horizontal rotations.
-- Pressure plate and exit objectives.
-- Block collision checks and optional simple downward gravity.
-- JSON import, apply, validate and export.
-- Gameplay undo/redo (toolbar buttons or Ctrl/Cmd+Z and Ctrl/Cmd+Y), including walking, attachment and rotation.
-- Deterministic simulation helpers with tests for axial rotation and unsupported-block gravity.
-- Basic visual board editor for adding cells, removing cells, moving the spawn, and placing blocks, plates, exits, walls, gates, lifts and bridges.
-- Pressure-plate-linked gates and retractable bridges using each mechanism's `linkedTo` plate ID.
-- Gravity handling for cells explicitly marked `support: false`; blocks fall to the highest lower supported cell or are removed if no landing exists.
-- Seeded meadow, hills, temple and lava-lake decorative palettes.
-- Procedural geometric player/block/plate/goal visuals, emissive accents and animated details.
-- Generated Web Audio click/step/rotation feedback and sound toggle.
-- Responsive UI and HUD.
+## Editor
 
-## Prototype limitations
+Open **Level editor** to edit JSON, import a `.json` file, validate/apply the level, and export the current level. The canvas tools can move the spawn, add an adjacent tile, erase a tile, or place supported object types. Set Elevation to target a different `h` layer, then click a board tile to use its axial coordinate at the selected elevation. For mechanism linking, assembly IDs, mirror direction, or lift destinations, use JSON properties directly.
 
-This is a functional starter project, not a finished commercial game. Attachment rotation is a simple axial-grid transform; complex multi-block rigid assembly collision, laser reflection logic, lift routing, a dedicated height-layer painting view, and level solvability proofs are not implemented. The canvas editor is intentionally basic. Gravity only reacts to cells explicitly marked `support: false`; it is not a full physical support solver. Object types such as `wall`, `lift`, `bridge`, `laser`, and `mirror` have basic visual placeholders only. The current gravity routine is intentionally conservative and should be replaced with a full support graph before authoring multi-storey production levels. The included example uses one elevation and is designed to be completed using the controls above.
+## Validation and tests
 
-## Suggested next engineering steps
+The validator checks required entities, duplicate object IDs/cells, object positions, solid overlaps, objective references, lift links, gate/bridge plate links, assembly properties, and valid direction indices. The automated test suite covers axial rotation, gravity and void falls, rigid glued-block falls, assembly lookup, laser paths and receivers, and pressure-plate-linked mechanism state.
 
-1. Move all player, assembly and mechanism transitions into the deterministic simulation module.
-2. Add true rigid assemblies for glued blocks and exhaustive collision validation for rotated groups.
-3. Add lift routing and laser emitter, mirror and receiver logic.
-4. Add browser-level interaction tests and keyboard/screen-reader accessibility checks.
-5. Add a visual height-layer inspector and richer object property controls to the editor.
-6. Add a solvability checker for small levels and a set of multilevel sample puzzles.
+```bash
+npm test
+```
+
+## Current limits
+
+This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, but receivers do not yet participate in the win condition or trigger arbitrary mechanism graphs. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Audio selection is session-local until the soundtrack file is supplied and bundled. Browser automation and a full production build could not be run in the current environment because package installation timed out.

@@ -7,9 +7,9 @@ export type GravityResult = {
 };
 
 /**
- * Resolve cells explicitly marked support:false. The function is deterministic
- * and does not mutate its arguments, so the same transition can be replayed.
- * Base cells and cells without an explicit support flag are solid by default.
+ * Resolve unsupported blocks deterministically. Glued assemblies fall as a
+ * rigid vertical group: all members receive the same height delta. A group
+ * is removed only when no common supported landing layer exists.
  */
 export function resolveGravity(level: Level, objects: LevelObject[], attachedIds: Set<string>): GravityResult {
   const next = structuredClone(objects);
@@ -17,19 +17,42 @@ export function resolveGravity(level: Level, objects: LevelObject[], attachedIds
   const fallenIds: string[] = [];
   if (!level.rules.gravity) return { objects: next, detachedIds, fallenIds };
 
-  for (const block of next.filter((object) => object.type === 'block')) {
-    const current = level.board.cells.find((cell) => cell.q === block.q && cell.r === block.r && cell.h === block.h);
-    if (!current || current.support !== false) continue;
-    const landing = level.board.cells
-      .filter((cell) => cell.q === block.q && cell.r === block.r && cell.h < block.h && cell.kind !== 'void' && cell.support !== false)
-      .sort((a, b) => b.h - a.h)[0];
+  const blocks = next.filter((object) => object.type === 'block');
+  const groups = new Map<string, LevelObject[]>();
+  for (const block of blocks) {
+    const groupKey = block.assemblyId ? `assembly:${block.assemblyId}` : `block:${block.id}`;
+    const group = groups.get(groupKey) ?? [];
+    group.push(block);
+    groups.set(groupKey, group);
+  }
 
-    if (!landing) {
-      fallenIds.push(block.id);
+  const cellAt = (q: number, r: number, h: number) => level.board.cells.find((cell) => cell.q === q && cell.r === r && cell.h === h);
+  for (const group of groups.values()) {
+    const needsGravity = group.some((block) => {
+      const cell = cellAt(block.q, block.r, block.h);
+      return !!cell && (cell.support === false || cell.kind === 'void');
+    });
+    if (!needsGravity) continue;
+
+    const highest = Math.max(...group.map((block) => block.h));
+    const lowest = Math.min(...group.map((block) => block.h));
+    let landingDelta: number | null = null;
+    for (let delta = 1; delta <= highest - lowest + 32; delta++) {
+      const valid = group.every((block) => {
+        const landing = cellAt(block.q, block.r, block.h - delta);
+        return !!landing && landing.kind !== 'void' && landing.support !== false;
+      });
+      if (valid) { landingDelta = delta; break; }
+    }
+
+    if (landingDelta === null) {
+      fallenIds.push(...group.map((block) => block.id));
       continue;
     }
-    block.h = landing.h;
-    if (attachedIds.has(block.id)) detachedIds.push(block.id);
+    for (const block of group) {
+      block.h -= landingDelta;
+      if (attachedIds.has(block.id)) detachedIds.push(block.id);
+    }
   }
 
   return {
