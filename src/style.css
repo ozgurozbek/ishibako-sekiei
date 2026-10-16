@@ -179,3 +179,24 @@ button,.file-button{font-size:14px}
 
 .level-info{top:220px;width:min(400px,calc(100vw - 24px));max-height:calc(100vh - 310px)}
 @media(max-width:800px){.level-info{top:190px;max-height:calc(100vh - 240px);width:min(340px,calc(100vw - 16px))}}
+
+
+/* Batch 24: full-viewport game shell, isolated information screens, and collision-safe layout. */
+html,body,#app{width:100%;height:100%;min-height:100%;margin:0}
+body{overflow:hidden}
+.shell{width:100%;max-width:none;height:100dvh;min-height:0;margin:0;padding:0;display:flex;flex-direction:column;overflow:hidden}
+.topbar{flex:0 0 auto;height:68px;min-height:60px;padding:0 18px;border-bottom:1px solid #29403a;z-index:20}
+.stage{flex:1 1 auto;width:100%;height:auto;min-height:0;margin:0;border-radius:0;border-left:0;border-right:0;border-bottom:0}
+#viewport{inset:0!important;width:100%;height:100%}
+#viewport canvas{width:100%!important;height:100%!important}
+.level-info{z-index:4;max-width:min(390px,calc(100vw - 24px))}
+.hud{z-index:5;gap:10px;flex-wrap:wrap}
+.level-tag,.moves{max-width:min(48vw,360px)}
+.hud-objectives{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px}
+.game-menu{z-index:100}
+.menu-info:not(.hidden){position:fixed;inset:0;z-index:150;display:block!important;overflow:auto;padding:clamp(24px,6vh,64px) clamp(20px,8vw,120px);background:rgba(9,20,17,.98);backdrop-filter:blur(18px);border:0;border-radius:0;max-height:none;width:100vw;height:100dvh}
+.info-screen-back{position:sticky;top:0;display:block;margin:0 0 28px auto}
+.game-menu:has(.menu-info:not(.hidden)){visibility:hidden;pointer-events:none}
+.game-menu:has(.menu-info:not(.hidden)) .menu-info:not(.hidden){visibility:visible;pointer-events:auto}
+@media(max-width:800px){.topbar{height:auto;min-height:62px;padding:8px 10px;gap:8px}.brand h1{font-size:12px}.header-actions{max-width:65vw;flex-wrap:wrap;justify-content:flex-end}.header-actions button{font-size:10px;padding:7px 9px}.stage{min-height:0}.hud{top:8px;left:8px;right:8px}.level-info{top:122px;left:8px;width:min(300px,calc(100vw - 16px));max-height:30vh;overflow:auto}.moves{min-width:0}.menu-info:not(.hidden){padding:20px 16px}}
+@media(max-height:600px){.topbar{height:54px;min-height:50px}.level-info{top:100px;max-height:25vh}.hud{top:6px}}
