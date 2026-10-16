@@ -188,6 +188,22 @@ The site opens to the main menu. The level dropdown is replaced by a scrollable,
 The in-game HUD now places objectives beneath Now Playing, removes the oversized controls/field-notes bar and camera hint, and increases text sizes. WASD destination hints are rounded and translucent. Mechanism connection paths are shown during gameplay with directional animated dashes. The completion dialog fades in, the campaign map uses the brand icon, and the Two Plates, One Lift gloves pickup has been moved to `(-1, -1, 0)`.
 
 
-## Latest changes
+## License
 
-See [BATCH23.md](BATCH23.md) for the startup fix and completion-screen action hierarchy.
+## Licence
+
+Unless otherwise stated, all source code and assets in this project are released under the **[WTFPL - Do What the Fuck You Want to Public License](https://www.wtfpl.net/)**.
+
+You are free to use, copy, modify, distribute, sublicense, and commercially exploit these materials without restriction, subject to applicable law and the rights of any third-party material included in the project.
+
+### Excluded: Music
+
+All music, located at `[public\music]`, is **expressly excluded from the WTFPL licence grant**. It is third-party or original material owned by or licensed from the relevant rights holder.
+
+No permission to copy, distribute, modify, adapt, share, or otherwise reuse the music is granted by this project's licence. Any use of this music requires separate authorisation from the relevant rights holder under the applicable terms.
+
+The exclusion of the menu music does not affect the WTFPL licensing of the project's other original code and assets.
+
+### Third-party materials
+
+Any other third-party materials remain subject to their respective copyright and licence terms. Nothing in this notice grants rights that the project author does not own or have authority to grant.
