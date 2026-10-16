@@ -186,3 +186,8 @@ Campaign completion and best-move counts persist in browser `localStorage`, inde
 The site opens to the main menu. The level dropdown is replaced by a scrollable, responsive hex-grid selector, with completed-level marks saved in browser `localStorage` and shared across campaigns. The game menu now contains fullscreen, editor, replay import, music import, help, credits, and close controls. Music defaults to on and transitions between `/music/menu/1.mp3` and the selected biome track; place the menu soundtrack at `public/music/menu/1.mp3`.
 
 The in-game HUD now places objectives beneath Now Playing, removes the oversized controls/field-notes bar and camera hint, and increases text sizes. WASD destination hints are rounded and translucent. Mechanism connection paths are shown during gameplay with directional animated dashes. The completion dialog fades in, the campaign map uses the brand icon, and the Two Plates, One Lift gloves pickup has been moved to `(-1, -1, 0)`.
+
+
+## Latest changes
+
+See [BATCH23.md](BATCH23.md) for the startup fix and completion-screen action hierarchy.

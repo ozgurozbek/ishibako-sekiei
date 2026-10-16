@@ -230,3 +230,8 @@ Added a confirmed **Clear progress** action to the campaign screen. It removes e
 Rebranded the UI to **Sekiei**. Replaced the dropdown with a responsive, scrollable hex-grid level selector, added browser-local passed-level records keyed by ID/name and shared completion marks across campaigns, moved settings/tools into the main menu, and made the menu the first screen. The menu soundtrack path is `public/music/menu/1.mp3`; the audio file itself is not included in this archive and must be supplied. Music transitions fade between tracks. The game HUD now places objectives under Now Playing, removes the bottom controls/field-notes bar and camera hint, and uses larger type. WASD previews are rounded and translucent; mechanism links are always visible with directional animated flow. The completion modal fades in, the campaign logo uses the brand icon, duplicate JSON-import UI and decorative map line are removed, and `plate-and-lift.json` has its gloves pickup at `(-1, -1, 0)`.
 
 Latest tests: **56 passed, 0 failed**. TypeScript syntax transpilation passed for all source files. A full production build and live browser interaction pass remain unverified because project dependencies are not installed in this workspace.
+
+
+## Batch 23 update
+
+Fixed the startup DOM exception caused by appending the removed bottom bar, which had prevented all subsequent event handlers from registering. Completion actions now prioritize Continue, with Download run recording secondary. See `BATCH23.md`.
