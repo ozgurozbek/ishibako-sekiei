@@ -1,6 +1,6 @@
 # Ishibako: Hexbound
 
-**Batch 6: themed presentation and expandable soundtrack routing.** Eight environment themes are supported, and a Vite plugin scans biome music folders to discover the available numbered tracks. See `BATCH5.md` and `BATCH6.md` for the presentation history.
+**Batch 8: contextual object tooltips, repaired block picking, and richer procedural terrain.** Eight environment themes remain supported, with dynamic biome music cataloguing. See `BATCH5.md` through `BATCH8.md` for the implementation history.
 
 A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps. A four-step gradient map creates a lightweight toon-shaded, toy-diorama style.
 
@@ -89,3 +89,11 @@ WASD and arrow keys are camera-relative, and the direction mapping appears below
 
 
 The Batch 7 automated suite contains 19 tests, including level validation and a check that the mechanics showcase includes the expected mechanic families. Run it with `npm test`.
+
+
+## Batch 8 update
+
+- Hover over an object to see its name, ID, hex position, elevation, orientation where relevant, and connection state. A gate or bridge reports its source; a plate, receiver or key reports connected targets. Blocks show whether they are adjacent and attachable, currently attached, or need the player to move closer.
+- Object picking now raycasts object meshes before board cells, avoiding tile-surface hits masking block clicks. Blocks also have clearer click affordance through the cursor.
+- The procedural field now uses layered hex prisms with separate top facets, a broader range of elevations, more intentional color variation, stronger near-field fog, and a distant themed silhouette ring. These are render-only and do not affect puzzle collision.
+- `npm test` passes all 19 tests. TypeScript syntax was inspected, but a complete typecheck/build could not finish because dependencies could not be installed in this environment.
