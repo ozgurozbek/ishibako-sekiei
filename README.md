@@ -1,6 +1,8 @@
 # Ishibako: Hexbound
 
-A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps.
+**Batch 5: presentation and animation pass.** This pass adds a soft cel-shaded look, a friendlier player character, biome-tinted atmosphere, and eased movement transitions. See `BATCH5.md` for details.
+
+A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps. A four-step gradient map creates a lightweight toon-shaded, toy-diorama style.
 
 ## Run locally
 
@@ -60,6 +62,14 @@ The validator checks required entities, duplicate object IDs/cells, object posit
 ```bash
 npm test
 ```
+
+## Presentation notes
+
+- A small shared gradient texture quantizes lighting into four pastel bands for toon shading. It is a lighting ramp, not a surface texture map.
+- The player has a simple face and blush accents; board pieces retain clean hexagonal silhouettes.
+- Movement and lift transfers ease between grid positions over a short interval. Puzzle logic remains discrete and resolves before the visual tween.
+- Meadow and hills biomes include sparse stylized flowers. The environment remains decorative and never participates in puzzle collision.
+- Reduced-motion preferences disable CSS transitions. Three.js movement easing remains brief and can be disabled in a future accessibility setting.
 
 ## Current limits
 

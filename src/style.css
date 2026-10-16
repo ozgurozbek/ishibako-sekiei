@@ -4,3 +4,26 @@
 .visual-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:8px 0 14px;font-size:11px;color:#a9bdb3}.visual-tools label{display:flex;align-items:center;gap:7px}.visual-tools select,.visual-tools input{background:#0c1415;color:#d1e5d8;border:1px solid #355047;border-radius:4px;padding:8px;font:11px 'DM Mono',monospace}.visual-tools input{width:70px}.visual-tools span{color:#71988a}
 
 .editor-actions label{display:flex;align-items:center;gap:7px;color:#a9bdb3;font-size:11px}.editor-actions select,.editor-actions input{max-width:145px;background:#0c1415;color:#d1e5d8;border:1px solid #355047;border-radius:4px;padding:9px;font:11px "DM Mono",monospace}.music-file{white-space:nowrap}@media(max-width:900px){.header-actions{flex-wrap:wrap}.music-file{display:none}}
+
+/* Batch 5 presentation pass: quiet, rounded diorama UI with a pastel-toon world. */
+:root{color-scheme:dark;--mint:#9fe4c9;--cream:#fff2d8;--line:#3d5b50;--panel:rgba(19,34,31,.88)}
+body{background:radial-gradient(ellipse at 50% -15%,#355c50 0%,#192b28 42%,#10191b 78%);background-attachment:fixed}
+button,.file-button{border-radius:999px;padding:10px 16px;box-shadow:0 3px 0 rgba(0,0,0,.16);transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease}
+button:hover,.file-button:hover{transform:translateY(-1px);box-shadow:0 5px 0 rgba(0,0,0,.16)}
+button:active,.file-button:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.brand .mark{color:var(--mint);text-shadow:0 0 22px #83e8c244}
+.brand h1{letter-spacing:.075em}.brand h1 span{color:#a5c4b4}
+.stage{border:1px solid #476b5b;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#b8d9c4,#6b9b83);box-shadow:0 18px 45px #0003,inset 0 1px #ffffff22}
+#viewport{isolation:isolate}#viewport canvas{display:block;outline:none}
+.hud{gap:12px}.level-tag,.moves{background:rgba(18,37,31,.82);border:1px solid #a8d6bf44;border-radius:13px;box-shadow:0 5px 20px #07120e2e;backdrop-filter:blur(12px)}
+.level-tag .dot{box-shadow:0 0 0 4px #7de2b51a,0 0 12px #7de2b5}
+.level-tag strong{color:#fff2d8}.moves strong{color:var(--mint)}
+.toast{border-radius:999px;background:#18342ceF;border:1px solid #82cdb055;box-shadow:0 10px 35px #0004;font-weight:600;letter-spacing:.01em}
+.crosshair-note{padding:8px 11px;background:#132722aa;border:1px solid #7aab9638;border-radius:999px;backdrop-filter:blur(8px)}
+.bottom{margin-top:12px;background:linear-gradient(135deg,#17282480,#15232030);border:1px solid #29433a;border-radius:15px;overflow:hidden}.bottom>div{padding-top:22px;padding-bottom:22px}.bottom>div+div{border-color:#304b41}
+.section-kicker{color:#8ab9a4;letter-spacing:.16em;font-size:9px}.objective-line{font-weight:600}.status-icon{border-radius:50%;background:#1b332c}.status-icon:has(+span){flex-shrink:0}
+.keyrow kbd{border-radius:6px;box-shadow:0 2px 0 #07110e;background:#243c33;border-color:#496c5a}.move-bar{height:5px;border-radius:99px}.move-bar span{border-radius:99px;box-shadow:0 0 10px #5de0c188}
+.editor{margin-top:12px;padding:22px;border:1px solid #304b41;border-radius:15px;background:#14231fbb}.editor textarea{border-radius:10px}.editor-actions select,.editor-actions input{border-radius:8px}
+footer{padding-left:4px;padding-right:4px}
+@media(max-width:720px){.stage{border-radius:12px}.bottom{border-radius:12px}.bottom>div{padding-top:16px;padding-bottom:16px}.editor{padding:15px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
