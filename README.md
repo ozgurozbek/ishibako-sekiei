@@ -27,7 +27,7 @@ npm run preview
 - Space: detach all attached blocks.
 - Ctrl/Cmd+Z and Ctrl/Cmd+Y: undo and redo.
 - Drag to orbit the camera; scroll to zoom.
-- Load music: select an audio file from your device to loop it during play. Playback is local to the current browser session and the file is not copied into the project automatically. To bundle the soundtrack as the default, add the supplied track at `public/music/ishibako-theme.mp3` and wire it as the default source.
+- Music: click **Music: off** to play the deterministic biome track. Each environment selects `1.mp3`, `2.mp3`, or `3.mp3` from `public/music/<musicFolder>/` using `((seed % 3) + 3) % 3 + 1`, so a given biome and level seed always choose the same track. By default, `musicFolder` is the environment `type`; set `environment.musicFolder` when the folder name differs. Use **Load music** to audition a local file for the current session. A loaded level resets the custom override and selects its own biome track. Browser playback begins only after a user gesture.
 - SFX toggle: enable or disable generated sound effects.
 
 ## Included levels
@@ -44,9 +44,9 @@ Top-level fields are `version`, `metadata`, `rules`, `board`, `objects`, `enviro
 Supported object types include `player`, `block`, `plate`, `goal`, `wall`, `gate`, `bridge`, `lift`, `laser`, `mirror`, and `receiver`.
 
 - Glued blocks share an `assemblyId`. Attaching any member attaches the whole group; group translation and rotation preserve the relative hex layout.
-- A laser uses `direction` from 0 to 5, indexing the six axial directions in `src/types.ts`. Mirrors use `direction` as their reflection axis. Walls, blocks, and closed gates absorb the beam. The trace is deterministic and receiver hits are returned by the simulation helper.
+- A laser uses `direction` from 0 to 5, indexing the six axial directions in `src/types.ts`. Mirrors use `direction` as their reflection axis. Walls, blocks, and closed gates absorb the beam. Receiver activation is recomputed from the current laser paths. Add `objectives.requiredReceiverIds` to require one or more receivers before the exit can complete the level.
 - A lift's `linkedTo` field references the ID of its paired lift. Stand on a lift and press F to transfer to its destination. Lift transfers consume one walking move.
-- Gates and bridges can use `linkedTo` to reference a pressure plate. Gates open and bridges activate while a block occupies that plate. A bridge with `kind: "normallyOpen"` starts walkable.
+- Gates and bridges can use `linkedTo` to reference a pressure plate or a laser receiver. Plate-linked mechanisms activate while a block occupies the plate; receiver-linked mechanisms activate while the receiver is lit. A bridge with `kind: "normallyOpen"` starts walkable.
 - `direction` must be an integer from 0 through 5. Elevation is an integer-like layer value used in cell/object positions.
 
 ## Editor
@@ -55,7 +55,7 @@ Open **Level editor** to edit JSON, import a `.json` file, validate/apply the le
 
 ## Validation and tests
 
-The validator checks required entities, duplicate object IDs/cells, object positions, solid overlaps, objective references, lift links, gate/bridge plate links, assembly properties, and valid direction indices. The automated test suite covers axial rotation, gravity and void falls, rigid glued-block falls, assembly lookup, laser paths and receivers, and pressure-plate-linked mechanism state.
+The validator checks required entities, duplicate object IDs/cells, object positions, solid overlaps, objective references, lift links, gate/bridge plate links, assembly properties, and valid direction indices. The automated test suite covers axial rotation, gravity and void falls, rigid glued-block falls, assembly lookup, laser paths and receivers, receiver-linked gates, pressure-plate-linked mechanism state, and deterministic biome music selection.
 
 ```bash
 npm test
@@ -63,4 +63,4 @@ npm test
 
 ## Current limits
 
-This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, but receivers do not yet participate in the win condition or trigger arbitrary mechanism graphs. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Audio selection is session-local until the soundtrack file is supplied and bundled. Browser automation and a full production build could not be run in the current environment because package installation timed out.
+This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Biome music playback expects three numbered audio files in each biome folder. No actual soundtrack files were present in the project workspace when this batch was packaged, so only the deterministic music routing is included. Browser automation and a full production build could not be run in the current environment because package installation timed out.

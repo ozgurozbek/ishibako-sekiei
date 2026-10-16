@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assemblyMembers, traceLaser, isLinkedMechanismOpen } from './mechanics.ts';
+import { assemblyMembers, traceLaser, isLinkedMechanismOpen, refreshReceiverStates } from './mechanics.ts';
 import type { Level, LevelObject } from './types.ts';
 
 const level: Level = {
@@ -56,4 +56,19 @@ test('mirror changes the laser to the reflected axial direction', () => {
   const trace = traceLaser(mirrorLevel, objects, objects[0]);
   assert.deepEqual(trace.cells.map((p) => [p.q, p.r]), [[-1, 0], [0, 0], [0, -1], [0, -2]]);
   assert.deepEqual(trace.receiverIds, ['receiver']);
+});
+
+test('laser receivers refresh active state and can open linked gates', () => {
+  const localLevel: Level = { ...level, board: { ...level.board, cells: [{ q: 0, r: 0, h: 0 }, { q: 1, r: 0, h: 0 }, { q: 2, r: 0, h: 0 }] } };
+  const objects: LevelObject[] = [
+    { id: 'laser', type: 'laser', q: 0, r: 0, h: 0, direction: 0 },
+    { id: 'receiver', type: 'receiver', q: 2, r: 0, h: 0 },
+    { id: 'gate', type: 'gate', q: 1, r: 0, h: 0, linkedTo: 'receiver' },
+  ];
+  // The gate begins closed, so this layout deliberately verifies the receiver only
+  // when its beam can reach it without depending on the gate it controls.
+  objects[2].q = 3;
+  localLevel.board.cells.push({ q: 3, r: 0, h: 0 });
+  assert.deepEqual(refreshReceiverStates(localLevel, objects), ['receiver']);
+  assert.equal(isLinkedMechanismOpen(objects[2], objects), true);
 });

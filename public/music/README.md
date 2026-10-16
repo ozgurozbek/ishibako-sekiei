@@ -1,1 +1,22 @@
-Place the final bundled soundtrack here as `ishibako-theme.mp3` once the music file has been supplied. The current build includes an in-game **Load music** picker, so a local audio file can already be auditioned without being bundled. Upload the soundtrack in chat to include it in the project archive and set it as the default track.
+# Biome soundtrack layout
+
+Add three audio files to each biome folder using these exact filenames:
+
+```text
+public/music/
+  meadow/1.mp3
+  meadow/2.mp3
+  meadow/3.mp3
+  hills/1.mp3
+  hills/2.mp3
+  hills/3.mp3
+  temple/1.mp3
+  temple/2.mp3
+  temple/3.mp3
+  lavaLake/1.mp3
+  lavaLake/2.mp3
+  lavaLake/3.mp3
+```
+
+The runtime selects one track deterministically from the level seed:
+`((seed % 3) + 3) % 3 + 1`. A given level seed and music folder therefore always resolve to the same track. By default, the folder is the exact `environment.type` string. Set `environment.musicFolder` in JSON to override it. The repository includes routing and fallback messaging, but not the user's actual music tracks yet.

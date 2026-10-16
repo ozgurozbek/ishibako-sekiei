@@ -32,12 +32,13 @@ export function validateLevel(l:Level):string[] {
   const cellKeys=new Set<string>();
   for(const c of l.board.cells??[]){const k=`${c.q},${c.r},${c.h}`;if(cellKeys.has(k))errors.push(`Duplicate board cell: ${k}`);cellKeys.add(k);}
   for(const id of l.objectives?.requiredPlateIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='plate')) errors.push(`Required plate not found: ${id}`);
+  for(const id of l.objectives?.requiredReceiverIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='receiver')) errors.push(`Required receiver not found: ${id}`);
   if(l.objectives?.goalId&&!l.objects.some(o=>o.id===l.objectives.goalId&&o.type==='goal')) errors.push('Objective goalId does not reference a goal.');
   const solidKeys=new Set<string>();
   for(const o of l.objects??[]){
     if(['player','block','goal','plate','wall','lift','bridge','gate','switch','laser','mirror','receiver'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
     if(['block','wall','lift','bridge','gate'].includes(o.type)){const k=`${o.q},${o.r},${o.h}`;if(solidKeys.has(k))errors.push(`Multiple solid objects occupy ${k}.`);solidKeys.add(k);}
-    if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&p.type==='plate')) errors.push(`${o.id} linkedTo must reference a pressure plate.`);
+    if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&(p.type==='plate'||p.type==='receiver'))) errors.push(`${o.id} linkedTo must reference a pressure plate or laser receiver.`);
     if(o.type==='lift'&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&p.type==='lift')) errors.push(`${o.id} linkedTo must reference another lift.`);
     if(o.type==='block'&&o.assemblyId&&l.objects.some(p=>p.assemblyId===o.assemblyId&&p.type!=='block')) errors.push(`${o.id} assemblyId can only be shared by blocks.`);
     if(o.direction!==undefined&&(!Number.isInteger(o.direction)||o.direction<0||o.direction>5)) errors.push(`${o.id} direction must be an integer from 0 to 5.`);

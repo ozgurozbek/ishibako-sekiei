@@ -60,9 +60,25 @@ export function traceLaser(level: Level, objects: LevelObject[], laser: LevelObj
 export function isLinkedMechanismOpen(mechanism: LevelObject, objects: LevelObject[]): boolean {
   if (!mechanism.linkedTo) return mechanism.kind === 'normallyOpen';
   const plate = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'plate');
-  return !!plate && objects.some((o) => o.type === 'block' && o.q === plate.q && o.r === plate.r && o.h === plate.h);
+  if (plate) return objects.some((o) => o.type === 'block' && o.q === plate.q && o.r === plate.r && o.h === plate.h);
+  const receiver = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'receiver');
+  return !!receiver?.active;
 }
 
 export function sameHex(a: Hex, b: Hex): boolean {
   return a.q === b.q && a.r === b.r && a.h === b.h;
+}
+
+/** Recompute receiver activation from all current laser traces. Two passes allow
+ * a receiver-linked gate to react after the first pass without recursive tracing. */
+export function refreshReceiverStates(level: Level, objects: LevelObject[]): string[] {
+  for (const o of objects) if (o.type === 'receiver') o.active = false;
+  for (let pass = 0; pass < 2; pass++) {
+    const lit = new Set<string>();
+    for (const laser of objects.filter((o) => o.type === 'laser')) {
+      for (const id of traceLaser(level, objects, laser).receiverIds) lit.add(id);
+    }
+    for (const receiver of objects.filter((o) => o.type === 'receiver')) receiver.active = lit.has(receiver.id);
+  }
+  return objects.filter((o) => o.type === 'receiver' && o.active).map((o) => o.id);
 }
