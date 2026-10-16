@@ -24,3 +24,11 @@ test('recording parser rejects unrelated JSON and malformed frames', () => {
   assert.throws(() => parseRunRecording({ hello: 'world' }), /not an Ishibako/);
   assert.throws(() => parseRunRecording({ ...recording, frames: [{ action: 'broken' }] }), /frame 0 is incomplete/);
 });
+
+
+test('recording parser rejects unsupported versions and non-sequential frame indices', () => {
+  assert.throws(() => parseRunRecording({ ...recording, version: 2 }), /Unsupported run recording version/);
+  const malformed = structuredClone(recording);
+  malformed.frames[1].index = 4;
+  assert.throws(() => parseRunRecording(malformed), /frame 1 is incomplete or invalid/);
+});

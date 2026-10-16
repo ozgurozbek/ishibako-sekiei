@@ -136,3 +136,7 @@ The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the edit
 ### Replay file compatibility
 
 Replay files use `format: "ishibako-run-recording"`, version `1`, and include the initial level plus a snapshot for each recorded action. The viewer validates the structure before loading it.
+
+## Batch 12 simulation hardening
+
+Receiver activation now resolves to a stable state across linked gates before and after gravity. Feedback loops that do not settle fail closed. Imported run recordings are checked for supported version, sequential frames, valid counters and required state fields before playback. See `BATCH12.md` for the changes and regression coverage.

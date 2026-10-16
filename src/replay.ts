@@ -27,10 +27,25 @@ export function parseRunRecording(input: unknown): RunRecording {
   if (!input || typeof input !== 'object') throw new Error('Recording must be a JSON object.');
   const value = input as Partial<RunRecording>;
   if (value.format !== 'ishibako-run-recording') throw new Error('This file is not an Ishibako run recording.');
-  if (!value.initialLevel || !Array.isArray(value.frames) || value.frames.length === 0) throw new Error('Recording is missing its initial level or frames.');
+  if (value.version !== 1) throw new Error(`Unsupported run recording version: ${String(value.version)}.`);
+  if (!value.initialLevel || typeof value.initialLevel !== 'object' || !Array.isArray(value.frames) || value.frames.length === 0) {
+    throw new Error('Recording is missing its initial level or frames.');
+  }
+  if (!value.level || typeof value.level.id !== 'string' || typeof value.level.name !== 'string' || !Number.isFinite(value.level.seed)) {
+    throw new Error('Recording metadata is incomplete.');
+  }
   for (const [index, frame] of value.frames.entries()) {
-    if (!frame || typeof frame !== 'object' || !frame.player || !Array.isArray(frame.objects) || !Array.isArray(frame.attached)) {
-      throw new Error(`Recording frame ${index} is incomplete.`);
+    if (!frame || typeof frame !== 'object' || !frame.player || typeof frame.player !== 'object' ||
+        !Array.isArray(frame.objects) || !Array.isArray(frame.attached) ||
+        !Number.isInteger(frame.index) || frame.index !== index ||
+        !Number.isFinite(frame.moves) || frame.moves < 0 ||
+        !Number.isFinite(frame.keyCount) || frame.keyCount < 0 ||
+        (frame.shardCount !== undefined && (!Number.isFinite(frame.shardCount) || frame.shardCount < 0)) ||
+        typeof frame.won !== 'boolean' || typeof frame.action !== 'string' ||
+        (frame.elapsedMs !== undefined && (!Number.isFinite(frame.elapsedMs) || frame.elapsedMs < 0)) ||
+        !frame.objects.every((object) => object && typeof object === 'object' && typeof object.id === 'string' && typeof object.type === 'string') ||
+        !frame.attached.every((id) => typeof id === 'string')) {
+      throw new Error(`Recording frame ${index} is incomplete or invalid.`);
     }
   }
   return value as RunRecording;

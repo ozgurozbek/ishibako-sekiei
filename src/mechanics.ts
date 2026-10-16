@@ -82,16 +82,39 @@ export function sameHex(a: Hex, b: Hex): boolean {
   return a.q === b.q && a.r === b.r && a.h === b.h;
 }
 
-/** Recompute receiver activation from all current laser traces. Two passes allow
- * a receiver-linked gate to react after the first pass without recursive tracing. */
+/**
+ * Recompute receiver activation from the current laser paths. Receiver-linked
+ * gates can change the path being traced, so iterate until the receiver state
+ * reaches a fixed point. If a feedback loop oscillates, fail closed instead of
+ * leaving the result dependent on an arbitrary number of passes.
+ */
 export function refreshReceiverStates(level: Level, objects: LevelObject[]): string[] {
-  for (const o of objects) if (o.type === 'receiver') o.active = false;
-  for (let pass = 0; pass < 2; pass++) {
+  const receivers = objects.filter((o) => o.type === 'receiver');
+  const signature = () => receivers.map((receiver) => receiver.active ? '1' : '0').join('');
+  const seen = new Set<string>();
+  for (const receiver of receivers) receiver.active = false;
+
+  // A stable state should be reached quickly for ordinary puzzle circuits. The
+  // extra bound protects against malformed, adversarially large feedback loops.
+  const maxPasses = Math.max(4, receivers.length * 2 + 2);
+  for (let pass = 0; pass < maxPasses; pass++) {
+    const current = signature();
+    if (seen.has(current)) {
+      for (const receiver of receivers) receiver.active = false;
+      return [];
+    }
+    seen.add(current);
+
     const lit = new Set<string>();
     for (const laser of objects.filter((o) => o.type === 'laser')) {
       for (const id of traceLaser(level, objects, laser).receiverIds) lit.add(id);
     }
-    for (const receiver of objects.filter((o) => o.type === 'receiver')) receiver.active = lit.has(receiver.id);
+    const next = receivers.map((receiver) => lit.has(receiver.id));
+    const stable = next.every((active, index) => active === !!receivers[index].active);
+    receivers.forEach((receiver, index) => { receiver.active = next[index]; });
+    if (stable) return receivers.filter((receiver) => receiver.active).map((receiver) => receiver.id);
   }
-  return objects.filter((o) => o.type === 'receiver' && o.active).map((o) => o.id);
+
+  for (const receiver of receivers) receiver.active = false;
+  return [];
 }

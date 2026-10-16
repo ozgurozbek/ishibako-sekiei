@@ -98,3 +98,27 @@ test('fragile blocks break when they become unsupported', () => {
   assert.equal(broken.objects.length, 0);
   assert.deepEqual(broken.fallenIds, ['fragile']);
 });
+
+
+test('gravity resolution is deterministic and does not mutate its input objects', () => {
+  const level = makeLevel([{ q: 0, r: 0, h: 0 }, { q: 0, r: 0, h: 1, support: false }, { q: 0, r: 0, h: 2, support: false }]);
+  const input: LevelObject[] = [{ id: 'falling', type: 'block', q: 0, r: 0, h: 2 }];
+  const before = structuredClone(input);
+  const first = resolveGravity(level, input, new Set());
+  const second = resolveGravity(level, input, new Set());
+  assert.deepEqual(input, before);
+  assert.deepEqual(first, second);
+  assert.equal(first.objects[0].h, 0);
+});
+
+test('gravity respects a closed gate in the fall path', () => {
+  const level = makeLevel([{ q: 0, r: 0, h: 0 }, { q: 0, r: 0, h: 1, support: false }, { q: 0, r: 0, h: 2, support: false }]);
+  const input: LevelObject[] = [
+    { id: 'falling', type: 'block', q: 0, r: 0, h: 2 },
+    { id: 'gate', type: 'gate', q: 0, r: 0, h: 1 },
+  ];
+  const result = resolveGravity(level, input, new Set());
+  assert.equal(result.objects.some(o => o.id === 'falling'), false);
+  assert.equal(result.objects.some(o => o.id === 'gate'), true);
+  assert.deepEqual(result.fallenIds, ['falling']);
+});

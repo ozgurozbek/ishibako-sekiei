@@ -113,3 +113,27 @@ test('heavy-only plates ignore standard blocks and activate for heavy blocks', (
   assert.equal(isLinkedMechanismOpen(gate, [plate, standard, gate]), false);
   assert.equal(isLinkedMechanismOpen(gate, [plate, heavy, gate]), true);
 });
+
+
+test('receiver states settle deterministically when a receiver opens a downstream gate', () => {
+  const localLevel: Level = { ...level, board: { ...level.board, cells: [{q:0,r:0,h:0},{q:1,r:0,h:0},{q:2,r:0,h:0},{q:3,r:0,h:0}] } };
+  const objects: LevelObject[] = [
+    { id: 'laser', type: 'laser', q: 0, r: 0, h: 0, direction: 0 },
+    { id: 'receiver-a', type: 'receiver', q: 1, r: 0, h: 0 },
+    { id: 'gate', type: 'gate', q: 2, r: 0, h: 0, linkedTo: 'receiver-a' },
+    { id: 'receiver-b', type: 'receiver', q: 3, r: 0, h: 0 },
+  ];
+  assert.deepEqual(refreshReceiverStates(localLevel, objects), ['receiver-a', 'receiver-b']);
+  assert.deepEqual(refreshReceiverStates(localLevel, objects), ['receiver-a', 'receiver-b']);
+});
+
+test('receiver feedback that starts blocked settles fail-closed rather than oscillating', () => {
+  const localLevel: Level = { ...level, board: { ...level.board, cells: [{q:0,r:0,h:0},{q:1,r:0,h:0},{q:2,r:0,h:0}] } };
+  const objects: LevelObject[] = [
+    { id: 'laser', type: 'laser', q: 0, r: 0, h: 0, direction: 0 },
+    { id: 'gate', type: 'gate', q: 1, r: 0, h: 0, linkedTo: 'receiver' },
+    { id: 'receiver', type: 'receiver', q: 2, r: 0, h: 0 },
+  ];
+  assert.deepEqual(refreshReceiverStates(localLevel, objects), []);
+  assert.equal(objects.find(o => o.id === 'receiver')?.active, false);
+});
