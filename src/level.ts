@@ -1,0 +1,37 @@
+import type { Level } from './types';
+export const starterLevel: Level = {
+  version:1,
+  metadata:{id:'first-light',name:'First Light',author:'Ishibako Web',description:'Carry the prism block onto the pressure plate, then reach the exit.'},
+  rules:{moveLimit:5,rotationsCostMoves:false,gravity:true},
+  board:{radius:3,cellSize:1,cells:[]},
+  objects:[
+    {id:'player',type:'player',q:0,r:0,h:0,color:'#f3f1e8'},
+    {id:'prism-1',type:'block',kind:'standard',q:1,r:0,h:0,color:'#f0b45b'},
+    {id:'plate-1',type:'plate',q:1,r:1,h:0,color:'#5de0c1'},
+    {id:'exit-1',type:'goal',q:-2,r:1,h:0,color:'#a6a1ff'}
+  ],
+  environment:{type:'meadow',seed:1207,radius:10,density:.65,palette:'mint'},
+  presentation:{camera:'isometric',showCoordinates:false},
+  objectives:{requiredPlateIds:['plate-1'],goalId:'exit-1'}
+};
+export function normalizeLevel(input:Level):Level {
+  const l=structuredClone(input);
+  if (!l.board.cells?.length) {
+    const rad=l.board.radius??3;
+    for(let q=-rad;q<=rad;q++) for(let r=Math.max(-rad,-q-rad);r<=Math.min(rad,-q+rad);r++) l.board.cells.push({q,r,h:0});
+  }
+  return l;
+}
+export function validateLevel(l:Level):string[] {
+  const errors:string[]=[];
+  if(!l.metadata?.name) errors.push('Level needs a name.');
+  if(!Array.isArray(l.board?.cells)||!l.board.cells.length) errors.push('Board needs at least one cell.');
+  if(!l.objects?.some(o=>o.type==='player')) errors.push('Place one player spawn.');
+  if(!l.objects?.some(o=>o.type==='goal')) errors.push('Place a goal.');
+  const ids=new Set<string>(); for(const o of l.objects??[]){if(ids.has(o.id))errors.push(`Duplicate object id: ${o.id}`);ids.add(o.id);}
+  for(const id of l.objectives?.requiredPlateIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='plate')) errors.push(`Required plate not found: ${id}`);
+  if(l.objectives?.goalId&&!l.objects.some(o=>o.id===l.objectives.goalId&&o.type==='goal')) errors.push('Objective goalId does not reference a goal.');
+  const cells=new Set(l.board.cells.map(c=>`${c.q},${c.r},${c.h}`));
+  for(const o of l.objects??[]) if(['player','block','goal','plate','wall','lift','bridge'].includes(o.type)&&!cells.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
+  return [...new Set(errors)];
+}
