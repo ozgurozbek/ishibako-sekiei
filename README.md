@@ -121,3 +121,18 @@ The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the edit
 - Paired `teleporter` objects use reciprocal `linkedTo` IDs. They transfer the player and any attached blocks when entered.
 - Cells with `kind: "fragile"` collapse after the player leaves them. Cells with `support: false` are drawn as gaps and allow blocks to fall to a supported lower cell at the same axial coordinate.
 - Blocks sharing `assemblyId` form a glued rigid group. The render layer shows a badge, connector bar and rivet between members; attached blocks show warm tethers to the player.
+
+
+## Batch 11 additions
+
+- **Replay viewer:** use **Open replay** to import a run-recording JSON. Playback supports play/pause, step backward/forward, and seeking along the timeline.
+- **Selected-object inspector:** select an object in the scene while the editor is open to edit its kind, colour, direction, assembly ID and connection references. Use the disconnect controls to remove connections without editing raw JSON.
+- **Collision-safe rigid groups:** block moves, rotations and lift transfers use shared placement checks. Gravity resolves glued assemblies as rigid groups and checks blockers along fall paths and at landing cells.
+- **Heavy blocks and weighted plates:** set a block's `kind` to `heavy` and a plate's `kind` to `heavyOnly`. Only heavy blocks activate those plates.
+- **Fragile blocks:** set a block's `kind` to `fragile`; it breaks when it becomes unsupported and begins falling.
+- **Spike hazards:** place a `spikes` object on a cell to block entry to that hex.
+- **Advanced Mechanics Lab:** select it from the bundled level dropdown to explore the new heavy-block, heavy-only plate, spikes and fragile-block behaviours.
+
+### Replay file compatibility
+
+Replay files use `format: "ishibako-run-recording"`, version `1`, and include the initial level plus a snapshot for each recorded action. The viewer validates the structure before loading it.

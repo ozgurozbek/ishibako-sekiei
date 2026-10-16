@@ -57,10 +57,14 @@ export function traceLaser(level: Level, objects: LevelObject[], laser: LevelObj
   return { cells, receiverIds: [...new Set(receiverIds)] };
 }
 
+export function isPlatePressed(plate: LevelObject, objects: LevelObject[]): boolean {
+  return objects.some((o) => o.type === 'block' && o.q === plate.q && o.r === plate.r && o.h === plate.h && (plate.kind !== 'heavyOnly' || o.kind === 'heavy'));
+}
+
 export function isSourceActive(sourceId: string, objects: LevelObject[]): boolean {
   const source = objects.find((o) => o.id === sourceId);
   if (!source) return false;
-  if (source.type === 'plate') return objects.some((o) => o.type === 'block' && o.q === source.q && o.r === source.r && o.h === source.h);
+  if (source.type === 'plate') return isPlatePressed(source, objects);
   if (source.type === 'receiver' || source.type === 'key' || source.type === 'switch') return !!source.active;
   return false;
 }

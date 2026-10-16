@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assemblyMembers, traceLaser, isLinkedMechanismOpen, refreshReceiverStates } from './mechanics.ts';
+import { assemblyMembers, traceLaser, isLinkedMechanismOpen, refreshReceiverStates, isPlatePressed } from './mechanics.ts';
 import type { Level, LevelObject } from './types.ts';
 
 const level: Level = {
@@ -100,4 +100,16 @@ test('a lift can be enabled by a pressure plate independently of its paired lift
   const top: LevelObject = { id: 'lift-top', type: 'lift', q: 1, r: 0, h: 1, linkedTo: 'lift' };
   assert.equal(isLinkedMechanismOpen(lift, [plate, lift, top]), false);
   assert.equal(isLinkedMechanismOpen(lift, [plate, lift, top, { id: 'weight', type: 'block', q: 0, r: 0, h: 0 }]), true);
+});
+
+
+test('heavy-only plates ignore standard blocks and activate for heavy blocks', () => {
+  const plate: LevelObject = { id: 'weight-plate', type: 'plate', q: 0, r: 0, h: 0, kind: 'heavyOnly' };
+  const standard: LevelObject = { id: 'standard', type: 'block', q: 0, r: 0, h: 0 };
+  const heavy: LevelObject = { id: 'heavy', type: 'block', q: 0, r: 0, h: 0, kind: 'heavy' };
+  assert.equal(isPlatePressed(plate, [plate, standard]), false);
+  assert.equal(isPlatePressed(plate, [plate, heavy]), true);
+  const gate: LevelObject = { id: 'gate-heavy', type: 'gate', q: 1, r: 0, h: 0, linkedTo: plate.id };
+  assert.equal(isLinkedMechanismOpen(gate, [plate, standard, gate]), false);
+  assert.equal(isLinkedMechanismOpen(gate, [plate, heavy, gate]), true);
 });

@@ -38,7 +38,7 @@ export function validateLevel(l:Level):string[] {
   if(l.objectives?.goalId&&!l.objects.some(o=>o.id===l.objectives.goalId&&o.type==='goal')) errors.push('Objective goalId does not reference a goal.');
   const solidKeys=new Set<string>();
   for(const o of l.objects??[]){
-    if(['player','block','goal','plate','wall','lift','bridge','gate','switch','laser','mirror','receiver','key','conveyor','teleporter','shard'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
+    if(['player','block','goal','plate','wall','lift','bridge','gate','switch','laser','mirror','receiver','key','conveyor','teleporter','shard','spikes'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
     if(['block','wall','lift','bridge','gate'].includes(o.type)){const k=`${o.q},${o.r},${o.h}`;if(solidKeys.has(k))errors.push(`Multiple solid objects occupy ${k}.`);solidKeys.add(k);}
     if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&(p.type==='plate'||p.type==='receiver'||p.type==='key'||p.type==='switch'))) errors.push(`${o.id} linkedTo must reference a pressure plate, laser receiver, key or switch.`);
     for(const sourceId of o.linkedToAll??[]) if(!l.objects.some(p=>p.id===sourceId&&(p.type==='plate'||p.type==='receiver'||p.type==='key'||p.type==='switch'))) errors.push(`${o.id} linkedToAll references an invalid source: ${sourceId}`);
