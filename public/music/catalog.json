@@ -1,11 +1,43 @@
 {
-  "hills": [],
-  "lavaLake": [],
-  "meadow": [],
-  "medievalCastle": [],
-  "menu": [],
-  "smallVillage": [],
-  "snowMountain": [],
-  "temple": [],
-  "witchHut": []
+  "hills": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3"
+  ],
+  "lavaLake": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3"
+  ],
+  "meadow": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3"
+  ],
+  "medievalCastle": [
+    "1.mp3",
+    "2.mp3"
+  ],
+  "menu": [
+    "1.mp3"
+  ],
+  "smallVillage": [
+    "1.mp3"
+  ],
+  "snowMountain": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3",
+    "4.mp3"
+  ],
+  "temple": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3"
+  ],
+  "witchHut": [
+    "1.mp3",
+    "2.mp3",
+    "3.mp3"
+  ]
 }
