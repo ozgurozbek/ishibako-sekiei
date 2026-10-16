@@ -170,3 +170,7 @@ A second campaign is now available from the campaign atlas selector: **The Carto
 Sixteen new JSON levels were added for movement, rotation, heavy blocks, multi-block assemblies, switches and gates, lasers and receivers, teleporters, lifts, conveyors, fragile floors, and combination challenges. New level metadata credits `ChatGPT (OpenAI) · Campaign Design`. Bundled JSON levels are discovered automatically, so adding a level file no longer requires editing a static import map.
 
 See `BATCH19.md`, `CAMPAIGN_AUTHORING.md`, and `PROJECT_STATUS.md` for the campaign layout, content inventory, authoring instructions, verification results, and playtest priorities.
+
+## Batch 20: The Frontier Mechanisms
+
+The third campaign adds twelve levels combining key-gated passages, mirror/receiver routing, heavy-only plates, AND-gates, enabled lifts, portals with attached assemblies, conveyors, fragile assemblies, spike detours, switch bridges, and a multi-mechanic finale. See `BATCH20.md` and `CAMPAIGN_AUTHORING.md` for content details.

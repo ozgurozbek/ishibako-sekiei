@@ -214,3 +214,7 @@ Latest automated suite: **52 tests passed, 0 failed**. All bundled level JSON fi
 4. Verify drag-and-drop JSON import from both the campaign overlay and active gameplay, including malformed JSON and run-recording files.
 5. Add more authored campaign levels for dedicated dragging, springs, teleporter, and gate teaching routes as those level designs are finalized. The current graph demonstrates branch/convergence logic using existing mechanics and levels; it is a framework, not the final campaign content count.
 6. Add a small minimap or pan/zoom controls if playtesting shows that the whole map is difficult to navigate on narrow screens.
+
+## Batch 20 update
+
+Added The Frontier Mechanisms, a third campaign with 12 new level JSON files. New authored combinations include key-gates, laser-controlled bridges, heavy-only plates, AND-gates, signal-enabled lifts, portals with attached blocks, conveyors, fragile assemblies, spike detours, and a synthesis finale. Campaign progress remains separated by campaign ID. Automated tests cover level validation and campaign graph references; production build and live browser playtesting remain unverified.

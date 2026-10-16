@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { campaignDefinitions, campaignNodes, campaignNodeState, completeCampaignNode, initialCampaignProgress, nextAvailableNode } from './campaign.ts';
 
 test('campaign starts with one available level and gates dependent nodes', () => {
@@ -53,7 +53,7 @@ test('campaign map nodes reference distinct bundled level files and have authore
 
 
 test('multiple campaigns have independent node graphs and every node points to a bundled level', () => {
-  assert.equal(campaignDefinitions.length, 2);
+  assert.equal(campaignDefinitions.length, 3);
   assert.notEqual(campaignDefinitions[0].id, campaignDefinitions[1].id);
   for (const campaign of campaignDefinitions) {
     const ids = new Set(campaign.nodes.map(node => node.id));
@@ -79,4 +79,16 @@ test('Cartographer convergence requires all three mechanic branches and secrets 
   assert.equal(campaignNodeState(byId('atlas-seal'), progress), 'available');
   assert.equal(campaignNodeState(byId('atlas-secret-triad'), progress), 'available');
   assert.equal(campaignNodeState(byId('atlas-secret-no-turn'), progress), 'locked');
+});
+
+test('Frontier campaign includes twelve authored levels with validated mechanics metadata', () => {
+  const nodes = campaignDefinitions.find(c => c.id === 'frontier-mechanics')!.nodes;
+  assert.equal(nodes.length, 12);
+  for (const node of nodes) {
+    const level = JSON.parse(readFileSync(new URL(`../levels/${node.levelId}.json`, import.meta.url), 'utf8'));
+    assert.equal(level.metadata.author, 'ChatGPT (OpenAI)');
+    assert.ok(level.metadata.mechanics.length);
+    assert.ok(level.metadata.hint);
+    assert.ok(level.metadata.solution);
+  }
 });

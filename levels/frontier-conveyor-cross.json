@@ -1,0 +1,392 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "frontier-conveyor-cross",
+    "name": "Current of Stone",
+    "author": "ChatGPT (OpenAI)",
+    "description": "Conveyors reposition the route, but the final step is yours.",
+    "difficulty": "Campaign",
+    "mechanics": [
+      "Conveyors",
+      "gaps",
+      "shards"
+    ],
+    "hint": "Use the conveyor to cross the broken stretch and collect the shard if possible.",
+    "solution": "Follow the conveyor direction across the causeway, then approach the exit from the safe side."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player-1",
+      "type": "player",
+      "q": -2,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "conveyor-2",
+      "type": "conveyor",
+      "q": -1,
+      "r": 0,
+      "h": 0,
+      "color": "#b9d5d0",
+      "direction": 0
+    },
+    {
+      "id": "conveyor-3",
+      "type": "conveyor",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "color": "#b9d5d0",
+      "direction": 0
+    },
+    {
+      "id": "shard-4",
+      "type": "shard",
+      "q": 1,
+      "r": 0,
+      "h": 0,
+      "color": "#8ff5df"
+    },
+    {
+      "id": "goal-5",
+      "type": "goal",
+      "q": 3,
+      "r": 0,
+      "h": 0,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "temple",
+    "seed": 20261020,
+    "radius": 10,
+    "density": 0.55,
+    "palette": "mint"
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": false
+  },
+  "objectives": {
+    "goalId": "goal-5"
+  }
+}

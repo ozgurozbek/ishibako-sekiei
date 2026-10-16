@@ -1,0 +1,459 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "frontier-cartographers-end",
+    "name": "The Unfinished Map",
+    "author": "ChatGPT (OpenAI)",
+    "description": "A final synthesis of weight, light, and elevation.",
+    "difficulty": "Campaign",
+    "mechanics": [
+      "Heavy blocks",
+      "plates",
+      "laser receiver",
+      "enabled lift"
+    ],
+    "hint": "Solve the signal and weight puzzle before taking the lift to the goal.",
+    "solution": "Collect the belt, place the heavy block on the plate, align the mirror to the receiver, then use the enabled lift to reach the upper exit."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 1
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 1
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 1
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player-1",
+      "type": "player",
+      "q": -3,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "belt-2",
+      "type": "belt",
+      "q": -2,
+      "r": 1,
+      "h": 0,
+      "color": "#f2c45d"
+    },
+    {
+      "id": "block-3",
+      "type": "block",
+      "q": -2,
+      "r": 0,
+      "h": 0,
+      "color": "#f0b45b",
+      "kind": "heavy"
+    },
+    {
+      "id": "plate-4",
+      "type": "plate",
+      "q": 0,
+      "r": 1,
+      "h": 0,
+      "color": "#5de0c1",
+      "kind": "heavyOnly"
+    },
+    {
+      "id": "laser-5",
+      "type": "laser",
+      "q": -1,
+      "r": -1,
+      "h": 0,
+      "color": "#ff647d",
+      "direction": 0
+    },
+    {
+      "id": "mirror-6",
+      "type": "mirror",
+      "q": 0,
+      "r": -1,
+      "h": 0,
+      "color": "#9bd8e4",
+      "direction": 2
+    },
+    {
+      "id": "receiver-7",
+      "type": "receiver",
+      "q": 1,
+      "r": -1,
+      "h": 0,
+      "color": "#d8d0ff"
+    },
+    {
+      "id": "lift-low",
+      "type": "lift",
+      "q": 1,
+      "r": 0,
+      "h": 0,
+      "color": "#b9d5d0",
+      "linkedTo": "lift-top",
+      "enabledBy": "receiver-7"
+    },
+    {
+      "id": "lift-top",
+      "type": "lift",
+      "q": 2,
+      "r": 0,
+      "h": 1,
+      "color": "#b9d5d0",
+      "linkedTo": "lift-low"
+    },
+    {
+      "id": "goal-10",
+      "type": "goal",
+      "q": 3,
+      "r": 0,
+      "h": 1,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "temple",
+    "seed": 20261025,
+    "radius": 10,
+    "density": 0.55,
+    "palette": "mint"
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": false
+  },
+  "objectives": {
+    "goalId": "goal-10",
+    "requiredPlateIds": [
+      "plate-4"
+    ],
+    "requiredReceiverIds": [
+      "receiver-7"
+    ]
+  }
+}

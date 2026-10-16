@@ -1,0 +1,396 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "frontier-fragile-assembly",
+    "name": "The Last Anchor",
+    "author": "ChatGPT (OpenAI)",
+    "description": "A fragile block cannot survive a fall.",
+    "difficulty": "Campaign",
+    "mechanics": [
+      "Fragile blocks",
+      "assemblies",
+      "gravity"
+    ],
+    "hint": "Keep the fragile prism on supported tiles throughout the rotation.",
+    "solution": "Attach the fragile block from the safe side and rotate only while every destination tile is supported."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player-1",
+      "type": "player",
+      "q": -2,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "block-2",
+      "type": "block",
+      "q": -1,
+      "r": 0,
+      "h": 0,
+      "color": "#f0b45b",
+      "kind": "fragile",
+      "assemblyId": "anchor"
+    },
+    {
+      "id": "block-3",
+      "type": "block",
+      "q": -1,
+      "r": 1,
+      "h": 0,
+      "color": "#f0b45b",
+      "assemblyId": "anchor"
+    },
+    {
+      "id": "plate-4",
+      "type": "plate",
+      "q": 1,
+      "r": 0,
+      "h": 0,
+      "color": "#5de0c1"
+    },
+    {
+      "id": "goal-5",
+      "type": "goal",
+      "q": 2,
+      "r": 0,
+      "h": 0,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "temple",
+    "seed": 20261020,
+    "radius": 10,
+    "density": 0.55,
+    "palette": "mint"
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": false
+  },
+  "objectives": {
+    "goalId": "goal-5",
+    "requiredPlateIds": [
+      "plate-4"
+    ]
+  }
+}

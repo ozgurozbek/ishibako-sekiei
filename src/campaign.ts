@@ -92,4 +92,21 @@ export const campaignDefinitions: CampaignDefinition[] = [
     id: 'cartographers-trials', title: 'The Cartographer’s Trials', tagline: 'Chart every mechanism. Earn the final map.', footerTitle: 'THE CARTOGRAPHER’S TRIALS', footerTagline: 'Three routes diverge. Every route must return.',
     regionLabels: ['THE GREEN REACH', 'THE SUNKEN ARCHIVE', 'IRONWOOD / SIGNAL MARSH', 'THE CONFLUENCE'], nodes: cartographerNodes,
   },
+  {
+    id: 'frontier-mechanics', title: 'The Frontier Mechanisms', tagline: 'Beyond the atlas, new systems await.', footerTitle: 'THE FRONTIER MECHANISMS', footerTagline: 'Keys, signals, portals, and perilous crossings.',
+    regionLabels: ['THE LOCKED MARCH', 'THE REFLECTION FEN', 'THE HIGH WORKS', 'THE LAST SURVEY'], nodes: [
+      { id: 'frontier-key', title: 'The Keyed Causeway', subtitle: 'A locked route', levelId: 'frontier-key', x: 95, y: 555, region: 'THE LOCKED MARCH', mechanics: ['Keys', 'Gates'], requires: [] },
+      { id: 'frontier-mirror', title: 'The Mirror Maze', subtitle: 'Bend the light', levelId: 'frontier-mirror-maze', x: 210, y: 465, region: 'THE REFLECTION FEN', mechanics: ['Mirrors', 'Receivers', 'Bridges'], requires: ['frontier-key'] },
+      { id: 'frontier-heavy', title: 'The Heavy Seal', subtitle: 'Weight has a purpose', levelId: 'frontier-heavy-seal', x: 335, y: 365, region: 'THE HIGH WORKS', mechanics: ['Heavy blocks', 'Heavy-only plates'], requires: ['frontier-mirror'] },
+      { id: 'frontier-signals', title: 'Two Signals', subtitle: 'Both conditions matter', levelId: 'frontier-two-signals', x: 455, y: 275, region: 'THE HIGH WORKS', mechanics: ['Switches', 'AND-gates'], requires: ['frontier-heavy'] },
+      { id: 'frontier-lift', title: 'The Lift Warden', subtitle: 'Earn the ascent', levelId: 'frontier-lift-lock', x: 560, y: 180, region: 'THE HIGH WORKS', mechanics: ['Enabled lifts', 'Elevation'], requires: ['frontier-signals'] },
+      { id: 'frontier-portal', title: 'Portal Freight', subtitle: 'Bring the assembly', levelId: 'frontier-portal-weight', x: 565, y: 380, region: 'THE PORTAL REACH', mechanics: ['Teleporters', 'Attached blocks'], requires: ['frontier-signals'] },
+      { id: 'frontier-current', title: 'Current of Stone', subtitle: 'Let the floor carry you', levelId: 'frontier-conveyor-cross', x: 670, y: 465, region: 'THE PORTAL REACH', mechanics: ['Conveyors', 'Collectibles'], requires: ['frontier-portal'] },
+      { id: 'frontier-fragile', title: 'The Last Anchor', subtitle: 'Keep the assembly whole', levelId: 'frontier-fragile-assembly', x: 690, y: 280, region: 'THE HIGH WORKS', mechanics: ['Fragile blocks', 'Assemblies'], requires: ['frontier-lift'] },
+      { id: 'frontier-spikes', title: 'The Quiet Detour', subtitle: 'Choose the safe line', levelId: 'frontier-spike-detour', x: 775, y: 185, region: 'THE ASHEN MARGIN', mechanics: ['Spikes', 'Route planning'], requires: ['frontier-fragile'], secret: true },
+      { id: 'frontier-bridge', title: 'Bridge on Demand', subtitle: 'Open the crossing', levelId: 'frontier-bridge-timing', x: 785, y: 390, region: 'THE REFLECTION FEN', mechanics: ['Switches', 'Bridges'], requires: ['frontier-current'] },
+      { id: 'frontier-shards', title: 'The Shard Circuit', subtitle: 'Key and signal', levelId: 'frontier-shard-circuit', x: 845, y: 300, region: 'THE LAST SURVEY', mechanics: ['Keys', 'Plates', 'Gates', 'Shards'], requires: ['frontier-bridge', 'frontier-fragile'] },
+      { id: 'frontier-finale', title: 'The Unfinished Map', subtitle: 'A final synthesis', levelId: 'frontier-cartographers-end', x: 850, y: 450, region: 'THE LAST SURVEY', mechanics: ['Heavy blocks', 'Lasers', 'Enabled lifts'], requires: ['frontier-shards'], final: true },
+    ]
+  }
 ];
