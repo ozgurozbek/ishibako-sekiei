@@ -222,3 +222,17 @@ html:fullscreen,html:fullscreen body,html:fullscreen #app{width:100%!important;h
 .game-menu:has(.menu-info:not(.hidden)) .menu-info:not(.hidden){visibility:visible!important;pointer-events:auto!important}
 /* The editor intentionally shows every connection; play mode shows only the hovered object's links. */
 @media(max-width:800px){.topbar{flex:0 0 auto!important}.stage{flex:1 1 0!important;height:auto!important;min-height:0!important}.hud{max-width:100%;align-items:flex-start}.level-tag{max-width:calc(100vw - 130px)!important}.moves{max-width:42vw!important}.menu-info:not(.hidden){width:calc(100vw - 20px)!important;max-height:calc(100dvh - 20px)!important;padding:22px 18px!important;border-radius:16px!important}.menu-info p{font-size:15px!important}}
+/* Batch 26 readability pass: larger type and more comfortable controls. */
+button,.file-button{font-size:14px;min-height:40px;padding:11px 15px}
+.eyebrow,.section-kicker{font-size:11px}
+.level-tag strong{font-size:16px}
+.level-info h2,.level-info-main h2{font-size:clamp(20px,2vw,26px)}
+.level-info p,.level-walkthrough p{font-size:14px;line-height:1.65}
+.hud-objective-text,.objective-line{font-size:14px}
+.moves strong{font-size:24px}
+.object-tooltip{font-size:14px;max-width:320px}
+.object-tooltip span,.object-tooltip small{font-size:13px;line-height:1.5}
+.campaign-detail p,.campaign-detail-footnote{font-size:14px;line-height:1.6}
+.level-selector-card h2,.game-menu-card h2{font-size:clamp(24px,3vw,34px)}
+.level-selector-head p,.game-menu-card p,.menu-info p{font-size:15px;line-height:1.65}
+@media(max-width:720px){button,.file-button{font-size:13px;min-height:38px;padding:9px 11px}.level-tag strong{font-size:14px}.moves strong{font-size:20px}}

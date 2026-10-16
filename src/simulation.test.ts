@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveGravity, rotateAxial, validateAssemblyPlacement } from './simulation.ts';
+import { resolveGravity, rotateAxial, validateAssemblyPlacement, slideBlocksOnIce } from './simulation.ts';
 import type { Level, LevelObject } from './types.ts';
 
 const makeLevel = (cells: Level['board']['cells']): Level => ({
@@ -132,4 +132,23 @@ test('spikes and laser emitters are not solid collision objects for blocks', () 
   ];
   assert.equal(validateAssemblyPlacement(level, objects, [{ id: 'moving', q: 1, r: 0, h: 0 }], new Set(['moving'])).valid, true);
   assert.equal(validateAssemblyPlacement(level, objects, [{ id: 'moving', q: 2, r: 0, h: 0 }], new Set(['moving'])).valid, true);
+});
+
+
+test('blocks slide across consecutive ice cells and stop on normal ground', async () => {
+  const level = makeLevel([
+    {q:0,r:0,h:0,kind:'ice'}, {q:1,r:0,h:0,kind:'ice'},
+    {q:2,r:0,h:0,kind:'normal'}, {q:3,r:0,h:0,kind:'normal'}
+  ]);
+  const objects = [{id:'b',type:'block' as const,q:0,r:0,h:0}];
+  const result = slideBlocksOnIce(level, objects, [{id:'b',dq:1,dr:0}]);
+  assert.equal(result[0].q, 2);
+});
+
+test('fire destroys a block and mirror blocks solid placement', async () => {
+  const level = makeLevel([{q:0,r:0,h:0,kind:'normal'},{q:1,r:0,h:0,kind:'normal'}]);
+  const objects = [{id:'b',type:'block' as const,q:1,r:0,h:0},{id:'fire',type:'fire' as const,q:1,r:0,h:0}];
+  assert.equal(slideBlocksOnIce(level, objects, []).some(o=>o.type==='block'), false);
+  const placement = validateAssemblyPlacement(level, [{id:'m',type:'mirror',q:1,r:0,h:0} as any], [{id:'b',q:1,r:0,h:0}], new Set());
+  assert.equal(placement.valid, false);
 });

@@ -235,3 +235,6 @@ Latest tests: **56 passed, 0 failed**. TypeScript syntax transpilation passed fo
 ## Batch 23 update
 
 Fixed the startup DOM exception caused by appending the removed bottom bar, which had prevented all subsequent event handlers from registering. Completion actions now prioritize Continue, with Download run recording secondary. See `BATCH23.md`.
+
+## Batch 26 update
+Ice ground now slides moved blocks across consecutive ice tiles until a non-ice tile or obstacle, with unsupported edge movement left to gravity. Fire blocks destroy any block occupying their cell, allowing glued assemblies to be decoupled by destroying individual members. Mirrors are solid to player and block movement. The editor can paint ice ground and place fire blocks. UI typography and button sizes were increased. Automated tests: 60 passed. Production build and browser testing remain outstanding.

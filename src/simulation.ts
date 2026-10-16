@@ -10,7 +10,7 @@ export type GravityResult = {
 
 export type PlacementResult = { valid: boolean; reason?: string; collisionId?: string };
 
-const SOLID_TYPES = new Set(['block', 'wall', 'gate']);
+const SOLID_TYPES = new Set(['block', 'wall', 'gate', 'mirror']);
 
 /**
  * Validates a proposed rigid-group placement as a single transaction. All moving
@@ -117,4 +117,27 @@ export function resolveGravity(level: Level, objects: LevelObject[], attachedIds
 /** One clockwise or counter-clockwise 60-degree axial rotation around a pivot. */
 export function rotateAxial(q: number, r: number, sign: 1 | -1): { q: number; r: number } {
   return sign === 1 ? { q: -r, r: q + r } : { q: q + r, r: -q };
+}
+
+/** Slide moved blocks along their movement vector while they occupy ice. The first non-ice tile is a stopping tile; unsupported cells are entered and then resolved by gravity. */
+export function slideBlocksOnIce(level: Level, objects: LevelObject[], moves: Array<{id:string; dq:number; dr:number}>): LevelObject[] {
+  const next = structuredClone(objects);
+  const cellAt = (q:number,r:number,h:number) => level.board.cells.find(c=>c.q===q&&c.r===r&&c.h===h);
+  for (const move of moves) {
+    let block = next.find(o=>o.id===move.id&&o.type==='block'); if(!block) continue;
+    const dq=move.dq, dr=move.dr; if(Math.abs(dq)+Math.abs(dr)+Math.abs(dq+dr) !== 2) continue;
+    let guard=0;
+    while(guard++<64) {
+      const current=cellAt(block.q,block.r,block.h); if(current?.kind!=='ice') break;
+      const q=block.q+dq,r=block.r+dr,h=block.h; const dest=cellAt(q,r,h);
+      if(!dest) { block.q=q; block.r=r; break; }
+      const blocker=next.find(o=>o.id!==block!.id&&o.q===q&&o.r===r&&o.h===h&&(o.type==='block'||o.type==='wall'||o.type==='mirror'||(o.type==='gate'&&!isLinkedMechanismOpen(o,next))));
+      if(blocker) break;
+      block.q=q; block.r=r;
+      if(dest.kind==='void'||dest.support===false) break;
+      if(dest.kind!=='ice') break;
+    }
+  }
+  const fireCells=new Set(next.filter(o=>o.type==='fire').map(o=>`${o.q},${o.r},${o.h}`));
+  return next.filter(o=>o.type!=='block'||!fireCells.has(`${o.q},${o.r},${o.h}`));
 }
