@@ -83,7 +83,7 @@ npm test
 
 ## Current limits
 
-This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Biome music playback scans the files actually present in each biome folder and selects deterministically from that list. No actual soundtrack files were present in the project workspace when this batch was packaged, so the catalog is empty until audio is added. Browser automation and a full production build could not be run in the current environment because package installation timed out.
+This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Active laser beams and spikes are hazards to the player only; they do not block attached blocks, although blocks can interrupt laser paths. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not a complete animated elevator sequence. Biome music playback scans the files actually present in each biome folder and selects deterministically from that list. No soundtrack files were included in this workspace when this batch was packaged. Optional GLB/GLTF model overrides and 2D art slots are now manifest-driven; standalone external texture assignment and automatic playback of arbitrary model animation clips are not yet implemented. Browser automation and a full production build could not be run in the current environment because package installation timed out.
 
 ## Batch 7 update
 
@@ -130,7 +130,7 @@ The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the edit
 - **Collision-safe rigid groups:** block moves, rotations and lift transfers use shared placement checks. Gravity resolves glued assemblies as rigid groups and checks blockers along fall paths and at landing cells.
 - **Heavy blocks and weighted plates:** set a block's `kind` to `heavy` and a plate's `kind` to `heavyOnly`. Only heavy blocks activate those plates.
 - **Fragile blocks:** set a block's `kind` to `fragile`; it breaks when it becomes unsupported and begins falling.
-- **Spike hazards:** place a `spikes` object on a cell to block entry to that hex.
+- **Spike hazards:** place a `spikes` object on a cell to make that hex unsafe for the player. Attached blocks can pass through or occupy it.
 - **Advanced Mechanics Lab:** select it from the bundled level dropdown to explore the new heavy-block, heavy-only plate, spikes and fragile-block behaviours.
 
 ### Replay file compatibility
@@ -140,3 +140,13 @@ Replay files use `format: "ishibako-run-recording"`, version `1`, and include th
 ## Batch 12 simulation hardening
 
 Receiver activation now resolves to a stable state across linked gates before and after gravity. Feedback loops that do not settle fail closed. Imported run recordings are checked for supported version, sequential frames, valid counters and required state fields before playback. See `BATCH12.md` for the changes and regression coverage.
+
+
+## Batch 16: terrain, sound cues and asset pipeline
+
+- Terrain now extends farther from the puzzle, with deterministic low-amplitude undulation and biome-dependent distant ridges. Decorative field props have more variation in all eight biomes and remain separate from puzzle collision.
+- Synthesized SFX now include layered cues for movement, blocked actions, attachment, rotation, key/shard collection, switches, lifts, teleporters, and completion.
+- Added `public/assets/manifest.json` for optional GLB/GLTF model replacements with automatic height/footprint fitting, horizontal centring and ground alignment. Stateful mechanism models keep procedural state cues unless explicitly opted in.
+- Added `public/assets/2d/manifest.json` for favicon, brand mark, stage background and panel texture, plus replaceable starter SVGs.
+- See `PROJECT_STATUS.md` for the full implementation inventory and prioritized remaining work, and `ASSET_PIPELINE.md` for the artist workflow.
+- `npm test` passes 43 tests. The production build remains unverified because dependency installation timed out in this workspace.
