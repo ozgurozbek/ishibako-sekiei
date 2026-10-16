@@ -72,3 +72,13 @@ test('laser receivers refresh active state and can open linked gates', () => {
   assert.deepEqual(refreshReceiverStates(localLevel, objects), ['receiver']);
   assert.equal(isLinkedMechanismOpen(objects[2], objects), true);
 });
+
+test('a collected key opens a linked gate', () => {
+  const objects: LevelObject[] = [
+    { id: 'key-1', type: 'key', q: 0, r: 0, h: 0, active: false },
+    { id: 'gate-1', type: 'gate', q: 1, r: 0, h: 0, linkedTo: 'key-1' },
+  ];
+  assert.equal(isLinkedMechanismOpen(objects[1], objects), false);
+  objects[0].active = true;
+  assert.equal(isLinkedMechanismOpen(objects[1], objects), true);
+});

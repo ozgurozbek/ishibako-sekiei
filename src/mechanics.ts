@@ -62,7 +62,9 @@ export function isLinkedMechanismOpen(mechanism: LevelObject, objects: LevelObje
   const plate = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'plate');
   if (plate) return objects.some((o) => o.type === 'block' && o.q === plate.q && o.r === plate.r && o.h === plate.h);
   const receiver = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'receiver');
-  return !!receiver?.active;
+  if (receiver) return !!receiver.active;
+  const key = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'key');
+  return !!key?.active;
 }
 
 export function sameHex(a: Hex, b: Hex): boolean {

@@ -78,3 +78,14 @@ npm test
 ## Current limits
 
 This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Biome music playback scans the files actually present in each biome folder and selects deterministically from that list. No actual soundtrack files were present in the project workspace when this batch was packaged, so the catalog is empty until audio is added. Browser automation and a full production build could not be run in the current environment because package installation timed out.
+
+## Batch 7 update
+
+Open **Level editor** and select **Load mechanics showcase** to load `levels/mechanics-showcase.json` directly. It contains the current showcase puzzle and can also be exported as JSON.
+
+The editor's **Quick connections** panel supports drag-and-drop links: drag a plate, receiver or key chip onto a gate/bridge target, or drag one lift onto another lift to create a reciprocal pair. Select a laser emitter or mirror in the scene and use **Rotate selected laser / mirror** or press `R` to cycle its six hex directions.
+
+WASD and arrow keys are camera-relative, and the direction mapping appears below the movement controls. Collect a key before attaching blocks if you want to walk while carrying them. Collected keys can be linked to gates and bridges.
+
+
+The Batch 7 automated suite contains 19 tests, including level validation and a check that the mechanics showcase includes the expected mechanic families. Run it with `npm test`.
