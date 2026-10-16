@@ -236,3 +236,24 @@ button,.file-button{font-size:14px;min-height:40px;padding:11px 15px}
 .level-selector-card h2,.game-menu-card h2{font-size:clamp(24px,3vw,34px)}
 .level-selector-head p,.game-menu-card p,.menu-info p{font-size:15px;line-height:1.65}
 @media(max-width:720px){button,.file-button{font-size:13px;min-height:38px;padding:9px 11px}.level-tag strong{font-size:14px}.moves strong{font-size:20px}}
+
+
+/* Batch 27: consolidated shell geometry and in-game spacing overrides. */
+:root { --game-edge-gap: 10px; }
+.hud { top: 5rem !important; left: var(--game-edge-gap) !important; right: var(--game-edge-gap) !important; }
+.topbar { padding: 0 !important; border-bottom: 0 !important; }
+.brand { background: transparent !important; }
+.level-info { width: min(390px, calc(100vw - 20px)) !important; }
+/* Keep all floating gameplay UI a consistent 10px from the viewport edges. */
+.level-info { left: var(--game-edge-gap) !important; }
+.toast { max-width: calc(100vw - 20px) !important; }
+.crosshair-note { right: var(--game-edge-gap) !important; bottom: var(--game-edge-gap) !important; }
+.move-previews { left: var(--game-edge-gap) !important; right: var(--game-edge-gap) !important; }
+.object-tooltip { max-width: calc(100vw - 20px) !important; }
+@media (max-width: 800px) {
+  .hud { top: 5rem !important; left: var(--game-edge-gap) !important; right: var(--game-edge-gap) !important; }
+  .level-info { width: min(390px, calc(100vw - 20px)) !important; }
+}
+@media (max-height: 650px) {
+  .hud { top: 5rem !important; }
+}
