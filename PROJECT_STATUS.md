@@ -218,3 +218,8 @@ Latest automated suite: **52 tests passed, 0 failed**. All bundled level JSON fi
 ## Batch 20 update
 
 Added The Frontier Mechanisms, a third campaign with 12 new level JSON files. New authored combinations include key-gates, laser-controlled bridges, heavy-only plates, AND-gates, signal-enabled lifts, portals with attached blocks, conveyors, fragile assemblies, spike detours, and a synthesis finale. Campaign progress remains separated by campaign ID. Automated tests cover level validation and campaign graph references; production build and live browser playtesting remain unverified.
+
+
+## Batch 21 update
+
+Added a confirmed **Clear progress** action to the campaign screen. It removes each campaign's browser-local progress record, clears cached in-memory progress, resets the active campaign, and redraws the map. Campaign saves continue to use `localStorage` with independent keys per campaign. Removed legacy save migration, as the project has not been released. This small UI change has not been browser-tested; production build and live playtesting remain outstanding.

@@ -174,3 +174,8 @@ See `BATCH19.md`, `CAMPAIGN_AUTHORING.md`, and `PROJECT_STATUS.md` for the campa
 ## Batch 20: The Frontier Mechanisms
 
 The third campaign adds twelve levels combining key-gated passages, mirror/receiver routing, heavy-only plates, AND-gates, enabled lifts, portals with attached assemblies, conveyors, fragile assemblies, spike detours, switch bridges, and a multi-mechanic finale. See `BATCH20.md` and `CAMPAIGN_AUTHORING.md` for content details.
+
+## Batch 21: Browser-local progress controls
+
+Campaign completion and best-move counts persist in browser `localStorage`, independently for each campaign. The campaign screen now includes **Clear progress**, which asks for confirmation and resets saved progress across all campaigns. It does not remove custom level JSON files. Because the project has not been released, the legacy save migration path was removed. See `BATCH21.md` for details and verification limitations.
+
