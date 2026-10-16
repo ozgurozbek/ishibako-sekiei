@@ -23,7 +23,7 @@ Each node needs a unique `id`, a `levelId`, title/subtitle, region, mechanics ta
 
 ## Progress and saves
 
-Campaign progress is persisted under `ishibako-hexbound-campaign-v2-<campaign-id>`. Never reuse a campaign ID for an unrelated progression graph unless the old completion IDs are intentionally compatible. The old v1 save is migrated into `shattered-paths` only.
+Campaign progress is persisted under `ishibako-Sekiei-campaign-v2-<campaign-id>`. Never reuse a campaign ID for an unrelated progression graph unless the old completion IDs are intentionally compatible. The old v1 save is migrated into `shattered-paths` only.
 
 Progress records completed node IDs and best move counts. Level JSON contains no campaign completion state. Imported custom levels have no campaign node ID and cannot unlock campaign nodes.
 

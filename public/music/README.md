@@ -18,3 +18,5 @@ public/music/
 ```
 
 `npm run dev` watches the folders and refreshes `catalog.json` when tracks are added or removed. `npm run build` records the tracks present at build time. No real soundtrack files are bundled in this project copy; `.gitkeep` files only preserve the empty folders.
+
+Menu soundtrack: place the main-menu track at `public/music/menu/1.mp3`. It fades into the selected biome soundtrack when gameplay starts.

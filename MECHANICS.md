@@ -1,4 +1,4 @@
-# Ishibako: Hexbound mechanics reference
+# Ishibako: Sekiei mechanics reference
 
 This guide describes the mechanics currently represented in Batch 17. Some behaviours depend on level JSON properties and connections, so a level can configure a mechanic differently from another level.
 
@@ -71,7 +71,7 @@ This guide describes the mechanics currently represented in Batch 17. Some behav
 - **Biome music:** The music catalog selects a track from the level's biome folder when music files are supplied. Users can also load a local audio file for the current session.
 - **Sound effects:** Sound can be toggled in the header. Movement, blocked actions, pickups, switches, lifts, and completion use short synthesized effects where implemented.
 - **Run recording and replay:** Completed runs can be exported as JSON recordings. The replay viewer can load a recording, play/pause, step through frames, and seek along its timeline.
-- **Fullscreen and camera:** Fullscreen is available from the header. Drag to orbit the camera and scroll to zoom.
+- **Fullscreen and camera:** Fullscreen is available from the in-game menu. Drag to orbit the camera and scroll to zoom.
 
 ## Controls quick reference
 

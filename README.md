@@ -1,4 +1,4 @@
-# Ishibako: Hexbound
+# Ishibako: Sekiei
 
 **Batch 10: editor UX, bundled levels and fullscreen play.** Includes a bundled level selector, a single-hex blank canvas, docked editor, projected WASD destination markers, JSON-persisted appearance controls and resonance shard collectibles. See `BATCH10.md` and earlier batch notes for the implementation history.
 
@@ -6,7 +6,7 @@ A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The 
 
 ## Bundled levels
 
-Use the Level dropdown to load Blank Canvas, First Steps, First Light, Gap Garden, Two Plates, One Lift, Mechanics Lab, The Clockwork Garden: Grand Run, or the original JSON example. Choosing Blank Canvas opens the editor and selects the add-neighbour tool. The neighbour direction selector supports all six hex directions.
+Open the in-game menu and choose **Level selector** to browse the bundled puzzles in a scrollable hex grid. Completed levels display a tick. The menu also provides campaign access, fullscreen, editor, replay import, and music import. Choosing Blank Canvas opens the editor and selects the add-neighbour tool. The neighbour direction selector supports all six hex directions.
 
 The editor appearance controls write `environment.customization` to level JSON (`tileColor`, `fogColor`, `lightX`, `lightY`, `lightZ`). Resonance shards are optional collectibles with no objective requirement.
 
@@ -35,7 +35,7 @@ npm run preview
 - Space: detach all attached blocks.
 - Ctrl/Cmd+Z and Ctrl/Cmd+Y: undo and redo.
 - Drag to orbit the camera; scroll to zoom.
-- Music: click **Music: off** to play the deterministic biome track. The Vite music-catalog plugin scans each folder and lists supported audio files (`.mp3`, `.ogg`, `.wav`, `.m4a`, `.aac`, `.opus`, `.webm`) in `public/music/catalog.json`. A level selects one of the discovered files using its seed modulo the number of available tracks. Add `1.mp3` through `8.mp3`, or more numbered files, without changing code. The catalog refreshes when audio files are added or removed while the dev server is running. By default, `musicFolder` is the environment `type`; set `environment.musicFolder` when the folder name differs. Use **Load music** to audition a local file for the current session. Browser playback begins only after a user gesture.
+- Music: music is enabled by default and fades between the menu soundtrack and deterministic biome tracks. The Vite music-catalog plugin scans each folder and lists supported audio files (`.mp3`, `.ogg`, `.wav`, `.m4a`, `.aac`, `.opus`, `.webm`) in `public/music/catalog.json`. A level selects one of the discovered files using its seed modulo the number of available tracks. Add `1.mp3` through `8.mp3`, or more numbered files, without changing code. The catalog refreshes when audio files are added or removed while the dev server is running. By default, `musicFolder` is the environment `type`; set `environment.musicFolder` when the folder name differs. Use **Import music** in the menu to audition a local file for the current session. The main-menu track belongs at `public/music/menu/1.mp3`. Browser autoplay policies may require a user gesture before playback starts.
 - SFX toggle: enable or disable generated sound effects.
 
 ## Environment themes
@@ -149,16 +149,16 @@ Receiver activation now resolves to a stable state across linked gates before an
 - Added `public/assets/manifest.json` for optional GLB/GLTF model replacements with automatic height/footprint fitting, horizontal centring and ground alignment. Stateful mechanism models keep procedural state cues unless explicitly opted in.
 - Added `public/assets/2d/manifest.json` for favicon, brand mark, stage background and panel texture, plus replaceable starter SVGs.
 - See `PROJECT_STATUS.md` for the full implementation inventory and prioritized remaining work, and `ASSET_PIPELINE.md` for the artist workflow.
-- `npm test` passes 43 tests. The production build remains unverified because dependency installation timed out in this workspace.
+- `npm test` passes 56 tests. The production build remains unverified because dependencies are not installed in this workspace.
 
 
 ## Batch 18: campaign atlas and secret shrines
 
-The game now opens on **The Shattered Paths**, a dedicated campaign atlas with its own illustrated-map presentation. Select any available shrine, review its mechanics, and enter it. Main-route convergence requires all three incoming branches to be completed. Optional Orbit Vault secret challenges branch off the rotation tutorial and do not block campaign progress.
+The campaign atlas can be opened from the in-game menu; the website now opens on the main menu. **The Shattered Paths** is a dedicated campaign atlas with its own illustrated-map presentation. Select any available shrine, review its mechanics, and enter it. Main-route convergence requires all three incoming branches to be completed. Optional Orbit Vault secret challenges branch off the rotation tutorial and do not block campaign progress.
 
 Campaign nodes, map positions, mechanics tags, and prerequisite links are authored in `src/campaign.ts`. Progress and best move counts are saved separately in browser local storage. New secret rotation levels live in `levels/orbit-vault-01.json` and `levels/orbit-vault-02.json`.
 
-Drag a valid level JSON file onto the game window to load it as a custom session, or use **Import level JSON** on the campaign map. Custom levels do not affect campaign unlocks. Use **Campaign Map** in the in-game menu or the completion dialog to return to the atlas.
+Drag a valid level JSON file onto the game window to load it as a custom session, or use **Custom levels** on the campaign map. The level selector is a scrollable hex grid, and completed level IDs/names are saved locally so completion marks are shared across campaigns. Custom levels do not affect campaign unlocks. Use **Campaign Map** in the in-game menu or the completion dialog to return to the atlas.
 
 The campaign graph and secret levels are a first framework pass. Dedicated teaching levels for dragging, springs, teleporters, and gates remain planned content. See `PROJECT_STATUS.md` for verification limits and the next work items.
 
@@ -179,3 +179,10 @@ The third campaign adds twelve levels combining key-gated passages, mirror/recei
 
 Campaign completion and best-move counts persist in browser `localStorage`, independently for each campaign. The campaign screen now includes **Clear progress**, which asks for confirmation and resets saved progress across all campaigns. It does not remove custom level JSON files. Because the project has not been released, the legacy save migration path was removed. See `BATCH21.md` for details and verification limitations.
 
+
+
+## Batch 22: Sekiei interface polish
+
+The site opens to the main menu. The level dropdown is replaced by a scrollable, responsive hex-grid selector, with completed-level marks saved in browser `localStorage` and shared across campaigns. The game menu now contains fullscreen, editor, replay import, music import, help, credits, and close controls. Music defaults to on and transitions between `/music/menu/1.mp3` and the selected biome track; place the menu soundtrack at `public/music/menu/1.mp3`.
+
+The in-game HUD now places objectives beneath Now Playing, removes the oversized controls/field-notes bar and camera hint, and increases text sizes. WASD destination hints are rounded and translucent. Mechanism connection paths are shown during gameplay with directional animated dashes. The completion dialog fades in, the campaign map uses the brand icon, and the Two Plates, One Lift gloves pickup has been moved to `(-1, -1, 0)`.

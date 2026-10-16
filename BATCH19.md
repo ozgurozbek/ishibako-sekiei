@@ -4,7 +4,7 @@
 
 - Added a second complete campaign, **The Cartographer's Trials**, alongside **The Shattered Paths**.
 - The campaign atlas now includes a campaign selector. Each campaign has its own title, tagline, region labels, footer copy, node graph, unlock state, and persistent progress.
-- Progress is stored independently per campaign. The previous `ishibako-hexbound-campaign-v1` save is migrated into The Shattered Paths when no v2 save exists.
+- Progress is stored independently per campaign. The previous `ishibako-Sekiei-campaign-v1` save is migrated into The Shattered Paths when no v2 save exists.
 - The Cartographer's Trials has 18 nodes: a short prologue, three 3-level mechanic routes, a mandatory three-way convergence, two synthesis challenges, a finale, and two optional secret shrines.
 - Any unlocked node can be selected in any order. Merge nodes require every incoming branch. Secret challenges do not block the main route.
 - New levels credit `ChatGPT (OpenAI) · Campaign Design` in level metadata. The campaign design focuses on clear mechanic introduction, then combinations that require players to revisit prior ideas.
