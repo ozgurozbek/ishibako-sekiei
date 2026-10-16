@@ -1,8 +1,14 @@
 # Ishibako: Hexbound
 
-**Batch 8: contextual object tooltips, repaired block picking, and richer procedural terrain.** Eight environment themes remain supported, with dynamic biome music cataloguing. See `BATCH5.md` through `BATCH8.md` for the implementation history.
+**Batch 10: editor UX, bundled levels and fullscreen play.** Includes a bundled level selector, a single-hex blank canvas, docked editor, projected WASD destination markers, JSON-persisted appearance controls and resonance shard collectibles. See `BATCH10.md` and earlier batch notes for the implementation history.
 
 A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps. A four-step gradient map creates a lightweight toon-shaded, toy-diorama style.
+
+## Bundled levels
+
+Use the Level dropdown to load Blank Canvas, First Steps, First Light, Gap Garden, Two Plates, One Lift, Mechanics Lab, The Clockwork Garden: Grand Run, or the original JSON example. Choosing Blank Canvas opens the editor and selects the add-neighbour tool. The neighbour direction selector supports all six hex directions.
+
+The editor appearance controls write `environment.customization` to level JSON (`tileColor`, `fogColor`, `lightX`, `lightY`, `lightZ`). Resonance shards are optional collectibles with no objective requirement.
 
 ## Run locally
 

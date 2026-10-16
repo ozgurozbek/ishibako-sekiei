@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "first-steps",
+    "name": "First Steps",
+    "author": "Ishibako",
+    "description": "A short guided puzzle. Attach the prism, rotate it around yourself, and place it on the plate before reaching the exit."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 3,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": 0,
+      "r": 0,
+      "h": 0
+    },
+    {
+      "id": "prism",
+      "type": "block",
+      "q": 1,
+      "r": 0,
+      "h": 0,
+      "color": "#f0b45b"
+    },
+    {
+      "id": "plate-a",
+      "type": "plate",
+      "q": 2,
+      "r": -1,
+      "h": 0
+    },
+    {
+      "id": "key-a",
+      "type": "key",
+      "q": 1,
+      "r": -2,
+      "h": 0,
+      "color": "#ffe58a"
+    },
+    {
+      "id": "shard-a",
+      "type": "shard",
+      "q": 0,
+      "r": -1,
+      "h": 0
+    },
+    {
+      "id": "exit",
+      "type": "goal",
+      "q": 0,
+      "r": -2,
+      "h": 0
+    }
+  ],
+  "environment": {
+    "type": "meadow",
+    "seed": 241,
+    "radius": 30,
+    "density": 0.65,
+    "customization": {}
+  },
+  "objectives": {
+    "requiredPlateIds": [
+      "plate-a"
+    ],
+    "goalId": "exit",
+    "requiredKeyIds": []
+  }
+}

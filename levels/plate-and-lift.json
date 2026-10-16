@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "plate-and-lift",
+    "name": "Two Plates, One Lift",
+    "author": "Ishibako",
+    "description": "Put blocks on both plates to open the gate. The first plate enables the lift. Collect the key upstairs to finish."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 1
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 1
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 1
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 1
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 1
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 1
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": -2,
+      "r": 0,
+      "h": 0
+    },
+    {
+      "id": "block-a",
+      "type": "block",
+      "q": -1,
+      "r": 0,
+      "h": 0,
+      "assemblyId": "pair",
+      "color": "#f0b45b"
+    },
+    {
+      "id": "block-b",
+      "type": "block",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "assemblyId": "pair",
+      "color": "#e7c27b"
+    },
+    {
+      "id": "plate-a",
+      "type": "plate",
+      "q": 0,
+      "r": -1,
+      "h": 0
+    },
+    {
+      "id": "plate-b",
+      "type": "plate",
+      "q": 1,
+      "r": -1,
+      "h": 0
+    },
+    {
+      "id": "gate",
+      "type": "gate",
+      "q": 2,
+      "r": -1,
+      "h": 0,
+      "linkedToAll": [
+        "plate-a",
+        "plate-b"
+      ]
+    },
+    {
+      "id": "lift-low",
+      "type": "lift",
+      "q": 2,
+      "r": 0,
+      "h": 0,
+      "linkedTo": "lift-high",
+      "enabledBy": "plate-a"
+    },
+    {
+      "id": "lift-high",
+      "type": "lift",
+      "q": 2,
+      "r": 0,
+      "h": 1,
+      "linkedTo": "lift-low"
+    },
+    {
+      "id": "key-top",
+      "type": "key",
+      "q": 0,
+      "r": -2,
+      "h": 1
+    },
+    {
+      "id": "exit",
+      "type": "goal",
+      "q": -1,
+      "r": -2,
+      "h": 1
+    },
+    {
+      "id": "shard-top",
+      "type": "shard",
+      "q": 1,
+      "r": -1,
+      "h": 1
+    }
+  ],
+  "environment": {
+    "type": "temple",
+    "seed": 5501,
+    "radius": 32,
+    "density": 0.7,
+    "customization": {}
+  },
+  "objectives": {
+    "requiredPlateIds": [
+      "plate-a",
+      "plate-b"
+    ],
+    "requiredKeyIds": [
+      "key-top"
+    ],
+    "goalId": "exit"
+  }
+}

@@ -7,7 +7,7 @@ import type { Level } from './types.ts';
 const readLevel = (name: string) => JSON.parse(readFileSync(new URL(`../levels/${name}`, import.meta.url), 'utf8')) as Level;
 
 test('all shipped levels validate, including the mechanics showcase', () => {
-  for (const name of ['example.json', 'mechanics-lab.json', 'mechanics-showcase.json']) {
+  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json']) {
     assert.deepEqual(validateLevel(normalizeLevel(readLevel(name))), [], `${name} should validate`);
   }
 });
@@ -26,4 +26,20 @@ test('mechanics showcase includes the planned mechanic families', () => {
   assert.ok(level.board.cells.some((cell) => cell.support === false), 'showcase should contain visible gaps');
   assert.ok(level.objects.some((object) => object.linkedToAll?.length === 2), 'showcase should include a multi-plate gate');
   assert.ok(level.objects.some((object) => object.enabledBy === 'plate-b'), 'showcase lift should be plate-enabled');
+});
+
+test('blank canvas is a single-hex level ready for editing', () => {
+  const level = normalizeLevel(readLevel('blank-canvas.json'));
+  assert.equal(level.board.cells.length, 1);
+  assert.deepEqual([level.objects.find((o) => o.type === 'player')?.q, level.objects.find((o) => o.type === 'player')?.r], [0, 0]);
+  assert.deepEqual(validateLevel(level), []);
+});
+
+test('new bundled levels include their advertised mechanics', () => {
+  const gap = normalizeLevel(readLevel('gap-garden.json'));
+  assert.ok(gap.board.cells.some((cell) => cell.kind === 'void'));
+  assert.ok(gap.objects.some((object) => object.type === 'bridge'));
+  const lift = normalizeLevel(readLevel('plate-and-lift.json'));
+  assert.ok(lift.objects.some((object) => object.linkedToAll?.length === 2));
+  assert.ok(lift.objects.some((object) => object.type === 'shard'));
 });

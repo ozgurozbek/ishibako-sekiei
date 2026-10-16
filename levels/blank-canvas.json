@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "blank-canvas",
+    "name": "Blank Canvas",
+    "author": "Ishibako",
+    "description": "A tiny starting point for designing your own hex puzzle. Choose an editor tool and build outward in any of the six hex directions."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 1,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "exit-1",
+      "type": "goal",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "meadow",
+    "seed": 42,
+    "radius": 30,
+    "density": 0.6,
+    "palette": "mint",
+    "customization": {}
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": true
+  },
+  "objectives": {
+    "requiredPlateIds": [],
+    "goalId": "exit-1"
+  }
+}

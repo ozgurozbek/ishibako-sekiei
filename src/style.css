@@ -60,3 +60,41 @@ footer{padding-left:4px;padding-right:4px}
 .completion-card p{font-size:13px;line-height:1.7;color:#adc9b9;margin:0 0 20px}
 .completion-actions{display:flex;flex-wrap:wrap;gap:9px}.completion-actions button:first-child{background:#9fe4c9;color:#163329;border-color:#b7f4d9;font-weight:800}.completion-actions .quiet{background:#1d302a;color:#c6dcd0}
 .object-tooltip small{display:block}.status-icon{transition:background .18s ease,transform .18s ease}.objective-line:has(#requiredKeyStatus:not(:empty)) #requiredKeyStatus{color:#ffe58a}
+
+/* Batch 10: fullscreen play, docked authoring, level catalogue and projected hex controls. */
+.level-picker{display:flex;align-items:center;gap:7px;color:#9fc2b0;font-size:10px;white-space:nowrap}
+.level-picker select{max-width:180px;min-width:130px;padding:9px 12px;border:1px solid #416355;border-radius:999px;background:#142721;color:#e0f1e7;font:600 11px Manrope,sans-serif;outline:none}
+#fullscreenToggle{white-space:nowrap}
+.stage.editor-open #viewport{right:min(430px,43%);}
+.stage.editor-open .editor{display:block;position:absolute;z-index:12;top:0;right:0;bottom:0;width:min(430px,43%);margin:0;padding:15px 14px 18px;overflow-y:auto;overscroll-behavior:contain;border:0;border-left:1px solid #6ca18a55;border-radius:0;background:rgba(13,28,23,.97);box-shadow:-14px 0 35px #07110e55;scrollbar-color:#416958 #14231f;}
+.stage.editor-open .editor-head{display:block}
+.stage.editor-open .editor h2{font-size:17px;margin:0 0 6px}
+.stage.editor-open .editor p{font-size:11px;line-height:1.5}
+.stage.editor-open .editor-actions{gap:6px}
+.stage.editor-open .editor-actions button,.stage.editor-open .editor-actions .file-button{font-size:10px;padding:8px 10px}
+.stage.editor-open .editor-actions label{width:100%;justify-content:space-between}
+.stage.editor-open .editor-actions select,.stage.editor-open .editor-actions input{max-width:60%;}
+.stage.editor-open .editor textarea{height:190px;min-height:120px;font-size:10px;padding:10px}
+.stage.editor-open .connection-editor{padding:10px;margin:10px 0}
+.stage.editor-open .connection-cards{grid-template-columns:1fr;gap:7px}
+.stage.editor-open .connection-source-list,.stage.editor-open .connection-target-list{min-height:35px;padding:7px}
+.stage.editor-open .connection-chip{font-size:9px;padding:7px 8px}
+.stage.editor-open .editor-visual-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;padding:10px;background:#0b1713;border:1px solid #304b41;border-radius:10px}
+.stage.editor-open .editor-visual-tools strong{grid-column:1/-1;font-size:11px;color:#d8eee1}
+.stage.editor-open .editor-visual-tools label{display:flex;flex-direction:column;align-items:flex-start;gap:4px;font-size:9px}
+.stage.editor-open .editor-visual-tools input[type=color]{width:100%;height:30px;padding:2px;border-radius:6px}
+.stage.editor-open .editor-visual-tools input[type=range]{width:100%;padding:0}
+.stage.editor-open .editor-visual-tools button{grid-column:1/-1}
+.move-previews{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.move-preview{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:5px;padding:5px 7px;border:1px solid #e3ffe7b0;border-radius:999px;background:rgba(17,42,33,.9);box-shadow:0 3px 14px #06130d66;color:#eaffef;backdrop-filter:blur(5px);font:9px 'DM Mono',monospace;white-space:nowrap;transition:opacity .12s,background .12s}
+.move-preview kbd{min-width:19px;text-align:center;padding:3px 5px;background:#b6f0d1;color:#15362a;border:0;border-radius:5px;font-size:10px;font-weight:800;box-shadow:0 1px 0 #4c9874}
+.move-preview span{font-size:9px;color:#d2eddf}
+.move-preview.unavailable{background:rgba(72,32,36,.9);border-color:#ff9e9e99;opacity:.68}
+.move-preview.unavailable kbd{background:#f0b1a7;color:#542c2b;box-shadow:0 1px 0 #9a5b54}
+.shell:fullscreen{width:100%;height:100%;max-width:none;padding:12px 20px;overflow:auto;background:#10191b}
+.shell:fullscreen .topbar{height:64px}
+.shell:fullscreen .stage{height:calc(100vh - 265px);min-height:320px}
+.shell:fullscreen .bottom{min-height:135px}
+.shell:fullscreen .editor{max-height:none}
+@media(max-width:980px){.header-actions{gap:5px}.level-picker select{max-width:130px;min-width:100px}.stage.editor-open #viewport{right:48%}.stage.editor-open .editor{width:48%}}
+@media(max-width:700px){.level-picker{width:100%;justify-content:flex-end}.level-picker select{max-width:180px}.stage.editor-open #viewport{right:0;filter:brightness(.35)}.stage.editor-open .editor{width:min(94%,440px);left:3%;right:3%;top:8px;bottom:8px;border:1px solid #6ca18a55;border-radius:14px;background:rgba(13,28,23,.98)}.shell:fullscreen{padding:8px}.shell:fullscreen .stage{height:calc(100vh - 330px)}.move-preview{gap:3px;padding:4px 5px}.move-preview span{font-size:8px}}
