@@ -32,3 +32,10 @@ test('recording parser rejects unsupported versions and non-sequential frame ind
   malformed.frames[1].index = 4;
   assert.throws(() => parseRunRecording(malformed), /frame 1 is incomplete or invalid/);
 });
+
+
+test('recording parser rejects frames with missing player coordinates', () => {
+  const malformed = structuredClone(recording);
+  delete (malformed.frames[1].player as Partial<typeof malformed.frames[1]['player']>).h;
+  assert.throws(() => parseRunRecording(malformed), /frame 1 is incomplete or invalid/);
+});

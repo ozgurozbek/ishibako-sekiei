@@ -36,6 +36,7 @@ export function parseRunRecording(input: unknown): RunRecording {
   }
   for (const [index, frame] of value.frames.entries()) {
     if (!frame || typeof frame !== 'object' || !frame.player || typeof frame.player !== 'object' ||
+        !Number.isFinite(frame.player.q) || !Number.isFinite(frame.player.r) || !Number.isFinite(frame.player.h) ||
         !Array.isArray(frame.objects) || !Array.isArray(frame.attached) ||
         !Number.isInteger(frame.index) || frame.index !== index ||
         !Number.isFinite(frame.moves) || frame.moves < 0 ||

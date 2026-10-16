@@ -122,3 +122,14 @@ test('gravity respects a closed gate in the fall path', () => {
   assert.equal(result.objects.some(o => o.id === 'gate'), true);
   assert.deepEqual(result.fallenIds, ['falling']);
 });
+
+
+test('spikes and laser emitters are not solid collision objects for blocks', () => {
+  const level = makeLevel([{ q: 0, r: 0, h: 0 }, { q: 1, r: 0, h: 0 }, { q: 2, r: 0, h: 0 }]);
+  const objects: LevelObject[] = [
+    { id: 'spikes-1', type: 'spikes', q: 1, r: 0, h: 0 },
+    { id: 'laser-1', type: 'laser', q: 2, r: 0, h: 0, direction: 0 },
+  ];
+  assert.equal(validateAssemblyPlacement(level, objects, [{ id: 'moving', q: 1, r: 0, h: 0 }], new Set(['moving'])).valid, true);
+  assert.equal(validateAssemblyPlacement(level, objects, [{ id: 'moving', q: 2, r: 0, h: 0 }], new Set(['moving'])).valid, true);
+});

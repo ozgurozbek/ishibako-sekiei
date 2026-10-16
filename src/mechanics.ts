@@ -82,6 +82,12 @@ export function sameHex(a: Hex, b: Hex): boolean {
   return a.q === b.q && a.r === b.r && a.h === b.h;
 }
 
+/** Hazards affect the player only. Blocks may occupy spike cells and cross laser paths. */
+export function isPlayerHazardAt(level: Level, objects: LevelObject[], p: Hex): boolean {
+  if (objects.some(o => o.type === 'spikes' && sameHex(o, p))) return true;
+  return objects.filter(o => o.type === 'laser').some(laser => traceLaser(level, objects, laser).cells.some(cell => sameHex(cell, p)));
+}
+
 /**
  * Recompute receiver activation from the current laser paths. Receiver-linked
  * gates can change the path being traced, so iterate until the receiver state

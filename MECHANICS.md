@@ -15,7 +15,7 @@ This guide describes the mechanics currently represented in the Batch 13 project
 ## Blocks, tiles, and elevation
 
 - **Movable block:** Can be attached, detached, moved, and used to press a plate. Blocks can fall under gravity.
-- **Glued assembly:** Blocks with the same `assemblyId` are treated as a rigid group for movement, rotation, and gravity. They cannot overlap or pass through obstacles as individual pieces.
+- **Glued assembly:** Blocks with the same `assemblyId` are treated as a rigid group for movement, rotation, and gravity. They cannot overlap or pass through solid obstacles as individual pieces. Spike hazards and laser beams do not block block movement. Blocks can still interrupt a laser beam, which can change receiver activation.
 - **Heavy block:** A block with `kind: "heavy"`. It can activate a pressure plate configured with `kind: "heavyOnly"`; ordinary blocks cannot activate that plate.
 - **Fragile block:** A block with `kind: "fragile"`. If its group needs to fall, the fragile block and its glued group are removed rather than landing.
 - **Elevation / stacked platforms:** Board cells and objects have a height `h`. Separate hexes can share q/r coordinates at different elevations. Gravity resolves unsupported blocks downward to a valid supported landing or removes them if no landing exists.
@@ -45,8 +45,8 @@ This guide describes the mechanics currently represented in the Batch 13 project
 - **Laser emitter:** Projects a beam in one of six hex directions. The beam stops at missing/void cells or solid blockers. Its direction is set by `direction` (0 to 5).
 - **Mirror:** Redirects an incoming laser according to its orientation. Mirrors can be rotated in the editor. Beam tracing is bounded and stops if it detects a repeated ray state.
 - **Laser receiver:** Becomes active when a traced laser reaches its hex. Receiver state is recomputed from laser paths and may control connected mechanisms. Feedback loops that fail to settle resolve to all receivers inactive.
-- **Spike hazard:** A spike hex is hazardous to the player and attached blocks. Movement and carried-assembly placement reject destinations intersecting spikes.
-- **Collision rules:** Closed gates, walls, solid blocks, missing cells, active laser beams, and spikes can prevent movement or assembly placement. Gravity checks for solid blockers while blocks fall.
+- **Spike hazard:** A spike hex is hazardous to the player only. The player cannot move onto it, but attached blocks may pass through it or occupy it if no solid collision prevents placement.
+- **Collision rules:** Closed gates, walls, solid blocks, and missing cells can prevent movement or assembly placement. Active laser beams and spikes block the player only; neither is a solid collision for blocks. Gravity checks for solid blockers while blocks fall.
 
 ## Level editor
 

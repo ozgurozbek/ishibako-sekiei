@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assemblyMembers, traceLaser, isLinkedMechanismOpen, refreshReceiverStates, isPlatePressed } from './mechanics.ts';
+import { assemblyMembers, traceLaser, isLinkedMechanismOpen, refreshReceiverStates, isPlatePressed, isPlayerHazardAt } from './mechanics.ts';
 import type { Level, LevelObject } from './types.ts';
 
 const level: Level = {
@@ -136,4 +136,18 @@ test('receiver feedback that starts blocked settles fail-closed rather than osci
   ];
   assert.deepEqual(refreshReceiverStates(localLevel, objects), []);
   assert.equal(objects.find(o => o.id === 'receiver')?.active, false);
+});
+
+
+test('spikes and laser beams are hazards to the player only', () => {
+  const hazardLevel: Level = { ...level, board: { ...level.board, cells: [
+    { q: 0, r: 0, h: 0 }, { q: 1, r: 0, h: 0 }, { q: 2, r: 0, h: 0 }, { q: 3, r: 0, h: 0 }, { q: 3, r: 1, h: 0 },
+  ] } };
+  const objects: LevelObject[] = [
+    { id: 'spikes', type: 'spikes', q: 1, r: 0, h: 0 },
+    { id: 'laser', type: 'laser', q: 0, r: 0, h: 0, direction: 0 },
+  ];
+  assert.equal(isPlayerHazardAt(hazardLevel, objects, { q: 1, r: 0, h: 0 }), true, 'spikes threaten the player');
+  assert.equal(isPlayerHazardAt(hazardLevel, objects, { q: 2, r: 0, h: 0 }), true, 'laser beams threaten the player');
+  assert.equal(isPlayerHazardAt(hazardLevel, objects, { q: 3, r: 1, h: 0 }), false, 'cells outside the beam are safe');
 });
