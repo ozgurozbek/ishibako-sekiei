@@ -7,7 +7,7 @@ import type { Level } from './types.ts';
 const readLevel = (name: string) => JSON.parse(readFileSync(new URL(`../levels/${name}`, import.meta.url), 'utf8')) as Level;
 
 test('all shipped levels validate, including the mechanics showcase', () => {
-  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json', 'advanced-lab.json']) {
+  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json', 'advanced-lab.json', 'plate-practice.json', 'fragile-footing.json']) {
     assert.deepEqual(validateLevel(normalizeLevel(readLevel(name))), [], `${name} should validate`);
   }
 });
@@ -51,4 +51,18 @@ test('new bundled levels include their advertised mechanics', () => {
   const lift = normalizeLevel(readLevel('plate-and-lift.json'));
   assert.ok(lift.objects.some((object) => object.linkedToAll?.length === 2));
   assert.ok(lift.objects.some((object) => object.type === 'shard'));
+});
+
+test('tutorial levels advertise their mechanics and include authored hints and solutions', () => {
+  const plate = normalizeLevel(readLevel('plate-practice.json'));
+  assert.deepEqual(validateLevel(plate), []);
+  assert.ok(plate.metadata.mechanics?.includes('Pressure plates'));
+  assert.ok(plate.metadata.hint);
+  assert.ok(plate.metadata.solution);
+  assert.deepEqual(plate.objectives.requiredPlateIds, ['plate']);
+  const fragile = normalizeLevel(readLevel('fragile-footing.json'));
+  assert.deepEqual(validateLevel(fragile), []);
+  assert.equal(fragile.board.cells.find(cell => cell.q === 1 && cell.r === 0)?.kind, 'fragile');
+  assert.ok(fragile.metadata.mechanics?.includes('Fragile floor'));
+  assert.ok(fragile.metadata.solution);
 });

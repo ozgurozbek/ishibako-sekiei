@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "fragile-footing",
+    "name": "Fragile Footing",
+    "author": "Ishibako",
+    "description": "Cross a fragile tile and keep moving. A tile breaks after you leave it.",
+    "difficulty": "Easy",
+    "mechanics": [
+      "Fragile floor",
+      "Movement",
+      "Collectibles",
+      "Exit"
+    ],
+    "hint": "The fragile tile is safe to enter, but it disappears after you leave. Keep moving toward the exit.",
+    "solution": "Walk east from (0,0) onto the fragile tile at (1,0), then east again to the exit at (2,0). The tile behind you collapses after you leave it."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 2,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0,
+        "kind": "fragile"
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": 0,
+      "r": 0,
+      "h": 0
+    },
+    {
+      "id": "exit",
+      "type": "goal",
+      "q": 2,
+      "r": 0,
+      "h": 0,
+      "color": "#a6a1ff"
+    },
+    {
+      "id": "key",
+      "type": "key",
+      "q": 0,
+      "r": 1,
+      "h": 0,
+      "color": "#ffe58a"
+    },
+    {
+      "id": "shard",
+      "type": "shard",
+      "q": 1,
+      "r": 1,
+      "h": 0,
+      "color": "#a9f6ff"
+    }
+  ],
+  "environment": {
+    "type": "meadow",
+    "seed": 246,
+    "radius": 24,
+    "density": 0.55,
+    "customization": {}
+  },
+  "objectives": {
+    "requiredPlateIds": [],
+    "goalId": "exit",
+    "requiredKeyIds": []
+  }
+}
