@@ -200,3 +200,25 @@ body{overflow:hidden}
 .game-menu:has(.menu-info:not(.hidden)) .menu-info:not(.hidden){visibility:visible;pointer-events:auto}
 @media(max-width:800px){.topbar{height:auto;min-height:62px;padding:8px 10px;gap:8px}.brand h1{font-size:12px}.header-actions{max-width:65vw;flex-wrap:wrap;justify-content:flex-end}.header-actions button{font-size:10px;padding:7px 9px}.stage{min-height:0}.hud{top:8px;left:8px;right:8px}.level-info{top:122px;left:8px;width:min(300px,calc(100vw - 16px));max-height:30vh;overflow:auto}.moves{min-width:0}.menu-info:not(.hidden){padding:20px 16px}}
 @media(max-height:600px){.topbar{height:54px;min-height:50px}.level-info{top:100px;max-height:25vh}.hud{top:6px}}
+
+/* Batch 25: hover-scoped mechanism links, consistent modal screens, and viewport cleanup. */
+html,body,#app{margin:0!important;padding:0!important;border:0!important;outline:0!important;overflow:hidden!important}
+body::before,body::after,#app::before,#app::after{content:none!important;display:none!important}
+.shell{margin:0!important;padding:0!important;border:0!important;outline:0!important;max-width:none!important;width:100vw!important;height:100dvh!important;min-height:0!important;overflow:hidden!important}
+.topbar{border-top:0!important;outline:0!important;flex-shrink:0}
+.stage{position:relative;flex:1 1 0!important;height:auto!important;min-height:0!important;margin:0!important;border-top:0!important;border-bottom:0!important;outline:0!important;box-shadow:none!important}
+#viewport{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+#viewport canvas{display:block!important;width:100%!important;height:100%!important}
+html:fullscreen .shell,.shell:fullscreen{width:100vw!important;height:100dvh!important;max-width:none!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#10191b}
+html:fullscreen .shell .topbar,.shell:fullscreen .topbar{height:68px!important;min-height:60px!important;flex:0 0 auto!important}
+html:fullscreen .shell .stage,.shell:fullscreen .stage{height:auto!important;min-height:0!important;flex:1 1 0!important}
+html:fullscreen,html:fullscreen body,html:fullscreen #app{width:100%!important;height:100%!important;overflow:hidden!important}
+/* How-to-play and credits use the same centered modal-screen language as the level library. */
+.menu-info:not(.hidden){position:fixed!important;inset:0!important;z-index:160!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;overflow:auto!important;width:min(760px,calc(100vw - 32px))!important;height:max-content!important;max-height:calc(100dvh - 32px)!important;margin:auto!important;padding:clamp(22px,4vw,40px)!important;border:1px solid #86b69a55!important;border-radius:22px!important;background:linear-gradient(145deg,#1b382d,#0b1b15)!important;box-shadow:0 25px 100px #0009!important;backdrop-filter:blur(16px)!important;color:#e9f5eb!important}
+.menu-info strong{display:block;font-size:clamp(24px,3vw,34px)!important;line-height:1.2;margin:4px 0 20px;color:#fff0d0}
+.menu-info p{font-size:clamp(15px,1.4vw,18px)!important;line-height:1.85!important;color:#b6d0c0!important;margin:0;max-width:66ch}
+.info-screen-back{position:static!important;order:2;align-self:flex-end;margin:28px 0 0!important;min-height:42px}
+.game-menu:has(.menu-info:not(.hidden)){visibility:hidden!important;pointer-events:none!important}
+.game-menu:has(.menu-info:not(.hidden)) .menu-info:not(.hidden){visibility:visible!important;pointer-events:auto!important}
+/* The editor intentionally shows every connection; play mode shows only the hovered object's links. */
+@media(max-width:800px){.topbar{flex:0 0 auto!important}.stage{flex:1 1 0!important;height:auto!important;min-height:0!important}.hud{max-width:100%;align-items:flex-start}.level-tag{max-width:calc(100vw - 130px)!important}.moves{max-width:42vw!important}.menu-info:not(.hidden){width:calc(100vw - 20px)!important;max-height:calc(100dvh - 20px)!important;padding:22px 18px!important;border-radius:16px!important}.menu-info p{font-size:15px!important}}
