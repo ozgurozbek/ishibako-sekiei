@@ -1,13 +1,13 @@
 # Ishibako: Hexbound — Complete Project Status
 
-**Status snapshot:** Batch 16 planning pass, 14 October 2026  
+**Status snapshot:** Batch 17, 15 October 2026  
 **Purpose:** One reference for the implemented app, known limitations, verification status, asset conventions, and remaining release work.
 
 This report describes the current source tree and its tests. “Implemented” means a code path exists; it does not imply every edge case has been browser-tested. The project has not yet passed a complete production build or end-to-end browser regression in this workspace because package installation timed out and the Three.js/Vite dependencies were unavailable.
 
 ## Executive summary
 
-The project is a playable, single-player browser prototype for a small 3D hex-grid puzzle game. It has a JSON level format, a visual level editor, a suite of puzzle mechanisms, multiple procedural biomes, level selection, run recording/replay, and automated tests. This pass expands the distant terrain, increases biome-specific prop variety, adds richer synthesized sound cues, and establishes optional manifest-driven 3D and 2D asset slots.
+The project is a playable, single-player browser prototype for a small 3D hex-grid puzzle game. It has a JSON level format, a visual level editor, a suite of puzzle mechanisms, multiple procedural biomes, level selection, run recording/replay, and automated tests. Batch 16 expanded the distant terrain and biome props and established optional manifest-driven asset slots. Batch 17 moves the app to a full-window game presentation and improves editor object manipulation, elevation-aware placement, connection visualisation, state isolation, pickup rules, and completion stats.
 
 The highest-priority outstanding work is verification of the complete application, not a new architecture: install dependencies, run the production build, launch in a browser, then systematically test gameplay, editor, replay, audio, fullscreen, and custom asset loading.
 
@@ -19,7 +19,8 @@ The highest-priority outstanding work is verification of the complete applicatio
 - Player spawn, walk move counter, configurable move limit, restart, undo and redo.
 - Click-to-attach and detach blocks; glued assemblies share an `assemblyId` and move as a rigid group.
 - Q/E rotations in 60-degree steps; rotations do not consume walking moves.
-- Key-gated movement while blocks are attached.
+- Gloves-gated movement while blocks are attached (legacy JSON `type: "key"` remains compatible).
+- Belt pickup gates rotation of attached heavy blocks; ordinary blocks remain freely rotatable.
 - Gravity for unsupported blocks, falling to supported lower cells, falling away into voids, and glued-group gravity.
 - Collision checks for walls, closed gates, blocks, destination cells, elevation, and assembly placement.
 - Spike and active-laser hazards block the player. Spikes and laser beams do not make attached blocks physically impassable. A block may still intercept a laser beam and alter receiver activation.
@@ -42,13 +43,15 @@ Known limitation: this is not yet a general-purpose logic graph engine. Some mec
 
 ### Level authoring — implemented, usability refinements remain
 
-- JSON import, export, apply, and validation.
+- JSON import, export, apply, and validation; textarea edits apply on blur when valid, and Ctrl/Cmd+Enter applies explicitly.
 - Blank Canvas starter level and bundled example/tutorial/showcase levels.
-- Visual placement and removal tools, player spawn placement, elevation selection, six-direction neighbour creation, object selection/browser, property inspector, quick connection chips, and editor undo/redo.
+- Visual placement and removal tools, player spawn placement, elevation grid, direct empty-hex tile creation, six-direction neighbour creation, drag-to-move objects, object selection/browser, property inspector, quick connection chips, and editor undo/redo.
 - Validation for duplicate IDs/cells, references, overlaps, directions, assemblies, and mechanism links.
 - Level catalogue metadata for descriptions, difficulty, mechanic tags, hints, and solutions.
+- Full-window game UI with in-game start/level selection, How to Play, Credits, HUD, objectives, and overlay controls; no website navbar/footer presentation.
+- Hovered connections are shown as dotted colour-coded lines; hovered grid cells show `(q, r, h)`.
 
-Remaining editor work: clearer validation navigation for every error type, broader property controls, stronger import/export round-trip tests for unfamiliar custom JSON, and playtest/edit return flows for unsaved work.
+Remaining editor work: validate the new drag workflow in a real browser, make validation navigation cover every error type, broaden the property inspector, test unfamiliar custom JSON round trips, and add a clear prompt for discarding or preserving unsaved edits when changing levels.
 
 ### Run recording and replay — implemented, determinism verification remains
 
@@ -87,7 +90,7 @@ Remaining audio work: browser checks for autoplay restrictions, volume control, 
 
 No external asset packs were included in this workspace, so the pipeline is prepared but has not been validated against the user's actual Unity exports or modeller output.
 
-## Terrain generation pass in this batch
+## Terrain generation pass in Batch 16
 
 - Terrain radius now scales with the environment radius, bounded between 30 and 52 hex rings.
 - Decorative height includes repeatable coordinate-based undulation plus biome-dependent ridge lift.
@@ -96,9 +99,21 @@ No external asset packs were included in this workspace, so the pipeline is prep
 - Terrain placement remains seeded and is not part of puzzle collision.
 - New pure-function tests cover terrain radius bounds, deterministic height, and relative ridge profiles.
 
+## Batch 17 interaction and UI pass
+
+- The canvas now occupies the full window; toolbar, HUD, level context, objective panel, controls, editor, and completion dialog are overlays inside the game experience. The former website footer is hidden.
+- Added an in-game start/level selection screen, How to Play panel, Credits panel, and in-game menu button.
+- Editor open state resets to the saved level snapshot and blocks gameplay input, preventing collected pickups or moved player state from leaking into the level JSON.
+- Added elevation-aligned hex grid overlays and hover coordinate readouts. The Add adjacent cell tool also creates a tile directly when clicking an empty grid hex.
+- Added drag-to-move for player spawn and placed objects, with solid-object overlap checks and camera orbit disabled during object dragging.
+- Added hover-only dotted connection lines: cyan for enabled-by links, violet for single/pair links, amber for all-required links.
+- Legacy `key` collectibles now render as gloves and unlock movement while carrying. New `belt` collectibles unlock rotation of attached heavy blocks. Existing level JSON remains compatible.
+- Open bridge destinations now retain the WASD direction previews. Completion dialog reports collectibles collected out of total and remaining moves (including unlimited).
+- JSON edits apply on blur when valid; Ctrl/Cmd+Enter applies manually. Scene edits update the JSON text.
+
 ## Automated tests and build status
 
-Latest run in this workspace: **43 automated tests passed, 0 failed** (`npm test`). Tests cover audio selection, level validation, tutorial metadata, mechanics/laser/receiver behaviour, gravity and assemblies, hazard collision rules, replay parsing, and the new terrain profile functions.
+Latest run in this workspace: **46 automated tests passed, 0 failed** (`npm test`). Tests cover audio selection, level validation, tutorial metadata, mechanics/laser/receiver behaviour, gravity and assemblies, hazard collision rules, replay parsing, and the new terrain profile functions.
 
 A full TypeScript/Vite build could not be verified. `npm install` timed out; a global TypeScript check confirms the missing `three`, `vite/client`, and related declarations prevent meaningful compilation here. No claim is made that browser interactions or production bundling passed.
 
@@ -107,7 +122,7 @@ A full TypeScript/Vite build could not be verified. `npm install` timed out; a g
 ### P0 — Establish a verified build
 
 1. Install project dependencies in a network-enabled workspace.
-2. Run `npm test`, `npm run build`, and fix all genuine type/build errors.
+2. Run `npm test`, `npm run build`, and fix all genuine type/build errors. Batch 17 source parses successfully with TypeScript transpilation, but a full type-check/build is still blocked by missing installed dependencies.
 3. Launch the production preview and test startup with no custom assets and with missing optional manifests.
 4. Test current supported desktop browsers and at least one narrow/mobile viewport.
 
@@ -162,4 +177,5 @@ See `public/assets/README.md`, `public/assets/models/README.md`, and `ASSET_PIPE
 - Batch 13: editor object browser, elevation controls, validation navigation, and editor history polish.
 - Batch 14: player-only spike/laser hazard semantics, replay frame inspection, and replay validation refinements.
 - Batch 15: tutorial/level metadata and catalogue polish.
-- Batch 16 (this pass): terrain generation and biome prop variety, synthesized SFX cues, optional 3D model and 2D art manifests, and this comprehensive status report.
+- Batch 16: terrain generation and biome prop variety, synthesized SFX cues, optional 3D model and 2D art manifests.
+- Batch 17 (this pass): full-window game UI, in-game menu/help/credits, editor grid and object dragging, colour-coded hover connections, JSON/scene sync, gameplay state isolation, gloves/belt pickups, heavy-block rotation rules, bridge direction previews, and completion collectible/move stats.

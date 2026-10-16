@@ -9,12 +9,12 @@
     "mechanics": [
       "Attachment",
       "Pressure plates",
-      "Keys",
+      "Gloves",
       "Exit",
       "Move-free rotation"
     ],
-    "hint": "Collect the key before attaching the prism. Once the prism is on the plate, detach it before walking to the exit.",
-    "solution": "Collect the key at (1,-1). Attach the prism at (1,0), then walk east to (2,-1) so the prism moves onto the plate at (2,0). Click the prism to detach it, then travel around the plate to the exit at (-1,0)."
+    "hint": "Collect the gloves before attaching the prism. Once the prism is on the plate, detach it before walking to the exit.",
+    "solution": "Collect the gloves at (1,-1). Attach the prism at (1,0), then walk east to (2,-1) so the prism moves onto the plate at (2,0). Click the prism to detach it, then travel around the plate to the exit at (-1,0)."
   },
   "rules": {
     "moveLimit": 999,

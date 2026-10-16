@@ -1,6 +1,16 @@
 import type { Hex, Level, LevelObject } from './types.ts';
 import { DIRS, key } from './types.ts';
 
+/** Walking is locked only while carrying and before the gloves pickup is collected. */
+export function canWalkWhileCarrying(attachedBlockCount: number, glovesCollected: number): boolean {
+  return attachedBlockCount === 0 || glovesCollected > 0;
+}
+
+/** Heavy blocks are rotatable only after the belt pickup is collected. */
+export function canRotateAssembly(blocks: Pick<LevelObject, 'type' | 'kind'>[], beltsCollected: number): boolean {
+  return beltsCollected > 0 || !blocks.some((block) => block.type === 'block' && block.kind === 'heavy');
+}
+
 /** Blocks sharing an assemblyId are one rigid, inseparable glued assembly. */
 export function assemblyMembers(objects: LevelObject[], objectId: string): LevelObject[] {
   const selected = objects.find((o) => o.id === objectId && o.type === 'block');

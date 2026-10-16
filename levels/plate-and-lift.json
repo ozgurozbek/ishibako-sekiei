@@ -4,7 +4,7 @@
     "id": "plate-and-lift",
     "name": "Two Plates, One Lift",
     "author": "Ishibako",
-    "description": "Put blocks on both plates to open the gate. The first plate enables the lift. Collect the key upstairs to finish."
+    "description": "Put blocks on both plates to open the gate. The first plate enables the lift. Collect the gloves upstairs to finish."
   },
   "rules": {
     "moveLimit": 999,

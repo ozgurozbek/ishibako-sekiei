@@ -96,7 +96,7 @@ export async function apply2DAssetManifest(manifestUrl = '/assets/2d/manifest.js
     if (!response.ok) return;
     const value: unknown = await response.json();
     if (!value || typeof value !== 'object' || (value as { version?: unknown }).version !== 1) return;
-    const manifest = value as { favicon?: unknown; brandMark?: unknown; stageBackground?: unknown; panelTexture?: unknown };
+    const manifest = value as { favicon?: unknown; brandMark?: unknown; menuLogo?: unknown; stageBackground?: unknown; panelTexture?: unknown; menuBackground?: unknown; levelCardBackground?: unknown; buttonTexture?: unknown; glovesIcon?: unknown; beltIcon?: unknown; shardIcon?: unknown };
     const validPath = (path: unknown): path is string => typeof path === 'string' && path.startsWith('/assets/') && !path.includes('..');
     if (validPath(manifest.favicon)) {
       let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
@@ -107,8 +107,14 @@ export async function apply2DAssetManifest(manifestUrl = '/assets/2d/manifest.js
       const image = document.querySelector<HTMLImageElement>('#brandMarkImage');
       if (image) image.src = manifest.brandMark;
     }
+    if (validPath(manifest.menuLogo)) { const image = document.querySelector<HTMLImageElement>('#menuLogoImage'); if (image) image.src = manifest.menuLogo; }
+    const iconSlots: [keyof typeof manifest, string][] = [['glovesIcon','#glovesIcon'],['beltIcon','#beltIcon'],['shardIcon','#shardIcon']];
+    for (const [field, selector] of iconSlots) { const path = manifest[field]; if (validPath(path)) { const image = document.querySelector<HTMLImageElement>(selector); if (image) { image.src = path; image.classList.remove('hidden'); } } }
     if (validPath(manifest.stageBackground)) document.documentElement.style.setProperty('--asset-stage-background', `url("${manifest.stageBackground}")`);
     if (validPath(manifest.panelTexture)) document.documentElement.style.setProperty('--asset-panel-texture', `url("${manifest.panelTexture}")`);
+    if (validPath(manifest.menuBackground)) document.documentElement.style.setProperty('--asset-menu-background', `url("${manifest.menuBackground}")`);
+    if (validPath(manifest.levelCardBackground)) document.documentElement.style.setProperty('--asset-level-card-background', `url("${manifest.levelCardBackground}")`);
+    if (validPath(manifest.buttonTexture)) document.documentElement.style.setProperty('--asset-button-texture', `url("${manifest.buttonTexture}")`);
   } catch {
     // Optional art never prevents the game from starting.
   }

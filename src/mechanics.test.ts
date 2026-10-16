@@ -151,3 +151,19 @@ test('spikes and laser beams are hazards to the player only', () => {
   assert.equal(isPlayerHazardAt(hazardLevel, objects, { q: 2, r: 0, h: 0 }), true, 'laser beams threaten the player');
   assert.equal(isPlayerHazardAt(hazardLevel, objects, { q: 3, r: 1, h: 0 }), false, 'cells outside the beam are safe');
 });
+
+
+test('gloves unlock walking while carrying but are not needed without attached blocks', async () => {
+  const { canWalkWhileCarrying } = await import('./mechanics.ts');
+  assert.equal(canWalkWhileCarrying(0, 0), true);
+  assert.equal(canWalkWhileCarrying(1, 0), false);
+  assert.equal(canWalkWhileCarrying(2, 1), true);
+});
+
+test('belt pickup is required to rotate an assembly containing a heavy block', async () => {
+  const { canRotateAssembly } = await import('./mechanics.ts');
+  assert.equal(canRotateAssembly([{ type: 'block', kind: 'standard' }], 0), true);
+  assert.equal(canRotateAssembly([{ type: 'block', kind: 'heavy' }], 0), false);
+  assert.equal(canRotateAssembly([{ type: 'block', kind: 'heavy' }], 1), true);
+  assert.equal(canRotateAssembly([{ type: 'block', kind: 'standard' }, { type: 'block', kind: 'heavy' }], 0), false);
+});

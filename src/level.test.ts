@@ -34,6 +34,7 @@ test('advanced lab showcases heavy plates, fragile blocks and spike hazards', ()
   assert.ok(level.objects.some(o => o.type === 'block' && o.kind === 'heavy'));
   assert.ok(level.objects.some(o => o.type === 'block' && o.kind === 'fragile'));
   assert.ok(level.objects.some(o => o.type === 'spikes'));
+  assert.ok(level.objects.some(o => o.type === 'belt'), 'advanced lab demonstrates the belt pickup');
   assert.equal(level.objects.find(o => o.id === 'plate-heavy')?.kind, 'heavyOnly');
 });
 
@@ -65,4 +66,11 @@ test('tutorial levels advertise their mechanics and include authored hints and s
   assert.equal(fragile.board.cells.find(cell => cell.q === 1 && cell.r === 0)?.kind, 'fragile');
   assert.ok(fragile.metadata.mechanics?.includes('Fragile floor'));
   assert.ok(fragile.metadata.solution);
+});
+
+
+test('belt pickup is a valid collectible object type on a board cell', () => {
+  const level = normalizeLevel(readLevel('blank-canvas.json'));
+  level.objects.push({ id: 'belt-1', type: 'belt', q: 0, r: 0, h: 0, active: false });
+  assert.deepEqual(validateLevel(level), []);
 });

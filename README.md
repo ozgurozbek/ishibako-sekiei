@@ -89,9 +89,9 @@ This remains a prototype rather than a production game. Laser tracing and receiv
 
 Open **Level editor** and select **Load mechanics showcase** to load `levels/mechanics-showcase.json` directly. It contains the current showcase puzzle and can also be exported as JSON.
 
-The editor's **Quick connections** panel supports drag-and-drop links: drag a plate, receiver or key chip onto a gate/bridge target, or drag one lift onto another lift to create a reciprocal pair. Select a laser emitter or mirror in the scene and use **Rotate selected laser / mirror** or press `R` to cycle its six hex directions.
+The editor's **Quick connections** panel supports drag-and-drop links: drag a plate, receiver, gloves or switch chip onto a gate/bridge target, or drag one lift onto another lift to create a reciprocal pair. Select a laser emitter or mirror in the scene and use **Rotate selected laser / mirror** or press `R` to cycle its six hex directions.
 
-WASD and arrow keys are camera-relative, and the direction mapping appears below the movement controls. Collect a key before attaching blocks if you want to walk while carrying them. Collected keys can be linked to gates and bridges.
+WASD and arrow keys are camera-relative, and the direction mapping appears below the movement controls. Collect gloves before walking while carrying attached blocks. Legacy `key` objects now render as gloves and remain compatible with existing level JSON. Collect a belt pickup before rotating an assembly containing a heavy block.
 
 
 The Batch 7 automated suite contains 19 tests, including level validation and a check that the mechanics showcase includes the expected mechanic families. Run it with `npm test`.
@@ -109,7 +109,7 @@ The Batch 7 automated suite contains 19 tests, including level validation and a 
 
 When a level is completed, the completion dialog offers **Download run recording**. The exported `ishibako-run-recording` JSON contains the original level, timestamps, action names, and the player/object/attachment state after each action. Undo and redo are included in the timeline. This is a compact solution record, not a video file.
 
-The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the editor and choose **Load mechanics showcase**. It demonstrates a key-gated attachment flow, two pressure plates controlling one gate, a plate-enabled lift, multiple elevations, a collectible summit key, a block dropped through a gap onto a lower plate, a laser and mirror, receiver-linked bridge, switch-controlled gate, conveyor, paired teleporters, fragile floor, and glued blocks. The showcase sets `moveLimitEnabled` to `false` and `moveLimit` to `999`. Set `moveLimitEnabled` to `true` to enforce the numeric move limit.
+The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the editor and choose **Load mechanics showcase**. It demonstrates a gloves-gated attachment flow, two pressure plates controlling one gate, a plate-enabled lift, multiple elevations, a collectible summit gloves pickup, a block dropped through a gap onto a lower plate, a laser and mirror, receiver-linked bridge, switch-controlled gate, conveyor, paired teleporters, fragile floor, and glued blocks. The showcase sets `moveLimitEnabled` to `false` and `moveLimit` to `999`. Set `moveLimitEnabled` to `true` to enforce the numeric move limit.
 
 ### Added JSON fields and mechanics
 

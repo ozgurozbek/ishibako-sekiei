@@ -4,7 +4,7 @@
     "id": "clockwork-garden-grand-run",
     "name": "The Clockwork Garden: Grand Run",
     "author": "Ishibako Web",
-    "description": "A larger multi-elevation course. Collect the entry key, move the first prism onto Plate A to open the main gate, ride the enabled lift, collect the summit key, then carry the upper prism over the marked gap so it falls onto Plate C. Reach the summit exit. Explore the side branch for the laser, receiver, bridge, switch, conveyor, portal pair and fragile tile."
+    "description": "A larger multi-elevation course. Collect the entry gloves, move the first prism onto Plate A to open the main gate, ride the enabled lift, collect the summit gloves, then carry the upper prism over the marked gap so it falls onto Plate C. Reach the summit exit. Explore the side branch for the laser, receiver, bridge, switch, conveyor, portal pair and fragile tile."
   },
   "rules": {
     "moveLimit": 999,

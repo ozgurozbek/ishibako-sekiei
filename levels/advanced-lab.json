@@ -4,7 +4,12 @@
     "id": "advanced-lab",
     "name": "Advanced Mechanics Lab",
     "author": "Ishibako Web",
-    "description": "Collect the key, carry the heavy block onto the heavy-only plate, route around the spike hazard, and reach the gate. The fragile block above the gap demonstrates break-on-fall behavior."
+    "description": "Collect the gloves to carry the heavy block and the belt to rotate it. Put the heavy block on the heavy-only plate, route around the spike hazard, and reach the gate. The fragile block above the gap demonstrates break-on-fall behavior.",
+    "mechanics": [
+      "Gloves pickup",
+      "Belt pickup",
+      "Heavy-block rotation"
+    ]
   },
   "rules": {
     "moveLimit": 999,
@@ -244,6 +249,15 @@
       "r": 1,
       "h": 0,
       "color": "#ffe58a"
+    },
+    {
+      "id": "belt-rotation",
+      "type": "belt",
+      "q": -3,
+      "r": 1,
+      "h": 0,
+      "color": "#f2c45d",
+      "active": false
     },
     {
       "id": "spike-strip",

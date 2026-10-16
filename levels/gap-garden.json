@@ -4,7 +4,7 @@
     "id": "gap-garden",
     "name": "Gap Garden",
     "author": "Ishibako",
-    "description": "Use the pressure plate to extend the bridge, cross the gap, collect the key and reach the elevated exit."
+    "description": "Use the pressure plate to extend the bridge, cross the gap, collect the gloves and reach the elevated exit."
   },
   "rules": {
     "moveLimit": 999,
