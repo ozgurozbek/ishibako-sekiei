@@ -179,3 +179,25 @@ See `public/assets/README.md`, `public/assets/models/README.md`, and `ASSET_PIPE
 - Batch 15: tutorial/level metadata and catalogue polish.
 - Batch 16: terrain generation and biome prop variety, synthesized SFX cues, optional 3D model and 2D art manifests.
 - Batch 17 (this pass): full-window game UI, in-game menu/help/credits, editor grid and object dragging, colour-coded hover connections, JSON/scene sync, gameplay state isolation, gloves/belt pickups, heavy-block rotation rules, bridge direction previews, and completion collectible/move stats.
+
+
+## Batch 18 campaign atlas
+
+- Added a distinct full-window campaign screen with a hand-authored illustrated map, branching paths, region labels, shrine markers, completion states, available/locked states, and a selected-level detail panel. This interface has its own visual language and does not reuse the in-level 3D diorama presentation.
+- Campaign progression is data-driven in `src/campaign.ts`. Hand-authored map coordinates are independent of prerequisite logic. Nodes can have different branch lengths, multiple prerequisites at convergence points, and optional secret nodes that do not block the main route.
+- Players can select any unlocked node in any order. The main synthesis level requires all three mechanic routes to be completed. Campaign completion and best move counts persist in browser local storage, separately from level JSON.
+- Added two optional rotation challenge levels, `orbit-vault-01.json` and `orbit-vault-02.json`, with two-block and three-block assemblies that rotate onto multiple pressure plates. These are optional secret shrines, not prerequisites for the main route.
+- The campaign appears on initial launch. Completing a campaign level updates progress before the results dialog; Campaign Map returns to the newly updated atlas. The in-game menu can also reopen it.
+- Added JSON file drag-and-drop on the game window and a campaign import action. Imported levels run as custom sessions and do not unlock campaign nodes. Run recordings are rejected with guidance to use Open replay.
+- Added campaign graph tests for initial unlock state, branch selection, all-prerequisite convergence, secret routes, and best-move persistence.
+
+Latest automated suite: **52 tests passed, 0 failed**. All bundled level JSON files, including the new secret levels, pass level validation. A production TypeScript/Vite build and browser interaction pass remain outstanding because dependencies are not installed in this workspace; no claim is made that the campaign has been browser-tested.
+
+## Batch 18 remaining work
+
+1. Install dependencies in a network-enabled environment, run `npm run build`, and fix any genuine TypeScript or Vite issues.
+2. Browser-test the campaign atlas at desktop and mobile sizes, including map panning/zooming needs, node hit targets, selected-node panel layout, and progress persistence across refreshes.
+3. Playtest both Orbit Vault levels to confirm the rotation sequence and walkthroughs are understandable and solvable.
+4. Verify drag-and-drop JSON import from both the campaign overlay and active gameplay, including malformed JSON and run-recording files.
+5. Add more authored campaign levels for dedicated dragging, springs, teleporter, and gate teaching routes as those level designs are finalized. The current graph demonstrates branch/convergence logic using existing mechanics and levels; it is a framework, not the final campaign content count.
+6. Add a small minimap or pan/zoom controls if playtesting shows that the whole map is difficult to navigate on narrow screens.

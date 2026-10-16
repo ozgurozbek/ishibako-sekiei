@@ -150,3 +150,14 @@ Receiver activation now resolves to a stable state across linked gates before an
 - Added `public/assets/2d/manifest.json` for favicon, brand mark, stage background and panel texture, plus replaceable starter SVGs.
 - See `PROJECT_STATUS.md` for the full implementation inventory and prioritized remaining work, and `ASSET_PIPELINE.md` for the artist workflow.
 - `npm test` passes 43 tests. The production build remains unverified because dependency installation timed out in this workspace.
+
+
+## Batch 18: campaign atlas and secret shrines
+
+The game now opens on **The Shattered Paths**, a dedicated campaign atlas with its own illustrated-map presentation. Select any available shrine, review its mechanics, and enter it. Main-route convergence requires all three incoming branches to be completed. Optional Orbit Vault secret challenges branch off the rotation tutorial and do not block campaign progress.
+
+Campaign nodes, map positions, mechanics tags, and prerequisite links are authored in `src/campaign.ts`. Progress and best move counts are saved separately in browser local storage. New secret rotation levels live in `levels/orbit-vault-01.json` and `levels/orbit-vault-02.json`.
+
+Drag a valid level JSON file onto the game window to load it as a custom session, or use **Import level JSON** on the campaign map. Custom levels do not affect campaign unlocks. Use **Campaign Map** in the in-game menu or the completion dialog to return to the atlas.
+
+The campaign graph and secret levels are a first framework pass. Dedicated teaching levels for dragging, springs, teleporters, and gates remain planned content. See `PROJECT_STATUS.md` for verification limits and the next work items.

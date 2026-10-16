@@ -7,7 +7,7 @@ import type { Level } from './types.ts';
 const readLevel = (name: string) => JSON.parse(readFileSync(new URL(`../levels/${name}`, import.meta.url), 'utf8')) as Level;
 
 test('all shipped levels validate, including the mechanics showcase', () => {
-  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json', 'advanced-lab.json', 'plate-practice.json', 'fragile-footing.json']) {
+  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json', 'advanced-lab.json', 'plate-practice.json', 'fragile-footing.json', 'orbit-vault-01.json', 'orbit-vault-02.json']) {
     assert.deepEqual(validateLevel(normalizeLevel(readLevel(name))), [], `${name} should validate`);
   }
 });
@@ -73,4 +73,17 @@ test('belt pickup is a valid collectible object type on a board cell', () => {
   const level = normalizeLevel(readLevel('blank-canvas.json'));
   level.objects.push({ id: 'belt-1', type: 'belt', q: 0, r: 0, h: 0, active: false });
   assert.deepEqual(validateLevel(level), []);
+});
+
+
+test('secret orbit vaults teach one-step rotation of attached assemblies', () => {
+  for (const file of ['orbit-vault-01.json', 'orbit-vault-02.json']) {
+    const level = normalizeLevel(readLevel(file));
+    assert.deepEqual(validateLevel(level), []);
+    assert.equal(level.objects.filter(o => o.type === 'block').length, level.objectives.requiredPlateIds.length);
+    assert.ok(level.metadata.mechanics?.includes('Block rotation'));
+    assert.equal(level.rules.moveLimitEnabled, false);
+  }
+  assert.equal(normalizeLevel(readLevel('orbit-vault-01.json')).objects.filter(o => o.type === 'block').length, 2);
+  assert.equal(normalizeLevel(readLevel('orbit-vault-02.json')).objects.filter(o => o.type === 'block').length, 3);
 });
