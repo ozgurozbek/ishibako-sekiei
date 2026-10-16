@@ -27,3 +27,14 @@ button:active,.file-button:active{transform:translateY(1px);box-shadow:0 1px 0 r
 footer{padding-left:4px;padding-right:4px}
 @media(max-width:720px){.stage{border-radius:12px}.bottom{border-radius:12px}.bottom>div{padding-top:16px;padding-bottom:16px}.editor{padding:15px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Batch 6: themed diorama presentation and clearer authoring controls. */
+#environmentTheme{min-width:138px;max-width:170px;background:#0c1415;color:#d1e5d8;border:1px solid #355047;border-radius:8px;padding:9px;font:11px "DM Mono",monospace}
+.stage{box-shadow:0 22px 55px #0003,inset 0 1px #ffffff3d}
+#viewport canvas{touch-action:pan-y}
+.objective-line .status-icon{display:inline-grid;place-items:center;width:22px;height:22px;font-weight:800;transition:background .2s ease,color .2s ease,transform .2s ease}
+.objective-line .status-icon:not(:empty){color:#9fe4c9}
+.hint .move-bar{overflow:hidden;background:#293c35}
+.hint .move-bar span{transition:width .22s ease}
+@media(max-width:900px){#environmentTheme{max-width:100%}.editor-actions label{flex-wrap:wrap}}

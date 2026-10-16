@@ -1,22 +1,20 @@
-# Biome soundtrack layout
+# Biome soundtrack folders
 
-Add three audio files to each biome folder using these exact filenames:
+Put audio files directly inside a folder matching the biome/music folder. Number them `1.mp3`, `2.mp3`, `3.mp3`, and so on. You can have 3 to 8 tracks, or more. Supported formats are MP3, OGG, WAV, M4A, AAC, OPUS, and WEBM. The game scans the files actually present and selects by level seed modulo the available track count. Keep the same folder contents and seed if you want the same level to use the same song.
+
+Example:
 
 ```text
 public/music/
   meadow/1.mp3
   meadow/2.mp3
   meadow/3.mp3
-  hills/1.mp3
-  hills/2.mp3
-  hills/3.mp3
-  temple/1.mp3
-  temple/2.mp3
-  temple/3.mp3
-  lavaLake/1.mp3
-  lavaLake/2.mp3
-  lavaLake/3.mp3
+  meadow/4.ogg
+  snowMountain/1.mp3
+  snowMountain/2.mp3
+  medievalCastle/1.mp3
+  smallVillage/1.mp3
+  witchHut/1.mp3
 ```
 
-The runtime selects one track deterministically from the level seed:
-`((seed % 3) + 3) % 3 + 1`. A given level seed and music folder therefore always resolve to the same track. By default, the folder is the exact `environment.type` string. Set `environment.musicFolder` in JSON to override it. The repository includes routing and fallback messaging, but not the user's actual music tracks yet.
+`npm run dev` watches the folders and refreshes `catalog.json` when tracks are added or removed. `npm run build` records the tracks present at build time. No real soundtrack files are bundled in this project copy; `.gitkeep` files only preserve the empty folders.

@@ -1,6 +1,6 @@
 # Ishibako: Hexbound
 
-**Batch 5: presentation and animation pass.** This pass adds a soft cel-shaded look, a friendlier player character, biome-tinted atmosphere, and eased movement transitions. See `BATCH5.md` for details.
+**Batch 6: themed presentation and expandable soundtrack routing.** Eight environment themes are supported, and a Vite plugin scans biome music folders to discover the available numbered tracks. See `BATCH5.md` and `BATCH6.md` for the presentation history.
 
 A browser-based 3D hex puzzle prototype built with Three.js and TypeScript. The board, objects and mechanisms are data-driven, and levels can be imported/exported as JSON. Materials use colors and procedural geometry rather than texture maps. A four-step gradient map creates a lightweight toon-shaded, toy-diorama style.
 
@@ -29,8 +29,12 @@ npm run preview
 - Space: detach all attached blocks.
 - Ctrl/Cmd+Z and Ctrl/Cmd+Y: undo and redo.
 - Drag to orbit the camera; scroll to zoom.
-- Music: click **Music: off** to play the deterministic biome track. Each environment selects `1.mp3`, `2.mp3`, or `3.mp3` from `public/music/<musicFolder>/` using `((seed % 3) + 3) % 3 + 1`, so a given biome and level seed always choose the same track. By default, `musicFolder` is the environment `type`; set `environment.musicFolder` when the folder name differs. Use **Load music** to audition a local file for the current session. A loaded level resets the custom override and selects its own biome track. Browser playback begins only after a user gesture.
+- Music: click **Music: off** to play the deterministic biome track. The Vite music-catalog plugin scans each folder and lists supported audio files (`.mp3`, `.ogg`, `.wav`, `.m4a`, `.aac`, `.opus`, `.webm`) in `public/music/catalog.json`. A level selects one of the discovered files using its seed modulo the number of available tracks. Add `1.mp3` through `8.mp3`, or more numbered files, without changing code. The catalog refreshes when audio files are added or removed while the dev server is running. By default, `musicFolder` is the environment `type`; set `environment.musicFolder` when the folder name differs. Use **Load music** to audition a local file for the current session. Browser playback begins only after a user gesture.
 - SFX toggle: enable or disable generated sound effects.
+
+## Environment themes
+
+Supported `environment.type` values are `meadow`, `hills`, `temple`, `lavaLake`, `snowMountain`, `medievalCastle`, `smallVillage`, and `witchHut`. The Level editor has a Biome selector to change the scenery without changing puzzle geometry. Each theme uses seeded decorative geometry, a matching sky/fog/ground palette, and subtle floating motes. Theme scenery is visual-only and does not affect puzzle collision.
 
 ## Included levels
 
@@ -68,9 +72,9 @@ npm test
 - A small shared gradient texture quantizes lighting into four pastel bands for toon shading. It is a lighting ramp, not a surface texture map.
 - The player has a simple face and blush accents; board pieces retain clean hexagonal silhouettes.
 - Movement and lift transfers ease between grid positions over a short interval. Puzzle logic remains discrete and resolves before the visual tween.
-- Meadow and hills biomes include sparse stylized flowers. The environment remains decorative and never participates in puzzle collision.
+- Meadow and hills include flowers and trees; temple includes sandstone columns; snow mountain has icy peaks; medieval castle has stone towers; small village has cottages; witch hut has a crooked cabin and dark trees; lava lake uses glowing rings. Scenery remains decorative and never participates in puzzle collision. Subtle motes drift in every theme.
 - Reduced-motion preferences disable CSS transitions. Three.js movement easing remains brief and can be disabled in a future accessibility setting.
 
 ## Current limits
 
-This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Biome music playback expects three numbered audio files in each biome folder. No actual soundtrack files were present in the project workspace when this batch was packaged, so only the deterministic music routing is included. Browser automation and a full production build could not be run in the current environment because package installation timed out.
+This remains a prototype rather than a production game. Laser tracing and receiver detection are deterministic, receivers can be required objectives and can activate linked gates/bridges, but arbitrary multi-step logic graphs are not yet supported. Laser paths are visualized and block entry into traced cells. The editor has JSON-based property editing rather than dedicated property panels. Gravity uses explicit unsupported cells rather than a full physical support graph. Lift transfer is a discrete action, not an animated elevator sequence. Biome music playback scans the files actually present in each biome folder and selects deterministically from that list. No actual soundtrack files were present in the project workspace when this batch was packaged, so the catalog is empty until audio is added. Browser automation and a full production build could not be run in the current environment because package installation timed out.
