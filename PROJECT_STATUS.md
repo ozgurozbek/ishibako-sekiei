@@ -1,9 +1,9 @@
 # Ishibako: Sekiei — Complete Project Status
 
-**Status snapshot:** Batch 19, 15 October 2026  
+**Status snapshot:** Batch 27, 17 October 2026  
 **Purpose:** One reference for the implemented app, known limitations, verification status, asset conventions, and remaining release work.
 
-This report describes the current source tree and its tests. “Implemented” means a code path exists; it does not imply every edge case has been browser-tested. The project has not yet passed a complete production build or end-to-end browser regression in this workspace because package installation timed out and the Three.js/Vite dependencies were unavailable.
+This report describes the current source tree and its tests. “Implemented” means a code path exists; it does not imply every edge case has been browser-tested. As of Batch 27, the project has a verified production build and a passing headless-browser smoke test (see Batch 27 update below). Earlier batches could not get past `npm install` because this workspace had no Node.js installation at all, not a network issue as previously assumed.
 
 ## Executive summary
 
@@ -238,3 +238,21 @@ Fixed the startup DOM exception caused by appending the removed bottom bar, whic
 
 ## Batch 26 update
 Ice ground now slides moved blocks across consecutive ice tiles until a non-ice tile or obstacle, with unsupported edge movement left to gravity. Fire blocks destroy any block occupying their cell, allowing glued assemblies to be decoupled by destroying individual members. Mirrors are solid to player and block movement. The editor can paint ice ground and place fire blocks. UI typography and button sizes were increased. Automated tests: 60 passed. Production build and browser testing remain outstanding.
+
+## Batch 27 update — P0 resolved: verified build and browser pass
+
+Root cause of every prior "install timed out" / "dependencies unavailable" note in this document: **this workspace had no Node.js installation**, so `npm`/`node` were not on `PATH` at all. This was never a network or registry problem.
+
+Actions taken:
+- Installed Node.js 24.20.0 LTS (`winget install OpenJS.NodeJS.LTS`), which also permanently added `C:\Program Files\nodejs` to the machine `PATH` for future shells.
+- Ran `npm install`. One postinstall script (`esbuild@0.25.12`, which fetches its platform-specific native binary) was held back by npm's install-scripts allowlist; approved it via `npm install-scripts approve esbuild`. npm persisted this approval into `package.json`'s `allowScripts` field, so it is honored automatically on every future `npm install`/`npm ci` without manual steps.
+- Added an `engines` field to `package.json` (`node: "^18.0.0 || ^20.0.0 || >=22.0.0"`, matching Vite's own requirement) so a future mismatched Node version fails with a clear message instead of a confusing error.
+- `npm test`: 60/60 passed, unchanged.
+- `npm run build` (`tsc -b && vite build`) failed on its first real run with two genuine TypeScript errors in `src/main.ts`, both now fixed with no behavior change:
+  - The shared `mat()` material helper passed `flatShading:true` directly into `new THREE.MeshToonMaterial({...})`. `flatShading` is a real, working runtime property (confirmed in `three`'s own source), but the installed `@types/three@0.180.0` definitions omit it from `MeshToonMaterialParameters`. Fixed by constructing the material without it and setting it via `Object.assign(...)`, cast back to `THREE.MeshToonMaterial` so the exported `materials` record keeps its original type.
+  - The laser emitter's cone used `new THREE.MeshBasicMaterial({color, emissive, emissiveIntensity})`. `MeshBasicMaterial` is unlit and has never supported `emissive`/`emissiveIntensity` at runtime, so these were dead properties before this type-check ever ran; removed them with no visual change (the material was already rendering at full, lighting-independent brightness).
+- Verified a **clean install is fully reproducible**: deleted `node_modules`, ran `npm ci` (no manual script approval needed — honored `allowScripts` automatically), confirmed the `esbuild` native binary (`node_modules/@esbuild/win32-x64`) was installed, then reran `npm test` (60/60) and `npm run build` (succeeds) from that clean state.
+- Verified the production build **in an actual browser**, not just that it compiles: served `dist/` via `npm run preview`, drove it with Playwright + headless Chromium (`npx playwright install chromium`). Result: the main menu renders correctly (title, Start game, Level selector, Campaign map, etc.), clicking "Start game" loads the "First Light" tutorial level with a correctly rendered 3D hex scene (player character, prism block, gloves pickup, pressure plate, goal exit, meadow biome scenery), WASD movement works and the move counter updates correctly (`2 / 6`), and there were **zero browser console errors** throughout (only benign WebGL driver performance warnings).
+- This workspace is **not a git repository** (`git status` reports "not a git repository"). Twenty-seven batches of work currently have no version history or backup beyond the files on disk — worth flagging to the user as a separate decision; not acted on here since it wasn't requested.
+
+Everything in the former "P0 — Establish a verified build" section is now complete for this workspace. The next priorities are P1 (gameplay/editor/replay regression testing in the browser) as listed below, which have not yet been exercised beyond this one smoke test.
