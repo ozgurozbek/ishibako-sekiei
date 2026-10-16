@@ -26,12 +26,18 @@ export function validateLevel(l:Level):string[] {
   const errors:string[]=[];
   if(!l.metadata?.name) errors.push('Level needs a name.');
   if(!Array.isArray(l.board?.cells)||!l.board.cells.length) errors.push('Board needs at least one cell.');
-  if(!l.objects?.some(o=>o.type==='player')) errors.push('Place one player spawn.');
+  if((l.objects??[]).filter(o=>o.type==='player').length!==1) errors.push('Place exactly one player spawn.');
   if(!l.objects?.some(o=>o.type==='goal')) errors.push('Place a goal.');
   const ids=new Set<string>(); for(const o of l.objects??[]){if(ids.has(o.id))errors.push(`Duplicate object id: ${o.id}`);ids.add(o.id);}
+  const cellKeys=new Set<string>();
+  for(const c of l.board.cells??[]){const k=`${c.q},${c.r},${c.h}`;if(cellKeys.has(k))errors.push(`Duplicate board cell: ${k}`);cellKeys.add(k);}
   for(const id of l.objectives?.requiredPlateIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='plate')) errors.push(`Required plate not found: ${id}`);
   if(l.objectives?.goalId&&!l.objects.some(o=>o.id===l.objectives.goalId&&o.type==='goal')) errors.push('Objective goalId does not reference a goal.');
-  const cells=new Set(l.board.cells.map(c=>`${c.q},${c.r},${c.h}`));
-  for(const o of l.objects??[]) if(['player','block','goal','plate','wall','lift','bridge'].includes(o.type)&&!cells.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
+  const solidKeys=new Set<string>();
+  for(const o of l.objects??[]){
+    if(['player','block','goal','plate','wall','lift','bridge','gate','switch'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
+    if(['block','wall','lift','bridge','gate'].includes(o.type)){const k=`${o.q},${o.r},${o.h}`;if(solidKeys.has(k))errors.push(`Multiple solid objects occupy ${k}.`);solidKeys.add(k);}
+    if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&p.type==='plate')) errors.push(`${o.id} linkedTo must reference a pressure plate.`);
+  }
   return [...new Set(errors)];
 }

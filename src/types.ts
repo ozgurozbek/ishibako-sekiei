@@ -1,6 +1,6 @@
 export type Hex = { q:number; r:number; h:number };
-export type Cell = Hex & { kind?: 'normal'|'wall'|'void'; color?: string };
-export type LevelObject = Hex & { id:string; type:'player'|'block'|'plate'|'goal'|'wall'|'lift'|'laser'|'mirror'|'bridge'; kind?:string; color?:string; attached?:boolean; assemblyId?:string; active?:boolean };
+export type Cell = Hex & { kind?: 'normal'|'wall'|'void'; color?: string; support?: boolean };
+export type LevelObject = Hex & { id:string; type:'player'|'block'|'plate'|'goal'|'wall'|'lift'|'laser'|'mirror'|'bridge'|'gate'|'switch'; kind?:string; color?:string; attached?:boolean; assemblyId?:string; active?:boolean; linkedTo?:string };
 export type Level = { version:number; metadata:{id:string;name:string;author?:string;description?:string}; rules:{moveLimit:number;rotationsCostMoves:boolean;gravity:boolean}; board:{radius:number;cellSize:number;cells:Cell[]}; objects:LevelObject[]; environment:{type:string;seed:number;radius:number;density:number;palette?:string}; presentation?:Record<string,unknown>; objectives:{requiredPlateIds:string[];goalId:string} };
 export const key = (p:Hex) => `${p.q},${p.r},${p.h}`;
 export const xyKey = (q:number,r:number,h:number) => `${q},${r},${h}`;

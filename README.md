@@ -4,7 +4,7 @@ A browser-based, color-material prototype for a minimalist 3D hex puzzle game. T
 
 ## Requirements
 
-- Node.js 20 or newer recommended
+- Node.js 20 or newer for the game; Node.js 22.6+ for the built-in TypeScript test runner
 - npm
 - A modern browser with WebGL
 
@@ -47,7 +47,7 @@ Top-level fields:
 
 Hex coordinates use axial `(q,r)` coordinates. World coordinates are derived from those values. Elevation is `h`. Cells and decorative environment are independent: scenery is render-only and does not participate in puzzle collision.
 
-The editor validates JSON syntax, required entities, duplicate IDs, objective references and object positions against board cells. It is a JSON authoring panel rather than a full drag-and-drop tile painter in this prototype.
+The editor supports both JSON authoring and basic board-canvas editing. Choose a canvas tool, then click a tile: place/move objects, erase a tile, or add a tile one hex east of the clicked tile. The elevation field selects the target height for editor operations. JSON validation checks required entities, duplicate IDs and cells, objective references, solid-object overlaps, linked plate references, and object positions.
 
 ## Implemented prototype features
 
@@ -57,6 +57,11 @@ The editor validates JSON syntax, required entities, duplicate IDs, objective re
 - Pressure plate and exit objectives.
 - Block collision checks and optional simple downward gravity.
 - JSON import, apply, validate and export.
+- Gameplay undo/redo (toolbar buttons or Ctrl/Cmd+Z and Ctrl/Cmd+Y), including walking, attachment and rotation.
+- Deterministic simulation helpers with tests for axial rotation and unsupported-block gravity.
+- Basic visual board editor for adding cells, removing cells, moving the spawn, and placing blocks, plates, exits, walls, gates, lifts and bridges.
+- Pressure-plate-linked gates and retractable bridges using each mechanism's `linkedTo` plate ID.
+- Gravity handling for cells explicitly marked `support: false`; blocks fall to the highest lower supported cell or are removed if no landing exists.
 - Seeded meadow, hills, temple and lava-lake decorative palettes.
 - Procedural geometric player/block/plate/goal visuals, emissive accents and animated details.
 - Generated Web Audio click/step/rotation feedback and sound toggle.
@@ -64,13 +69,13 @@ The editor validates JSON syntax, required entities, duplicate IDs, objective re
 
 ## Prototype limitations
 
-This is a functional starter project, not a finished commercial game. Attachment rotation is a simple axial-grid transform; complex multi-block collision shapes, full rigid assemblies, dynamic gates, laser logic, lift routing, undo/redo, advanced gravity/support analysis, level solvability proofs, and a full visual tile-painting editor are not implemented. Object types such as `wall`, `lift`, `bridge`, `laser`, and `mirror` have basic visual placeholders only. The current gravity routine is intentionally conservative and should be replaced with a full support graph before authoring multi-storey production levels. The included example uses one elevation and is designed to be completed using the controls above.
+This is a functional starter project, not a finished commercial game. Attachment rotation is a simple axial-grid transform; complex multi-block rigid assembly collision, laser reflection logic, lift routing, a dedicated height-layer painting view, and level solvability proofs are not implemented. The canvas editor is intentionally basic. Gravity only reacts to cells explicitly marked `support: false`; it is not a full physical support solver. Object types such as `wall`, `lift`, `bridge`, `laser`, and `mirror` have basic visual placeholders only. The current gravity routine is intentionally conservative and should be replaced with a full support graph before authoring multi-storey production levels. The included example uses one elevation and is designed to be completed using the controls above.
 
 ## Suggested next engineering steps
 
-1. Move state transitions into a pure deterministic simulation module with unit tests.
-2. Add transaction-based undo and redo.
-3. Formalize vertical support, falls, voids and collision for assemblies.
-4. Implement mechanism graph updates for plates, gates, lifts, lasers and mirrors.
-5. Add a visual editor for board cells, elevations and object placement.
-6. Add browser test coverage and accessibility improvements.
+1. Move all player, assembly and mechanism transitions into the deterministic simulation module.
+2. Add true rigid assemblies for glued blocks and exhaustive collision validation for rotated groups.
+3. Add lift routing and laser emitter, mirror and receiver logic.
+4. Add browser-level interaction tests and keyboard/screen-reader accessibility checks.
+5. Add a visual height-layer inspector and richer object property controls to the editor.
+6. Add a solvability checker for small levels and a set of multilevel sample puzzles.
