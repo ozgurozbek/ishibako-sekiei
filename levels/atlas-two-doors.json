@@ -1,0 +1,394 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "atlas-two-doors",
+    "name": "Two Doors",
+    "author": "ChatGPT (OpenAI)",
+    "description": "Use the paired portals to cross the island without walking through the central wall.",
+    "difficulty": "Campaign",
+    "mechanics": [
+      "Teleporters",
+      "Route planning"
+    ],
+    "hint": "Step onto either portal to emerge from its linked partner. The wall is decorative route pressure; portals are the shortcut.",
+    "solution": "Move east onto portal A at (-1,0), teleport to portal B at (2,0), then step to the exit at (2,-1)."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": -2,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "portal-a",
+      "type": "teleporter",
+      "q": -1,
+      "r": 0,
+      "h": 0,
+      "linkedTo": "portal-b",
+      "color": "#a89bff"
+    },
+    {
+      "id": "portal-b",
+      "type": "teleporter",
+      "q": 2,
+      "r": 0,
+      "h": 0,
+      "linkedTo": "portal-a",
+      "color": "#a89bff"
+    },
+    {
+      "id": "wall",
+      "type": "wall",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "color": "#8da0ad"
+    },
+    {
+      "id": "exit",
+      "type": "goal",
+      "q": 2,
+      "r": -1,
+      "h": 0,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "snowMountain",
+    "seed": 8100,
+    "radius": 10,
+    "density": 0.65,
+    "palette": "mint"
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": false
+  },
+  "objectives": {
+    "requiredPlateIds": [],
+    "requiredReceiverIds": [],
+    "requiredKeyIds": [],
+    "goalId": "exit"
+  }
+}

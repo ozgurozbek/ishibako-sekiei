@@ -1,0 +1,406 @@
+{
+  "version": 1,
+  "metadata": {
+    "id": "atlas-double-drag",
+    "name": "The Double Draw",
+    "author": "ChatGPT (OpenAI)",
+    "description": "Attach two neighboring prisms and rotate the pair onto separate plates. Both plates must remain occupied to open the exit seal.",
+    "difficulty": "Campaign",
+    "mechanics": [
+      "Multi-block attachment",
+      "Assembly rotation",
+      "Pressure plates"
+    ],
+    "hint": "Attach both prisms before rotating. One clockwise rotation aligns the two prisms with the two plates.",
+    "solution": "Attach both adjacent prisms, rotate the assembly clockwise once, detach both blocks while on their plates, then reach the exit."
+  },
+  "rules": {
+    "moveLimit": 999,
+    "moveLimitEnabled": false,
+    "rotationsCostMoves": false,
+    "gravity": true
+  },
+  "board": {
+    "radius": 4,
+    "cellSize": 1,
+    "cells": [
+      {
+        "q": -4,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -4,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -3,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -2,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": -1,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 0,
+        "r": 4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 1,
+        "r": 3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 2,
+        "r": 2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 0,
+        "h": 0
+      },
+      {
+        "q": 3,
+        "r": 1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -4,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -3,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -2,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": -1,
+        "h": 0
+      },
+      {
+        "q": 4,
+        "r": 0,
+        "h": 0
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "player",
+      "type": "player",
+      "q": 0,
+      "r": 0,
+      "h": 0,
+      "color": "#f3f1e8"
+    },
+    {
+      "id": "prism-a",
+      "type": "block",
+      "q": 1,
+      "r": 0,
+      "h": 0,
+      "kind": "standard",
+      "color": "#f0b45b"
+    },
+    {
+      "id": "prism-b",
+      "type": "block",
+      "q": 0,
+      "r": -1,
+      "h": 0,
+      "kind": "standard",
+      "color": "#e8a66a"
+    },
+    {
+      "id": "plate-a",
+      "type": "plate",
+      "q": 0,
+      "r": 1,
+      "h": 0,
+      "color": "#5de0c1"
+    },
+    {
+      "id": "plate-b",
+      "type": "plate",
+      "q": 1,
+      "r": -1,
+      "h": 0,
+      "color": "#7bd9c7"
+    },
+    {
+      "id": "exit",
+      "type": "goal",
+      "q": -2,
+      "r": 1,
+      "h": 0,
+      "color": "#a6a1ff"
+    }
+  ],
+  "environment": {
+    "type": "temple",
+    "seed": 8100,
+    "radius": 10,
+    "density": 0.65,
+    "palette": "mint"
+  },
+  "presentation": {
+    "camera": "isometric",
+    "showCoordinates": false
+  },
+  "objectives": {
+    "requiredPlateIds": [
+      "plate-a",
+      "plate-b"
+    ],
+    "requiredReceiverIds": [],
+    "requiredKeyIds": [],
+    "goalId": "exit"
+  }
+}

@@ -1,15 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { normalizeLevel, validateLevel } from './level.ts';
 import type { Level } from './types.ts';
 
 const readLevel = (name: string) => JSON.parse(readFileSync(new URL(`../levels/${name}`, import.meta.url), 'utf8')) as Level;
 
-test('all shipped levels validate, including the mechanics showcase', () => {
-  for (const name of ['blank-canvas.json', 'first-steps.json', 'gap-garden.json', 'plate-and-lift.json', 'example.json', 'mechanics-lab.json', 'mechanics-showcase.json', 'advanced-lab.json', 'plate-practice.json', 'fragile-footing.json', 'orbit-vault-01.json', 'orbit-vault-02.json']) {
-    assert.deepEqual(validateLevel(normalizeLevel(readLevel(name))), [], `${name} should validate`);
-  }
+test('all shipped levels validate, including the mechanics showcase and campaign atlas', () => {
+  const files = readdirSync(new URL('../levels/', import.meta.url)).filter((name) => name.endsWith('.json'));
+  for (const name of files) assert.deepEqual(validateLevel(normalizeLevel(readLevel(name))), [], `${name} should validate`);
 });
 
 test('mechanics showcase includes the planned mechanic families', () => {
@@ -86,4 +85,16 @@ test('secret orbit vaults teach one-step rotation of attached assemblies', () =>
   }
   assert.equal(normalizeLevel(readLevel('orbit-vault-01.json')).objects.filter(o => o.type === 'block').length, 2);
   assert.equal(normalizeLevel(readLevel('orbit-vault-02.json')).objects.filter(o => o.type === 'block').length, 3);
+});
+
+test('new Cartographer campaign levels carry explicit campaign authorship and walkthrough metadata', () => {
+  const files = readdirSync(new URL('../levels/', import.meta.url)).filter(name => name.startsWith('atlas-') && name.endsWith('.json'));
+  assert.equal(files.length, 16);
+  for (const file of files) {
+    const level = normalizeLevel(readLevel(file));
+    assert.equal(level.metadata.author, 'ChatGPT (OpenAI)', `${file} should credit the campaign author`);
+    assert.ok(level.metadata.mechanics?.length, `${file} should declare its mechanics`);
+    assert.ok(level.metadata.hint, `${file} should have a hint`);
+    assert.ok(level.metadata.solution, `${file} should have a proposed solution`);
+  }
 });

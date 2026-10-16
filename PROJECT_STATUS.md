@@ -1,13 +1,13 @@
 # Ishibako: Hexbound — Complete Project Status
 
-**Status snapshot:** Batch 17, 15 October 2026  
+**Status snapshot:** Batch 19, 15 October 2026  
 **Purpose:** One reference for the implemented app, known limitations, verification status, asset conventions, and remaining release work.
 
 This report describes the current source tree and its tests. “Implemented” means a code path exists; it does not imply every edge case has been browser-tested. The project has not yet passed a complete production build or end-to-end browser regression in this workspace because package installation timed out and the Three.js/Vite dependencies were unavailable.
 
 ## Executive summary
 
-The project is a playable, single-player browser prototype for a small 3D hex-grid puzzle game. It has a JSON level format, a visual level editor, a suite of puzzle mechanisms, multiple procedural biomes, level selection, run recording/replay, and automated tests. Batch 16 expanded the distant terrain and biome props and established optional manifest-driven asset slots. Batch 17 moves the app to a full-window game presentation and improves editor object manipulation, elevation-aware placement, connection visualisation, state isolation, pickup rules, and completion stats.
+The project is a playable, single-player browser prototype for a small 3D hex-grid puzzle game. It has a JSON level format, a visual level editor, a suite of puzzle mechanisms, multiple procedural biomes, level selection, run recording/replay, and automated tests. Batch 16 expanded the distant terrain and biome props and established optional manifest-driven asset slots. Batch 17 moves the app to a full-window game presentation and improves editor object manipulation, elevation-aware placement, connection visualisation, state isolation, pickup rules, and completion stats. Batch 18 adds the illustrated campaign atlas. Batch 19 adds a second full campaign, sixteen new level files, campaign-specific progress, and automatic discovery of bundled level JSON.
 
 The highest-priority outstanding work is verification of the complete application, not a new architecture: install dependencies, run the production build, launch in a browser, then systematically test gameplay, editor, replay, audio, fullscreen, and custom asset loading.
 
@@ -52,6 +52,17 @@ Known limitation: this is not yet a general-purpose logic graph engine. Some mec
 - Hovered connections are shown as dotted colour-coded lines; hovered grid cells show `(q, r, h)`.
 
 Remaining editor work: validate the new drag workflow in a real browser, make validation navigation cover every error type, broaden the property inspector, test unfamiliar custom JSON round trips, and add a clear prompt for discarding or preserving unsaved edits when changing levels.
+
+### Campaign atlas and content — two data-driven campaigns
+
+- The Shattered Paths remains the original 10-node campaign. The Cartographer's Trials adds an 18-node campaign with a prologue, three branches of three levels each, a convergence requiring all branch endpoints, two synthesis levels, a finale, and two optional secret challenges.
+- Players may choose any currently unlocked node. Branches may be completed in any order; convergence prerequisites are all-required. Secret nodes never block the main route.
+- The campaign selector changes the atlas title, tagline, region labels, and graph. Each campaign has an independent local-storage save and best-move record. The old v1 campaign save is migrated into The Shattered Paths if no v2 save exists.
+- Sixteen new JSON levels cover movement, block rotation, heavy blocks and belt pickup, multi-block rotation, switches/gates, lasers/receivers, paired teleporters, linked lifts, conveyors, fragile floors, AND-gates, and synthesis puzzles. New level files are credited to ChatGPT (OpenAI) · Campaign Design.
+- Bundled levels are discovered through Vite's JSON glob import, so a new level file can be added without a corresponding static import or hard-coded object-map entry.
+- `CAMPAIGN_AUTHORING.md` documents adding campaigns, nodes, levels, prerequisites, map coordinates, and save compatibility.
+
+The authored hints/solutions are proposed walkthroughs and should be confirmed through hands-on browser playtesting. Several combination levels require particular attention during the first manual pass.
 
 ### Run recording and replay — implemented, determinism verification remains
 
@@ -113,7 +124,7 @@ No external asset packs were included in this workspace, so the pipeline is prep
 
 ## Automated tests and build status
 
-Latest run in this workspace: **46 automated tests passed, 0 failed** (`npm test`). Tests cover audio selection, level validation, tutorial metadata, mechanics/laser/receiver behaviour, gravity and assemblies, hazard collision rules, replay parsing, and the new terrain profile functions.
+Latest run in this workspace: **55 automated tests passed, 0 failed** (`npm test`). Tests cover audio selection, level validation, tutorial metadata, mechanics/laser/receiver behaviour, gravity and assemblies, hazard collision rules, replay parsing, and the new terrain profile functions.
 
 A full TypeScript/Vite build could not be verified. `npm install` timed out; a global TypeScript check confirms the missing `three`, `vite/client`, and related declarations prevent meaningful compilation here. No claim is made that browser interactions or production bundling passed.
 
@@ -151,11 +162,11 @@ A full TypeScript/Vite build could not be verified. `npm install` timed out; a g
 
 ### P2 — Content and presentation
 
-1. Add more hand-designed levels with known solutions, gradually introducing one mechanic at a time.
-2. Run a solvability/playtest pass on each advertised walkthrough; current hints/solutions are authored metadata and should be checked by actually playing the level.
+1. Manually play every new Cartographer level and verify each advertised walkthrough, especially multi-source gates, elevation transfer, conveyor/fragile interactions, and the finale route.
+2. Add more hand-designed levels only after the current campaign is playtested and difficulty pacing is adjusted.
 3. Profile larger procedural worlds and tune terrain radius/density if necessary.
 4. Add dedicated mechanism animations, collection/fall/landing effects, volume controls, and optional authored SFX.
-5. Consider ice sliding, magnetic/spring blocks, timed mechanisms, and more complex laser logic only after the core regression pass.
+5. Consider ice sliding, spring blocks, timed mechanisms, and more complex laser logic only after the core regression pass.
 
 ### P3 — Release packaging
 
@@ -178,6 +189,8 @@ See `public/assets/README.md`, `public/assets/models/README.md`, and `ASSET_PIPE
 - Batch 14: player-only spike/laser hazard semantics, replay frame inspection, and replay validation refinements.
 - Batch 15: tutorial/level metadata and catalogue polish.
 - Batch 16: terrain generation and biome prop variety, synthesized SFX cues, optional 3D model and 2D art manifests.
+- Batch 18: illustrated campaign atlas, prerequisite graph, optional secret rotation shrines, independent campaign progress, and JSON drag-and-drop.
+- Batch 19: The Cartographer's Trials, sixteen new JSON levels, multiple campaign selection, campaign-isolated saves, automatic JSON level discovery, and campaign authoring documentation.
 - Batch 17 (this pass): full-window game UI, in-game menu/help/credits, editor grid and object dragging, colour-coded hover connections, JSON/scene sync, gameplay state isolation, gloves/belt pickups, heavy-block rotation rules, bridge direction previews, and completion collectible/move stats.
 
 

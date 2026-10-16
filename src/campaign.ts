@@ -47,3 +47,49 @@ export function nextAvailableNode(nodes: CampaignNode[], progress: CampaignProgr
 }
 
 export function initialCampaignProgress(): CampaignProgress { return { completed: [], bestMoves: {} }; }
+
+export type CampaignDefinition = {
+  id: string;
+  title: string;
+  tagline: string;
+  footerTitle: string;
+  footerTagline: string;
+  regionLabels: [string, string, string, string];
+  nodes: CampaignNode[];
+};
+
+const cartographerNodes: CampaignNode[] = [
+  { id: 'atlas-compass', title: 'The Compass Walk', subtitle: 'Learn the lay of the land', levelId: 'atlas-compass-run', x: 95, y: 555, region: 'THE GREEN REACH', mechanics: ['Movement', 'Collectibles'], requires: [] },
+  { id: 'atlas-prism', title: 'The Prism Lesson', subtitle: 'Turn a simple idea', levelId: 'atlas-prism-lesson', x: 210, y: 465, region: 'THE GREEN REACH', mechanics: ['Attachment', 'Rotation', 'Plates'], requires: ['atlas-compass'] },
+  { id: 'atlas-foundation', title: 'A Broken Causeway', subtitle: 'Make a route from pieces', levelId: 'gap-garden', x: 330, y: 380, region: 'THE SUNKEN ARCHIVE', mechanics: ['Bridges', 'Elevation', 'Gloves'], requires: ['atlas-prism'] },
+  { id: 'atlas-orbit', title: 'Orbit of the Pair', subtitle: 'Rotate a small assembly', levelId: 'orbit-vault-01', x: 445, y: 300, region: 'THE SUNKEN ARCHIVE', mechanics: ['Assembly rotation', 'Pressure plates'], requires: ['atlas-foundation'] },
+  { id: 'atlas-secret-triad', title: 'The Cartographer’s Triad', subtitle: 'Three prisms, one turn', levelId: 'atlas-secret-triad', x: 430, y: 125, region: 'THE SEALED OBSERVATORY', mechanics: ['Advanced rotation', 'Three-block assembly'], requires: ['atlas-orbit'], secret: true },
+
+  { id: 'atlas-heavy-1', title: 'Belt and Brawn', subtitle: 'Unlock the heavy prism', levelId: 'atlas-belt-and-brawn', x: 570, y: 160, region: 'IRONWOOD RIDGE', mechanics: ['Heavy blocks', 'Belt pickup'], requires: ['atlas-orbit'] },
+  { id: 'atlas-heavy-2', title: 'The Double Draw', subtitle: 'Rotate a pair together', levelId: 'atlas-double-drag', x: 650, y: 125, region: 'IRONWOOD RIDGE', mechanics: ['Multi-block attachment', 'Rotation'], requires: ['atlas-heavy-1'] },
+  { id: 'atlas-heavy-3', title: 'The Weight of Two', subtitle: 'Master both weights', levelId: 'atlas-weight-of-two', x: 720, y: 180, region: 'IRONWOOD RIDGE', mechanics: ['Heavy blocks', 'Multi-block rotation'], requires: ['atlas-heavy-2'] },
+
+  { id: 'atlas-signal-1', title: 'The Switchback', subtitle: 'Open the way', levelId: 'atlas-switchback', x: 530, y: 360, region: 'THE SIGNAL MARSH', mechanics: ['Toggle switches', 'Gates'], requires: ['atlas-orbit'] },
+  { id: 'atlas-signal-2', title: 'Lantern Line', subtitle: 'Send light across the marsh', levelId: 'atlas-lantern-line', x: 640, y: 370, region: 'THE SIGNAL MARSH', mechanics: ['Lasers', 'Receivers'], requires: ['atlas-signal-1'] },
+  { id: 'atlas-signal-3', title: 'Signal Confluence', subtitle: 'Satisfy two conditions', levelId: 'atlas-signal-confluence', x: 720, y: 330, region: 'THE SIGNAL MARSH', mechanics: ['Pressure plates', 'Lasers', 'AND-gates'], requires: ['atlas-signal-2'] },
+
+  { id: 'atlas-transit-1', title: 'Two Doors', subtitle: 'Take the impossible shortcut', levelId: 'atlas-two-doors', x: 530, y: 555, region: 'THE HIGH PASS', mechanics: ['Teleporters', 'Route planning'], requires: ['atlas-orbit'] },
+  { id: 'atlas-transit-2', title: 'The Lifted Verse', subtitle: 'Cross the vertical divide', levelId: 'atlas-lifted-verse', x: 640, y: 575, region: 'THE HIGH PASS', mechanics: ['Elevation', 'Linked lifts'], requires: ['atlas-transit-1'] },
+  { id: 'atlas-transit-3', title: 'Current and Crumble', subtitle: 'Keep moving forward', levelId: 'atlas-current-and-crumble', x: 720, y: 535, region: 'THE HIGH PASS', mechanics: ['Conveyors', 'Fragile floors'], requires: ['atlas-transit-2'] },
+
+  { id: 'atlas-seal', title: 'The Threefold Seal', subtitle: 'Every signal matters', levelId: 'atlas-threefold-seal', x: 750, y: 360, region: 'THE CONFLUENCE', mechanics: ['Rotation', 'Pressure plates', 'Lasers', 'AND-gates'], requires: ['atlas-heavy-3', 'atlas-signal-3', 'atlas-transit-3'] },
+  { id: 'atlas-machinery', title: 'Quiet Machinery', subtitle: 'Coordinate the moving parts', levelId: 'atlas-quiet-machinery', x: 800, y: 260, region: 'THE CONFLUENCE', mechanics: ['Multi-block rotation', 'Switches', 'Gates'], requires: ['atlas-seal'] },
+  { id: 'atlas-finale', title: 'A World in Miniature', subtitle: 'Everything you have learned', levelId: 'atlas-world-in-miniature', x: 850, y: 365, region: 'THE LAST ATLAS', mechanics: ['Heavy blocks', 'Teleporters', 'Gates', 'Exploration'], requires: ['atlas-machinery'], final: true },
+  { id: 'atlas-secret-no-turn', title: 'No Turning Back', subtitle: 'A fragile secret route', levelId: 'atlas-secret-no-turning-back', x: 800, y: 510, region: 'THE ASHEN MARGIN', mechanics: ['Fragile floors', 'Route planning'], requires: ['atlas-seal'], secret: true },
+];
+
+export const campaignDefinitions: CampaignDefinition[] = [
+  {
+    id: 'shattered-paths', title: 'The Shattered Paths', tagline: 'One world. Many ways through.', footerTitle: 'THE SHATTERED PATHS', footerTagline: 'Explore the routes. Master the mechanisms.',
+    regionLabels: ['THE LOWLANDS', 'THE OLD TEMPLE', 'MISTFALL / IRONWOOD', 'THE CONFLUENCE'], nodes: campaignNodes,
+  },
+  {
+    id: 'cartographers-trials', title: 'The Cartographer’s Trials', tagline: 'Chart every mechanism. Earn the final map.', footerTitle: 'THE CARTOGRAPHER’S TRIALS', footerTagline: 'Three routes diverge. Every route must return.',
+    regionLabels: ['THE GREEN REACH', 'THE SUNKEN ARCHIVE', 'IRONWOOD / SIGNAL MARSH', 'THE CONFLUENCE'], nodes: cartographerNodes,
+  },
+];

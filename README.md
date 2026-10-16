@@ -161,3 +161,12 @@ Campaign nodes, map positions, mechanics tags, and prerequisite links are author
 Drag a valid level JSON file onto the game window to load it as a custom session, or use **Import level JSON** on the campaign map. Custom levels do not affect campaign unlocks. Use **Campaign Map** in the in-game menu or the completion dialog to return to the atlas.
 
 The campaign graph and secret levels are a first framework pass. Dedicated teaching levels for dragging, springs, teleporters, and gates remain planned content. See `PROJECT_STATUS.md` for verification limits and the next work items.
+
+
+## Batch 19: The Cartographer's Trials
+
+A second campaign is now available from the campaign atlas selector: **The Cartographer's Trials**. It contains 18 nodes, including a prologue, three mechanic branches, an all-branches-required convergence, synthesis puzzles, a finale, and two optional secret shrines. The original **The Shattered Paths** campaign remains available with its own independent progress.
+
+Sixteen new JSON levels were added for movement, rotation, heavy blocks, multi-block assemblies, switches and gates, lasers and receivers, teleporters, lifts, conveyors, fragile floors, and combination challenges. New level metadata credits `ChatGPT (OpenAI) · Campaign Design`. Bundled JSON levels are discovered automatically, so adding a level file no longer requires editing a static import map.
+
+See `BATCH19.md`, `CAMPAIGN_AUTHORING.md`, and `PROJECT_STATUS.md` for the campaign layout, content inventory, authoring instructions, verification results, and playtest priorities.
