@@ -97,3 +97,21 @@ The Batch 7 automated suite contains 19 tests, including level validation and a 
 - Object picking now raycasts object meshes before board cells, avoiding tile-surface hits masking block clicks. Blocks also have clearer click affordance through the cursor.
 - The procedural field now uses layered hex prisms with separate top facets, a broader range of elevations, more intentional color variation, stronger near-field fog, and a distant themed silhouette ring. These are render-only and do not affect puzzle collision.
 - `npm test` passes all 19 tests. TypeScript syntax was inspected, but a complete typecheck/build could not finish because dependencies could not be installed in this environment.
+
+
+## Batch 9: run recordings and the Clockwork Garden
+
+When a level is completed, the completion dialog offers **Download run recording**. The exported `ishibako-run-recording` JSON contains the original level, timestamps, action names, and the player/object/attachment state after each action. Undo and redo are included in the timeline. This is a compact solution record, not a video file.
+
+The mechanics showcase is now **The Clockwork Garden: Grand Run**. Open the editor and choose **Load mechanics showcase**. It demonstrates a key-gated attachment flow, two pressure plates controlling one gate, a plate-enabled lift, multiple elevations, a collectible summit key, a block dropped through a gap onto a lower plate, a laser and mirror, receiver-linked bridge, switch-controlled gate, conveyor, paired teleporters, fragile floor, and glued blocks. The showcase sets `moveLimitEnabled` to `false` and `moveLimit` to `999`. Set `moveLimitEnabled` to `true` to enforce the numeric move limit.
+
+### Added JSON fields and mechanics
+
+- `rules.moveLimitEnabled`: set to `false` for no move limit; the numeric `moveLimit` remains available for display or later re-enabling.
+- `objectives.requiredKeyIds`: key IDs that must be collected before the exit can complete.
+- `linkedToAll`: a gate or bridge opens only when every referenced plate, receiver, key, or switch is active.
+- `enabledBy`: a lift can be paired to another lift through `linkedTo`, and separately enabled by a plate, receiver, key, or switch through `enabledBy`.
+- `conveyor` objects use `direction` from 0 to 5 and push a player one hex when stepped onto, if the next cell is clear.
+- Paired `teleporter` objects use reciprocal `linkedTo` IDs. They transfer the player and any attached blocks when entered.
+- Cells with `kind: "fragile"` collapse after the player leaves them. Cells with `support: false` are drawn as gaps and allow blocks to fall to a supported lower cell at the same axial coordinate.
+- Blocks sharing `assemblyId` form a glued rigid group. The render layer shows a badge, connector bar and rivet between members; attached blocks show warm tethers to the player.

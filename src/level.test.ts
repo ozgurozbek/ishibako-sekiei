@@ -15,9 +15,15 @@ test('all shipped levels validate, including the mechanics showcase', () => {
 test('mechanics showcase includes the planned mechanic families', () => {
   const level = normalizeLevel(readLevel('mechanics-showcase.json'));
   const types = new Set(level.objects.map((object) => object.type));
-  for (const type of ['player', 'key', 'block', 'plate', 'gate', 'bridge', 'lift', 'laser', 'mirror', 'receiver', 'wall', 'goal']) {
+  for (const type of ['player', 'key', 'block', 'plate', 'gate', 'bridge', 'lift', 'laser', 'mirror', 'receiver', 'wall', 'goal', 'switch', 'conveyor', 'teleporter']) {
     assert.ok(types.has(type as Level['objects'][number]['type']), `missing ${type}`);
   }
-  assert.ok(level.objects.filter((object) => object.type === 'block' && object.assemblyId === 'prism-pair').length >= 2);
+  assert.ok(level.objects.filter((object) => object.type === 'block' && object.assemblyId === 'garden-prism').length >= 2);
   assert.equal(level.objectives.requiredReceiverIds?.includes('receiver-west'), true);
+  assert.equal(level.rules.moveLimitEnabled, false);
+  assert.equal(level.rules.moveLimit, 999);
+  assert.deepEqual(level.objectives.requiredKeyIds, ['key-summit']);
+  assert.ok(level.board.cells.some((cell) => cell.support === false), 'showcase should contain visible gaps');
+  assert.ok(level.objects.some((object) => object.linkedToAll?.length === 2), 'showcase should include a multi-plate gate');
+  assert.ok(level.objects.some((object) => object.enabledBy === 'plate-b'), 'showcase lift should be plate-enabled');
 });

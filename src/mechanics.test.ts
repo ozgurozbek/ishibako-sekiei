@@ -82,3 +82,22 @@ test('a collected key opens a linked gate', () => {
   objects[0].active = true;
   assert.equal(isLinkedMechanismOpen(objects[1], objects), true);
 });
+
+
+test('multi-plate gates require every listed source to be active', () => {
+  const plateA: LevelObject = { id: 'a', type: 'plate', q: 0, r: 0, h: 0 };
+  const plateB: LevelObject = { id: 'b', type: 'plate', q: 1, r: 0, h: 0 };
+  const gate: LevelObject = { id: 'gate-all', type: 'gate', q: 2, r: 0, h: 0, linkedToAll: ['a', 'b'] };
+  const onePressed = [plateA, plateB, gate, { id: 'weight-a', type: 'block', q: 0, r: 0, h: 0 } as LevelObject];
+  assert.equal(isLinkedMechanismOpen(gate, onePressed), false);
+  onePressed.push({ id: 'weight-b', type: 'block', q: 1, r: 0, h: 0 });
+  assert.equal(isLinkedMechanismOpen(gate, onePressed), true);
+});
+
+test('a lift can be enabled by a pressure plate independently of its paired lift link', () => {
+  const plate: LevelObject = { id: 'plate', type: 'plate', q: 0, r: 0, h: 0 };
+  const lift: LevelObject = { id: 'lift', type: 'lift', q: 1, r: 0, h: 0, linkedTo: 'lift-top', enabledBy: 'plate' };
+  const top: LevelObject = { id: 'lift-top', type: 'lift', q: 1, r: 0, h: 1, linkedTo: 'lift' };
+  assert.equal(isLinkedMechanismOpen(lift, [plate, lift, top]), false);
+  assert.equal(isLinkedMechanismOpen(lift, [plate, lift, top, { id: 'weight', type: 'block', q: 0, r: 0, h: 0 }]), true);
+});

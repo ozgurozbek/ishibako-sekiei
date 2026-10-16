@@ -51,3 +51,12 @@ footer{padding-left:4px;padding-right:4px}
 #viewport canvas{cursor:default}
 .stage:has(.object-tooltip:not(.hidden)) .crosshair-note{opacity:.45}
 @media(max-width:720px){.object-tooltip{max-width:220px;min-width:155px;padding:9px 10px}.object-tooltip strong{font-size:11px}.object-tooltip span,.object-tooltip small{font-size:9px}}
+
+
+/* Batch 9: run recording completion dialog and clearer new-mechanic states. */
+.completion-modal{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:20px;background:rgba(5,13,11,.62);backdrop-filter:blur(9px)}
+.completion-card{width:min(440px,100%);padding:28px;border:1px solid #8fd5b55c;border-radius:20px;background:linear-gradient(145deg,#1d3930,#12231f);box-shadow:0 25px 80px #0007;color:#e8f5ec}
+.completion-card h2{margin:5px 0 10px;font-size:24px;letter-spacing:-.035em;color:#fff2d8}
+.completion-card p{font-size:13px;line-height:1.7;color:#adc9b9;margin:0 0 20px}
+.completion-actions{display:flex;flex-wrap:wrap;gap:9px}.completion-actions button:first-child{background:#9fe4c9;color:#163329;border-color:#b7f4d9;font-weight:800}.completion-actions .quiet{background:#1d302a;color:#c6dcd0}
+.object-tooltip small{display:block}.status-icon{transition:background .18s ease,transform .18s ease}.objective-line:has(#requiredKeyStatus:not(:empty)) #requiredKeyStatus{color:#ffe58a}

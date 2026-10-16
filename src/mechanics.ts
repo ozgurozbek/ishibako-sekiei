@@ -57,14 +57,21 @@ export function traceLaser(level: Level, objects: LevelObject[], laser: LevelObj
   return { cells, receiverIds: [...new Set(receiverIds)] };
 }
 
+export function isSourceActive(sourceId: string, objects: LevelObject[]): boolean {
+  const source = objects.find((o) => o.id === sourceId);
+  if (!source) return false;
+  if (source.type === 'plate') return objects.some((o) => o.type === 'block' && o.q === source.q && o.r === source.r && o.h === source.h);
+  if (source.type === 'receiver' || source.type === 'key' || source.type === 'switch') return !!source.active;
+  return false;
+}
+
 export function isLinkedMechanismOpen(mechanism: LevelObject, objects: LevelObject[]): boolean {
+  if (mechanism.type === 'lift' && mechanism.enabledBy) return isSourceActive(mechanism.enabledBy, objects);
+  if (mechanism.linkedToAll?.length) return mechanism.linkedToAll.every((id) => isSourceActive(id, objects));
   if (!mechanism.linkedTo) return mechanism.kind === 'normallyOpen';
-  const plate = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'plate');
-  if (plate) return objects.some((o) => o.type === 'block' && o.q === plate.q && o.r === plate.r && o.h === plate.h);
-  const receiver = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'receiver');
-  if (receiver) return !!receiver.active;
-  const key = objects.find((o) => o.id === mechanism.linkedTo && o.type === 'key');
-  return !!key?.active;
+  const linked = objects.find((o) => o.id === mechanism.linkedTo);
+  if (linked?.type === 'lift' || linked?.type === 'teleporter') return true;
+  return isSourceActive(mechanism.linkedTo, objects);
 }
 
 export function sameHex(a: Hex, b: Hex): boolean {

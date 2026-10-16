@@ -34,12 +34,16 @@ export function validateLevel(l:Level):string[] {
   for(const c of l.board.cells??[]){const k=`${c.q},${c.r},${c.h}`;if(cellKeys.has(k))errors.push(`Duplicate board cell: ${k}`);cellKeys.add(k);}
   for(const id of l.objectives?.requiredPlateIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='plate')) errors.push(`Required plate not found: ${id}`);
   for(const id of l.objectives?.requiredReceiverIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='receiver')) errors.push(`Required receiver not found: ${id}`);
+  for(const id of l.objectives?.requiredKeyIds??[]) if(!l.objects.some(o=>o.id===id&&o.type==='key')) errors.push(`Required key not found: ${id}`);
   if(l.objectives?.goalId&&!l.objects.some(o=>o.id===l.objectives.goalId&&o.type==='goal')) errors.push('Objective goalId does not reference a goal.');
   const solidKeys=new Set<string>();
   for(const o of l.objects??[]){
-    if(['player','block','goal','plate','wall','lift','bridge','gate','switch','laser','mirror','receiver','key'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
+    if(['player','block','goal','plate','wall','lift','bridge','gate','switch','laser','mirror','receiver','key','conveyor','teleporter'].includes(o.type)&&!cellKeys.has(`${o.q},${o.r},${o.h}`)) errors.push(`${o.id} is outside the board.`);
     if(['block','wall','lift','bridge','gate'].includes(o.type)){const k=`${o.q},${o.r},${o.h}`;if(solidKeys.has(k))errors.push(`Multiple solid objects occupy ${k}.`);solidKeys.add(k);}
-    if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&(p.type==='plate'||p.type==='receiver'||p.type==='key'))) errors.push(`${o.id} linkedTo must reference a pressure plate, laser receiver or key.`);
+    if(['gate','bridge'].includes(o.type)&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&(p.type==='plate'||p.type==='receiver'||p.type==='key'||p.type==='switch'))) errors.push(`${o.id} linkedTo must reference a pressure plate, laser receiver, key or switch.`);
+    for(const sourceId of o.linkedToAll??[]) if(!l.objects.some(p=>p.id===sourceId&&(p.type==='plate'||p.type==='receiver'||p.type==='key'||p.type==='switch'))) errors.push(`${o.id} linkedToAll references an invalid source: ${sourceId}`);
+    if(o.type==='lift'&&o.enabledBy&&!l.objects.some(p=>p.id===o.enabledBy&&(p.type==='plate'||p.type==='receiver'||p.type==='switch'||p.type==='key'))) errors.push(`${o.id} enabledBy must reference an activatable object.`);
+    if(o.type==='teleporter'&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&p.type==='teleporter')) errors.push(`${o.id} linkedTo must reference another teleporter.`);
     if(o.type==='gate'&&o.requiresKey&&!l.objects.some(p=>p.type==='key')) errors.push(`${o.id} requiresKey but the level has no key collectible.`);
     if(o.type==='lift'&&o.linkedTo&&!l.objects.some(p=>p.id===o.linkedTo&&p.type==='lift')) errors.push(`${o.id} linkedTo must reference another lift.`);
     if(o.type==='block'&&o.assemblyId&&l.objects.some(p=>p.assemblyId===o.assemblyId&&p.type!=='block')) errors.push(`${o.id} assemblyId can only be shared by blocks.`);
